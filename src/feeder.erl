@@ -51,6 +51,8 @@ chars() ->
 
 %% Event handlers
 
+start_element(channel, ?STATE) ->
+  {_Chars, feed(), _Entry, _User};
 start_element(item, ?STATE) ->
   {_Chars, _Feed, entry(), _User};
 start_element(title, ?STATE) ->
@@ -59,7 +61,7 @@ start_element(_, S) ->
   S.
 
 end_element(title, ?STATE) when ?IS_ENTRY ->
-  Title = chars(_Chars),
+  Title = iolist_to_binary(_Chars),
   Entry = entry(title, Title, _Entry),
   {nil, _Feed, Entry, _User}; 
 end_element(item, ?STATE) ->
@@ -71,15 +73,12 @@ end_element(_, S) ->
 
 %% SAX events
 
-event(startDocument, _, S) ->
-  S;
 event({startElement, _, _LocalName, QName, _Attrs}, _, S) ->
   start_element(qname(QName), S);
 event({endElement, _, _LocalName, QName}, _, S) ->
   end_element(qname(QName), S);
 event({characters, C}, _, ?STATE) ->
-  %% TODO: Use binaries instead of lists
-  {[_Chars|C], _Feed, _Entry, _User};
+  {[_Chars, C], _Feed, _Entry, _User};
 event(endDocument, _, S) ->
   {_, _, _, {UserState, UserFun}} = S,
   UserFun(endFeed, UserState),
@@ -91,6 +90,3 @@ event(_, _, S) ->
 
 qname({_, Name}) ->
   list_to_atom(Name).
-
-chars(C) ->
-  list_to_binary(C).
