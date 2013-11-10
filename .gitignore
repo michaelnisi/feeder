@@ -1,0 +1,6 @@
+*.beam
+deps/*
+*.app
+*.dump
+log
+logs
