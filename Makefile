@@ -1,12 +1,21 @@
-.PHONY: test
+REBAR?=rebar
 
-REBAR=rebar
-ETEST=./deps/etest/bin/etest-runner
+all: build
 
-all: compile
+clean:
+	$(REBAR) clean
+	rm -rf logs
+	rm -f test/*.beam
 
-compile:
+build: 
 	$(REBAR) compile
 
-test: compile
-	$(ETEST)
+tap: test/etap.beam 
+	prove -v test
+
+test: build tap 
+
+%.beam: %.erl
+	erlc -o test/ $<
+
+.PHONY: all clean build tap test

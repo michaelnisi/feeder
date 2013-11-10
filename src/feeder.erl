@@ -3,6 +3,7 @@
 
 -module(feeder).
 -export([stream/2]).
+-include("../include/feeder.hrl").
 
 %% API
 
@@ -16,7 +17,7 @@ stream(Chunk, UserOpts) ->
 
 %% Tuples
 
-opts(Opts) -> 
+opts(Opts) ->
   ContinuationState = proplists:get_value(continuation_state, Opts),
   ContinuationFun = proplists:get_value(continuation_fun, Opts),
   UserState = proplists:get_value(event_state, Opts),
@@ -32,38 +33,35 @@ state(User) ->
   {nil, nil, nil, User}.
 
 -define(IS_FEED, _Feed =/= null, _Entry =:= nil).
--define(FEED, {_Title, _Summary, _Link}).
-feed() ->
-  {nil, nil, nil}.
-
 -define(IS_ENTRY, _Entry =/= nil).
--define(ENTRY, {_Title, _Summary, _Link, _PubDate}).
-entry() ->
-  {nil, nil, nil, nil}.
-
-entry(title, Title, ?ENTRY) ->
-  {Title, _Summary, _Link, _PubDate};
-entry(summary, Summary, ?ENTRY) ->
-  {_Title, Summary, _Link, _PubDate}.
-
-chars() ->
-  [].
 
 %% Event handlers
 
 start_element(channel, ?STATE) ->
-  {_Chars, feed(), _Entry, _User};
+  {_Chars, #feed{}, _Entry, _User};
 start_element(item, ?STATE) ->
-  {_Chars, _Feed, entry(), _User};
-start_element(title, ?STATE) ->
-  {chars(), _Feed, _Entry, _User};
+  {_Chars, _Feed, #entry{}, _User};
+start_element(E, ?STATE) when ?IS_ENTRY,
+E =:= author;
+E =:= id;
+E =:= link;
+E =:= subtitle;
+E =:= summary;
+E =:= title;
+E =:= updated ->
+  {[], _Feed, _Entry, _User};
 start_element(_, S) ->
   S.
 
-end_element(title, ?STATE) when ?IS_ENTRY ->
-  Title = iolist_to_binary(_Chars),
-  Entry = entry(title, Title, _Entry),
-  {nil, _Feed, Entry, _User}; 
+end_element(E, ?STATE) when ?IS_ENTRY,
+E =:= author;
+E =:= id;
+E =:= link;
+E =:= subtitle;
+E =:= summary;
+E =:= title;
+E =:= updated ->
+  {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
 end_element(item, ?STATE) ->
   {UserState, UserFun} = _User,
   UserFun({entry, _Entry}, UserState),
@@ -90,3 +88,18 @@ event(_, _, S) ->
 
 qname({_, Name}) ->
   list_to_atom(Name).
+
+update_entry(Entry, author, Chars)  ->
+  Entry#entry{author=iolist_to_binary(Chars)};
+update_entry(Entry, id, Chars) ->
+  Entry#entry{id=iolist_to_binary(Chars)};
+update_entry(Entry,link, Chars) ->
+  Entry#entry{link=iolist_to_binary(Chars)};
+update_entry(Entry, subtitle, Chars) ->
+  Entry#entry{subtitle=iolist_to_binary(Chars)};
+update_entry(Entry, summary, Chars) ->
+  Entry#entry{summary=iolist_to_binary(Chars)};
+update_entry(Entry, title, Chars) ->
+  Entry#entry{title=iolist_to_binary(Chars)};
+update_entry(Entry, updated, Chars) ->
+  Entry#entry{updated=iolist_to_binary(Chars)}.
