@@ -30,10 +30,10 @@ opts(Opts) ->
 
 -define(STATE, {_Chars, _Feed, _Entry, _User}).
 state(User) ->
-  {nil, nil, nil, User}.
+  {undefined, undefined, undefined, User}.
 
--define(IS_FEED, _Feed =/= null, _Entry =:= nil).
--define(IS_ENTRY, _Entry =/= nil).
+-define(IS_FEED, _Feed =/= undefined, _Entry =:= undefined).
+-define(IS_ENTRY, _Entry =/= undefined).
 
 %% Event handlers
 
@@ -65,7 +65,7 @@ E =:= updated ->
 end_element(item, ?STATE) ->
   {UserState, UserFun} = _User,
   UserFun({entry, _Entry}, UserState),
-  {_Chars, _Feed, nil, _User};
+  {_Chars, _Feed, undefined, _User};
 end_element(_, S) ->
   S.
 
