@@ -1,4 +1,26 @@
 
+-define(STATE, {_Chars, _Feed, _Entry, _User}).
+
+-define(IS_FEED, _Feed =/= undefined, _Entry =:= undefined).
+-define(IS_ENTRY, _Entry =/= undefined).
+
+-define(RSS,
+  E =:= title orelse
+  E =:= link orelse
+  E =:= description orelse
+  E =:= language orelse
+  E =:= pubDate orelse
+  E =:= guid
+).
+
+-define(ATOM,
+  E =:= updated orelse
+  E =:= name orelse
+  E =:= summary orelse
+  E =:= id orelse
+  E =:= author % TODO: nested
+).
+
 -record(feed, {
     author,
     copyright,

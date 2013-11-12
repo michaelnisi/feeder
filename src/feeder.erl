@@ -5,9 +5,6 @@
 -export([file/2, stream/2]).
 
 -include("../include/feeder.hrl").
--define(STATE, {_Chars, _Feed, _Entry, _User}).
--define(IS_FEED, _Feed =/= undefined, _Entry =:= undefined).
--define(IS_ENTRY, _Entry =/= undefined).
 
 %% API
 
@@ -21,7 +18,7 @@ file(Filename, Opts) ->
 stream(Chunk, Opts) ->
   xmerl_sax_parser:stream(Chunk, opts(stream, Opts)).
 
-%% Tuples
+%% Types
 
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
@@ -41,27 +38,12 @@ state(User) ->
 
 start_element(item, ?STATE) ->
   {_Chars, _Feed, #entry{}, _User};
-start_element(E, ?STATE) when ?IS_ENTRY,
-E =:= author orelse
-E =:= id orelse
-E =:= link orelse
-E =:= subtitle orelse
-E =:= summary orelse
-E =:= title orelse
-E =:= updated ->
-  true = _Entry =/= undefined,
+start_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
   {[], _Feed, _Entry, _User};
 start_element(_, S) ->
   S.
 
-end_element(E, ?STATE) when ?IS_ENTRY,
-E =:= author orelse
-E =:= id orelse
-E =:= link orelse
-E =:= subtitle orelse
-E =:= summary orelse
-E =:= title orelse
-E =:= updated ->
+end_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
   {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
 end_element(item, ?STATE) ->
   {UserState, UserFun} = _User,
@@ -98,9 +80,11 @@ update_entry(Entry,link, Chars) ->
   Entry#entry{link=iolist_to_binary(Chars)};
 update_entry(Entry, subtitle, Chars) ->
   Entry#entry{subtitle=iolist_to_binary(Chars)};
-update_entry(Entry, summary, Chars) ->
+update_entry(Entry, E, Chars) when E =:= description; E =:= summary ->
   Entry#entry{summary=iolist_to_binary(Chars)};
 update_entry(Entry, title, Chars) ->
   Entry#entry{title=iolist_to_binary(Chars)};
-update_entry(Entry, updated, Chars) ->
-  Entry#entry{updated=iolist_to_binary(Chars)}.
+update_entry(Entry, E, Chars) when E =:= pubDate; E =:= updated ->
+  Entry#entry{updated=iolist_to_binary(Chars)};
+update_entry(Entry, _, _) ->
+  Entry.
