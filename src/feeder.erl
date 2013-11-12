@@ -28,8 +28,8 @@ opts(file, Opts) ->
 opts(stream, Opts) ->
   ContinuationState = proplists:get_value(continuation_state, Opts),
   ContinuationFun = proplists:get_value(continuation_fun, Opts),
-  opts(file, Opts) ++ [{continuation_state, ContinuationState},
-    {continuation_fun, ContinuationFun}].
+  [{continuation_state, ContinuationState},
+   {continuation_fun, ContinuationFun}] ++ opts(file, Opts).
 
 state(User) ->
   {undefined, undefined, undefined, User}.
@@ -74,7 +74,7 @@ qname({_, Name}) ->
 
 update_entry(Entry, author, Chars)  ->
   Entry#entry{author=iolist_to_binary(Chars)};
-update_entry(Entry, id, Chars) ->
+update_entry(Entry, E, Chars) when E =:= guid; E =:= id ->
   Entry#entry{id=iolist_to_binary(Chars)};
 update_entry(Entry,link, Chars) ->
   Entry#entry{link=iolist_to_binary(Chars)};

@@ -18,7 +18,7 @@
   E =:= name orelse
   E =:= summary orelse
   E =:= id orelse
-  E =:= author % TODO: nested
+  E =:= author % TODO: <author><name>John Doe</name></author>
 ).
 
 -record(feed, {

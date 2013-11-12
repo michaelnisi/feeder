@@ -1,6 +1,13 @@
 
 -module(common).
--export([stream/1, file/1]).
+-export([stream/1, file/1, is/2]).
+
+is([],[]) ->
+  ok;
+is([AH|AT], [BH|BT]) ->
+  etap:is(AH, BH, "should be equal"),
+  is(AT, BT).
+
 
 file(Filename) ->
   {ok, _, _} = feeder:file(Filename, opts()),
