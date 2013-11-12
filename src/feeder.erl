@@ -2,64 +2,65 @@
 %% feeder - parse RSS and Atom feeds
 
 -module(feeder).
--export([stream/2]).
+-export([file/2, stream/2]).
+
 -include("../include/feeder.hrl").
+-define(STATE, {_Chars, _Feed, _Entry, _User}).
+-define(IS_FEED, _Feed =/= undefined, _Entry =:= undefined).
+-define(IS_ENTRY, _Entry =/= undefined).
 
 %% API
+
+file(Filename, Opts) ->
+  xmerl_sax_parser:file(Filename, opts(file, Opts)).
 
 %% Events
 %% {feed, Feed}, State
 %% {entry, Entry}, State
 %% endFeed, State
-stream(Chunk, UserOpts) ->
-  Opts = opts(UserOpts),
-  xmerl_sax_parser:stream(Chunk, Opts).
+stream(Chunk, Opts) ->
+  xmerl_sax_parser:stream(Chunk, opts(stream, Opts)).
 
 %% Tuples
 
-opts(Opts) ->
-  ContinuationState = proplists:get_value(continuation_state, Opts),
-  ContinuationFun = proplists:get_value(continuation_fun, Opts),
+opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
   UserFun = proplists:get_value(event_fun, Opts),
   User = {UserState, UserFun},
-  [{continuation_state, ContinuationState}
- , {continuation_fun, ContinuationFun}
- , {event_state, state(User)}
- , {event_fun, fun event/3}].
+  [{event_state, state(User)}, {event_fun, fun event/3}];
+opts(stream, Opts) ->
+  ContinuationState = proplists:get_value(continuation_state, Opts),
+  ContinuationFun = proplists:get_value(continuation_fun, Opts),
+  opts(file, Opts) ++ [{continuation_state, ContinuationState},
+    {continuation_fun, ContinuationFun}].
 
--define(STATE, {_Chars, _Feed, _Entry, _User}).
 state(User) ->
   {undefined, undefined, undefined, User}.
 
--define(IS_FEED, _Feed =/= undefined, _Entry =:= undefined).
--define(IS_ENTRY, _Entry =/= undefined).
-
 %% Event handlers
 
-start_element(channel, ?STATE) ->
-  {_Chars, #feed{}, _Entry, _User};
 start_element(item, ?STATE) ->
   {_Chars, _Feed, #entry{}, _User};
 start_element(E, ?STATE) when ?IS_ENTRY,
-E =:= author;
-E =:= id;
-E =:= link;
-E =:= subtitle;
-E =:= summary;
-E =:= title;
+E =:= author orelse
+E =:= id orelse
+E =:= link orelse
+E =:= subtitle orelse
+E =:= summary orelse
+E =:= title orelse
 E =:= updated ->
+  true = _Entry =/= undefined,
   {[], _Feed, _Entry, _User};
 start_element(_, S) ->
   S.
 
 end_element(E, ?STATE) when ?IS_ENTRY,
-E =:= author;
-E =:= id;
-E =:= link;
-E =:= subtitle;
-E =:= summary;
-E =:= title;
+E =:= author orelse
+E =:= id orelse
+E =:= link orelse
+E =:= subtitle orelse
+E =:= summary orelse
+E =:= title orelse
 E =:= updated ->
   {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
 end_element(item, ?STATE) ->
