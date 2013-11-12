@@ -10,7 +10,7 @@ clean:
 build: 
 	$(REBAR) compile
 
-tap: test/etap.beam 
+tap: test/etap.beam test/common.beam 
 	prove -v test
 
 test: build tap 

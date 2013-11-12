@@ -7,14 +7,18 @@
 -include("../include/feeder.hrl").
 
 %% API
+%%
+%% Events:
+%% {feed, Feed}, State
+%% {entry, Entry}, State
+%% endFeed, State
+%%
+%% Result:
+%% Result = {ok, EventState, Rest}
 
 file(Filename, Opts) ->
   xmerl_sax_parser:file(Filename, opts(file, Opts)).
 
-%% Events
-%% {feed, Feed}, State
-%% {entry, Entry}, State
-%% endFeed, State
 stream(Chunk, Opts) ->
   xmerl_sax_parser:stream(Chunk, opts(stream, Opts)).
 

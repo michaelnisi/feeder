@@ -1,0 +1,4 @@
+language: erlang
+script: "make compile && make test"
+otp_release:
+  - R16B
