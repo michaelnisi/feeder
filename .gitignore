@@ -1,6 +1,6 @@
-*.beam
-deps/*
 *.app
-*.dump
-log
-logs
+*.beam
+*.o
+*.so
+.eunit
+deps

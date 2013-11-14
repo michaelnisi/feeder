@@ -10,12 +10,7 @@ clean:
 build: 
 	$(REBAR) compile
 
-tap: test/etap.beam test/common.beam 
-	prove -v test
+test:
+	$(REBAR) eunit
 
-test: build tap 
-
-%.beam: %.erl
-	erlc -o test/ $<
-
-.PHONY: all clean build tap test
+.PHONY: all clean build test

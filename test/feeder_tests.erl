@@ -1,23 +1,15 @@
-#! /usr/bin/env escript
 
+-module(feeder_tests).
+
+-include_lib("eunit/include/eunit.hrl").
 -include("../include/feeder.hrl").
 
-main([]) ->
-  code:add_pathz("test"),
-  code:add_pathz("ebin"),
-  etap:plan(8),
-  file(),
-  stream(),
-  etap:end_tests().
-
-file() ->
+file_test() ->
   Wanted = wanted(),
-  Found = lists:reverse(common:file("test/rss.xml")),
-  etap:is(4, length(Found), "should be 4"),
-  common:is(Wanted, Found),
-  ok.
+  Found = lists:reverse(util:file("../test/rss.xml")),
+  util:is(Wanted, Found).
 
-wanted() -> 
+wanted() ->
   [#entry{
       title = <<"Star City">>,
       link = <<"http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp">>,
@@ -45,11 +37,3 @@ id= <<"http://liftoff.msfc.nasa.gov/2003/05/30.html#item572">>
   id= <<"http://liftoff.msfc.nasa.gov/2003/05/20.html#item570">>
 }
 ].
-
-%% TODO: stream file
-stream() ->
-  Entries = common:stream("<channel><item><author>John Doe</author><title>Nice Title</title></item><item><title>Nice Title</title><author>John Doe</author></item></channel>"),
-  Entry = #entry{author = <<"John Doe">>, title = <<"Nice Title">>},
-  [etap:is(E, Entry,  "should be wanted") || E <- Entries],
-  etap:is(2, length(Entries), "should be 2"),
-  ok.

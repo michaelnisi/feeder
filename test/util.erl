@@ -1,11 +1,12 @@
 
--module(common).
+-module(util).
 -export([stream/1, file/1, is/2]).
+-include_lib("eunit/include/eunit.hrl").
 
 is([],[]) ->
   ok;
 is([AH|AT], [BH|BT]) ->
-  etap:is(AH, BH, "should be equal"),
+  ?assertMatch(AH, BH),
   is(AT, BT).
 
 
