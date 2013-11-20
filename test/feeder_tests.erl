@@ -7,7 +7,8 @@
 file_test() ->
   Wanted = wanted(),
   {Feed, Entries} = util:file("../test/rss.xml"),
-  ?debugFmt("feed: ~p~n", [Feed]),
+  ?assertEqual(<<"Liftoff News">>, Feed#feed.title),
+  ?assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary),
   util:is(Wanted, lists:reverse(Entries)).
 
 wanted() ->

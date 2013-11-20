@@ -6,23 +6,11 @@
 
 -include("../include/feeder.hrl").
 
-%% API
-%%
-%% Events:
-%% {feed, Feed}, State
-%% {entry, Entry}, State
-%% endFeed, State
-%%
-%% Result:
-%% Result = {ok, EventState, Rest}
-
 file(Filename, Opts) ->
   xmerl_sax_parser:file(Filename, opts(file, Opts)).
 
 stream(Chunk, Opts) ->
   xmerl_sax_parser:stream(Chunk, opts(stream, Opts)).
-
-%% Types
 
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
@@ -40,27 +28,26 @@ state(User) ->
 
 %% Event handlers
 
-start_element(channel, _Attrs, ?STATE) ->
-  ?debugMsg("start channel"),
+start_element(E, _Attrs, ?STATE) when E =:= channel; E =:= feed ->
   {_Chars, #feed{}, _Entry, _User};
-start_element(item, _Attrs, ?STATE) ->
+start_element(E, _Attrs, ?STATE) when E =:= item; E =:= entry->
   {_Chars, _Feed, #entry{}, _User};
-start_element(E, _Attrs, ?STATE) when ?IS_FEED, ?RSS ->
+start_element(E, _Attrs, ?STATE) when ?IS_FEED, ?RSS orelse ?ATOM ->
   {[], _Feed, _Entry, _User};
 start_element(E, _Attrs, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
   {[], _Feed, _Entry, _User};
 start_element(_, _Attrs, S) ->
   S.
 
-end_element(channel, ?STATE) ->
+end_element(E, ?STATE) when E =:= channel; E =:= feed ->
   {UserState, UserFun} = _User,
   UserFun({feed, _Feed}, UserState),
   {_Chars, undefined, _Entry, _User};
-end_element(item, ?STATE) ->
+end_element(E, ?STATE) when E =:= item; E =:= entry ->
   {UserState, UserFun} = _User,
   UserFun({entry, _Entry}, UserState),
   {_Chars, _Feed, undefined, _User};
-end_element(E, ?STATE) when ?IS_FEED ->
+end_element(E, ?STATE) when ?IS_FEED, ?RSS orelse ?ATOM ->
   {_Chars, update_feed(_Feed, E, _Chars), _Entry, _User};
 end_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
   {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
@@ -114,3 +101,4 @@ update_entry(Entry, E, Chars) when E =:= pubDate; E =:= updated ->
   ?UE(updated);
 update_entry(Entry, _, _) ->
   Entry.
+
