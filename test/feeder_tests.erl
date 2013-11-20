@@ -6,8 +6,9 @@
 
 file_test() ->
   Wanted = wanted(),
-  Found = lists:reverse(util:file("../test/rss.xml")),
-  util:is(Wanted, Found).
+  {Feed, Entries} = util:file("../test/rss.xml"),
+  ?debugFmt("feed: ~p~n", [Feed]),
+  util:is(Wanted, lists:reverse(Entries)).
 
 wanted() ->
   [#entry{

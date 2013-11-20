@@ -40,26 +40,37 @@ state(User) ->
 
 %% Event handlers
 
-start_element(item, ?STATE) ->
+start_element(channel, _Attrs, ?STATE) ->
+  ?debugMsg("start channel"),
+  {_Chars, #feed{}, _Entry, _User};
+start_element(item, _Attrs, ?STATE) ->
   {_Chars, _Feed, #entry{}, _User};
-start_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
+start_element(E, _Attrs, ?STATE) when ?IS_FEED, ?RSS ->
   {[], _Feed, _Entry, _User};
-start_element(_, S) ->
+start_element(E, _Attrs, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
+  {[], _Feed, _Entry, _User};
+start_element(_, _Attrs, S) ->
   S.
 
-end_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
-  {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
+end_element(channel, ?STATE) ->
+  {UserState, UserFun} = _User,
+  UserFun({feed, _Feed}, UserState),
+  {_Chars, undefined, _Entry, _User};
 end_element(item, ?STATE) ->
   {UserState, UserFun} = _User,
   UserFun({entry, _Entry}, UserState),
   {_Chars, _Feed, undefined, _User};
+end_element(E, ?STATE) when ?IS_FEED ->
+  {_Chars, update_feed(_Feed, E, _Chars), _Entry, _User};
+end_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
+  {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
 end_element(_, S) ->
   S.
 
 %% SAX events
 
-event({startElement, _, _LocalName, QName, _Attrs}, _, S) ->
-  start_element(qname(QName), S);
+event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
+  start_element(qname(QName), Attrs, S);
 event({endElement, _, _LocalName, QName}, _, S) ->
   end_element(qname(QName), S);
 event({characters, C}, _, ?STATE) ->
@@ -76,19 +87,30 @@ event(_, _, S) ->
 qname({_, Name}) ->
   list_to_atom(Name).
 
+-define(UF(Atom), Feed#feed{Atom=iolist_to_binary(Chars)}).
+update_feed(Feed, title, Chars)  ->
+  ?UF(title);
+update_feed(Feed, link, Chars)  ->
+  ?UF(link);
+update_feed(Feed, description, Chars)  ->
+  ?UF(summary);
+update_feed(Feed, _, _) ->
+  Feed.
+
+-define(UE(Atom), Entry#entry{Atom=iolist_to_binary(Chars)}).
 update_entry(Entry, author, Chars)  ->
-  Entry#entry{author=iolist_to_binary(Chars)};
+  ?UE(author);
 update_entry(Entry, E, Chars) when E =:= guid; E =:= id ->
-  Entry#entry{id=iolist_to_binary(Chars)};
+  ?UE(id);
 update_entry(Entry,link, Chars) ->
-  Entry#entry{link=iolist_to_binary(Chars)};
+  ?UE(link);
 update_entry(Entry, subtitle, Chars) ->
-  Entry#entry{subtitle=iolist_to_binary(Chars)};
+  ?UE(subtitle);
 update_entry(Entry, E, Chars) when E =:= description; E =:= summary ->
-  Entry#entry{summary=iolist_to_binary(Chars)};
+  ?UE(summary);
 update_entry(Entry, title, Chars) ->
-  Entry#entry{title=iolist_to_binary(Chars)};
+  ?UE(title);
 update_entry(Entry, E, Chars) when E =:= pubDate; E =:= updated ->
-  Entry#entry{updated=iolist_to_binary(Chars)};
+  ?UE(updated);
 update_entry(Entry, _, _) ->
   Entry.

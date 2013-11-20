@@ -9,28 +9,32 @@ is([AH|AT], [BH|BT]) ->
   ?assertMatch(AH, BH),
   is(AT, BT).
 
-
 file(Filename) ->
   {ok, _, _} = feeder:file(Filename, opts()),
-  receive_entries([]).
+  loop({{}, []}).
 
 stream(Chunk) ->
   feeder:stream(Chunk, opts()),
-  receive_entries([]).
+  loop({{}, []}).
 
 opts() ->
   [{event_state, {}}, {event_fun, fun event/2}].
 
-receive_entries(Entries) ->
+loop({_Feed, Entries}) ->
   receive
     {entry, Entry} ->
-      receive_entries([Entry|Entries]);
+      loop({_Feed, [Entry|Entries]});
+    {feed, Feed} ->
+      loop({Feed, Entries});
     endFeed ->
-      Entries
+      {_Feed, Entries}
   end.
 
 event({entry, Entry}, S) ->
   self() ! {entry, Entry},
+  S;
+event({feed, Feed}, S) ->
+  self() ! {feed, Feed},
   S;
 event(endFeed, S) ->
 self() ! endFeed,

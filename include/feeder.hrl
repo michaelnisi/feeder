@@ -1,4 +1,6 @@
 
+-include_lib("eunit/include/eunit.hrl").
+
 -define(STATE, {_Chars, _Feed, _Entry, _User}).
 
 -define(IS_FEED, _Feed =/= undefined, _Entry =:= undefined).
