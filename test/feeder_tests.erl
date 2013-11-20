@@ -7,19 +7,21 @@
 rss_test_() ->
   {"We can parse simple RSS",
     {setup,
-     fun parse/0,
-     fun feed/1,
-     fun entries/1}}.
+     fun rss_setup/0,
+     fun teardown/1,
+     fun (D) ->
+       [rss_feed(D),
+        rss_entries(D)]
+     end}}.
 
-parse() ->
+rss_setup() ->
   util:file("../test/rss.xml").
 
-feed({Feed, Entries}) ->
+rss_feed({Feed, Entries}) ->
   ?_assertEqual(<<"Liftoff News">>, Feed#feed.title),
-  ?_assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary),
-  {Feed, Entries}.
+  ?_assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary).
 
-entries({_Feed, Entries}) ->
+rss_entries({_Feed, Entries}) ->
   Expected = rss(),
   Actual = lists:reverse(Entries),
   ?_assertMatch(Expected, Actual).
@@ -52,3 +54,7 @@ id= <<"http://liftoff.msfc.nasa.gov/2003/05/30.html#item572">>
   id= <<"http://liftoff.msfc.nasa.gov/2003/05/20.html#item570">>
 }
 ].
+
+teardown(D) ->
+  ok.
+
