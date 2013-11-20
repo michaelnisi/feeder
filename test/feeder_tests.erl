@@ -4,14 +4,27 @@
 -include_lib("eunit/include/eunit.hrl").
 -include("../include/feeder.hrl").
 
-file_test() ->
-  Wanted = wanted(),
-  {Feed, Entries} = util:file("../test/rss.xml"),
-  ?assertEqual(<<"Liftoff News">>, Feed#feed.title),
-  ?assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary),
-  util:is(Wanted, lists:reverse(Entries)).
+rss_test_() ->
+  {"We can parse simple RSS",
+    {setup,
+     fun parse/0,
+     fun feed/1,
+     fun entries/1}}.
 
-wanted() ->
+parse() ->
+  util:file("../test/rss.xml").
+
+feed({Feed, Entries}) ->
+  ?_assertEqual(<<"Liftoff News">>, Feed#feed.title),
+  ?_assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary),
+  {Feed, Entries}.
+
+entries({_Feed, Entries}) ->
+  Expected = rss(),
+  Actual = lists:reverse(Entries),
+  ?_assertMatch(Expected, Actual).
+
+rss() ->
   [#entry{
       title = <<"Star City">>,
       link = <<"http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp">>,
