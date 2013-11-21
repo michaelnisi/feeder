@@ -4,8 +4,10 @@
 -include_lib("eunit/include/eunit.hrl").
 -include("../include/feeder.hrl").
 
+%% Descriptions
+
 rss_test_() ->
-  {"We can parse simple RSS",
+  {"should parse simple RSS",
     {setup,
      fun rss_setup/0,
      fun teardown/1,
@@ -14,17 +16,66 @@ rss_test_() ->
         rss_entries(D)]
      end}}.
 
+atom_test_() ->
+  {"should parse simple Atom",
+    {setup,
+     fun atom_setup/0,
+     fun teardown/1,
+     fun (D) ->
+      [atom_feed(D),
+       atom_entries(D)]
+     end}}.
+
+itunes_test_() ->
+  {"should parse simple iTunes",
+    {setup,
+     fun itunes_setup/0,
+     fun teardown/1,
+     fun (D) ->
+       [itunes_feed(D),
+        itunes_entries(D)]
+     end}}.
+
+%% Details
+
+itunes_setup() ->
+  util:file("../test/itunes.xml").
+
+itunes_feed({Feed, _}) ->
+  [?_assert(Feed =/= undefined)].
+
+itunes_entries({_, Entries}) ->
+  [?_assert(Entries =/= undefined)].
+
+atom_setup() ->
+  util:file("../test/atom.xml").
+
+atom_feed({Feed, _}) -> [
+  ?_assert(Feed =/= undefined)
+, ?_assertEqual(<<"Example Feed">>, Feed#feed.title)
+].
+
+atom_entries({_, Entries}) -> [
+  ?_assert(Entries =/= undefined)
+, ?_assertEqual(length(Entries), 1)
+].
+
 rss_setup() ->
   util:file("../test/rss.xml").
 
-rss_feed({Feed, Entries}) ->
-  ?_assertEqual(<<"Liftoff News">>, Feed#feed.title),
-  ?_assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary).
+rss_feed({Feed, _}) -> [
+  ?_assert(Feed =/= undefined)
+, ?_assertEqual(<<"Liftoff News">>, Feed#feed.title)
+, ?_assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary)
+].
 
-rss_entries({_Feed, Entries}) ->
+rss_entries({_, Entries}) ->
   Expected = rss(),
   Actual = lists:reverse(Entries),
-  ?_assertMatch(Expected, Actual).
+  [
+    ?_assert(Entries =/= undefined)
+  , ?_assertMatch(Expected, Actual)
+  ].
 
 rss() ->
   [#entry{
@@ -55,6 +106,6 @@ id= <<"http://liftoff.msfc.nasa.gov/2003/05/30.html#item572">>
 }
 ].
 
-teardown(D) ->
+teardown(_) ->
   ok.
 
