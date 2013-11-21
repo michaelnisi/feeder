@@ -7,7 +7,7 @@
 %% Descriptions
 
 rss_test_() ->
-  {"should parse simple RSS",
+  {"should parse reference RSS",
     {setup,
      fun rss_setup/0,
      fun teardown/1,
@@ -17,7 +17,7 @@ rss_test_() ->
      end}}.
 
 atom_test_() ->
-  {"should parse simple Atom",
+  {"should parse reference Atom",
     {setup,
      fun atom_setup/0,
      fun teardown/1,
@@ -27,7 +27,7 @@ atom_test_() ->
      end}}.
 
 itunes_test_() ->
-  {"should parse simple iTunes",
+  {"should parse reference iTunes",
     {setup,
      fun itunes_setup/0,
      fun teardown/1,
@@ -42,7 +42,8 @@ itunes_setup() ->
   util:file("../test/itunes.xml").
 
 itunes_feed({Feed, _}) ->
-  [?_assert(Feed =/= undefined)].
+  Expected = expected(itunes, feed),
+  [?_assert(Feed =/= undefined), ?_assertMatch(Expected, Feed)].
 
 itunes_entries({_, Entries}) ->
   [?_assert(Entries =/= undefined)].
@@ -50,10 +51,9 @@ itunes_entries({_, Entries}) ->
 atom_setup() ->
   util:file("../test/atom.xml").
 
-atom_feed({Feed, _}) -> [
-  ?_assert(Feed =/= undefined)
-, ?_assertEqual(<<"Example Feed">>, Feed#feed.title)
-].
+atom_feed({Feed, _}) ->
+  [?_assert(Feed =/= undefined)
+  , ?_assertEqual(<<"Example Feed">>, Feed#feed.title)].
 
 atom_entries({_, Entries}) -> [
   ?_assert(Entries =/= undefined)
@@ -70,14 +70,11 @@ rss_feed({Feed, _}) -> [
 ].
 
 rss_entries({_, Entries}) ->
-  Expected = rss(),
+  Expected = expected(rss, entries),
   Actual = lists:reverse(Entries),
-  [
-    ?_assert(Entries =/= undefined)
-  , ?_assertMatch(Expected, Actual)
-  ].
+  [?_assert(Entries =/= undefined), ?_assertMatch(Expected, Actual)].
 
-rss() ->
+expected(rss, entries) ->
   [#entry{
       title = <<"Star City">>,
       link = <<"http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp">>,
@@ -104,7 +101,13 @@ id= <<"http://liftoff.msfc.nasa.gov/2003/05/30.html#item572">>
   updated= <<"Tue, 20 May 2003 08:56:02 GMT">>,
   id= <<"http://liftoff.msfc.nasa.gov/2003/05/20.html#item570">>
 }
-].
+];
+expected(itunes, feed) ->
+  #feed{
+    title = <<"All About Everything">>,
+    link = <<"http://www.example.com/podcasts/everything/index.html">>,
+    summary = <<"All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Store">>
+  }.
 
 teardown(_) ->
   ok.
