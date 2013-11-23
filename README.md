@@ -6,11 +6,11 @@ Word on the street has it that Erlang is terrible at parsing strings. A fair rea
 
 ## Usage
 
-```erl
+```Erlang
 {ok, EventState, Rest} = feeder:file(Filename, opts())
 ```
 
-```erl
+```Erlang
 {ok, EventState, Rest} = feeder:stream(Chunk, opts())
 ```
 
