@@ -6,11 +6,15 @@
 
 -include("../include/feeder.hrl").
 
+%% API
+
 file(Filename, Opts) ->
   xmerl_sax_parser:file(Filename, opts(file, Opts)).
 
-stream(Chunk, Opts) ->
-  xmerl_sax_parser:stream(Chunk, opts(stream, Opts)).
+stream(Xml, Opts) ->
+  xmerl_sax_parser:stream(Xml, opts(stream, Opts)).
+
+%% State
 
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),

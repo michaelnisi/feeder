@@ -10,7 +10,7 @@ is([AH|AT], [BH|BT]) ->
   is(AT, BT).
 
 file(Filename) ->
-  {ok, _, _} = feeder:file(Filename, opts()),
+  {ok, _EventState, _Rest} = feeder:file(Filename, opts()),
   loop({{}, []}).
 
 stream(Chunk) ->
