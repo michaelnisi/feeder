@@ -85,6 +85,8 @@ update_feed(Feed, link, Chars)  ->
   ?UF(link);
 update_feed(Feed, description, Chars)  ->
   ?UF(summary);
+update_feed(Feed, name, Chars)  ->
+  ?UF(author);
 update_feed(Feed, _, _) ->
   Feed.
 
