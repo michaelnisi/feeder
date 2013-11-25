@@ -31,7 +31,7 @@ feed() ->
   #feed{
     title = <<"Example Feed">>,
     author = <<"John Doe">>,
-    link = <<"">>
+    link = <<"http://example.org/">>
   }.
 
 teardown(_) ->
