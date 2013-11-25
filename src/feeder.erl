@@ -30,7 +30,6 @@ opts(stream, Opts) ->
 state(User) ->
   {undefined, undefined, undefined, User}.
 
-
 %% Event handlers
 
 start_element(E, _Attrs, ?STATE) when E =:= channel; E =:= feed ->
@@ -39,9 +38,9 @@ start_element(E, _Attrs, ?STATE) when E =:= item; E =:= entry->
   {_Chars, _Feed, #entry{}, _User};
 start_element(E, Attrs, ?STATE) when ?IS_FEED, ?RSS orelse ?ATOM ->
   {[], attribute(feed, _Feed, E, Attrs), _Entry, _User};
-start_element(E, _Attrs, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
-  {[], _Feed, _Entry, _User};
-start_element(_, _Attrs, S) ->
+start_element(E, Attrs, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
+  {[], _Feed, attribute(entry, _Entry, E, Attrs), _User};
+start_element(_, _, S) ->
   S.
 
 end_element(E, ?STATE) when E =:= channel; E =:= feed ->
@@ -83,6 +82,8 @@ attribute(feed, F, link, [{_, _, "href", L}]) ->
   update_feed(F, link, L);
 attribute(feed, F, _, _) ->
   F;
+attribute(entry, E, link, [{_, _, "href", L}]) ->
+  update_entry(E, link, L);
 attribute(entry, E, _, _) ->
   E.
 
@@ -102,10 +103,21 @@ update_feed(Feed, description, Chars)  ->
   ?UF(summary);
 update_feed(Feed, name, Chars)  ->
   ?UF(author);
+update_feed(Feed, updated, Chars)  ->
+  ?UF(updated);
+update_feed(Feed, id, Chars)  ->
+  ?UF(id);
 update_feed(Feed, _, _) ->
   Feed.
 
--define(UE(Atom), Entry#entry{Atom=iolist_to_binary(Chars)}).
+-define(UE(Atom),
+  if
+    Entry#entry.Atom =:= undefined ->
+      Entry#entry{Atom=iolist_to_binary(Chars)};
+    true ->
+      Entry
+  end).
+
 update_entry(Entry, author, Chars)  ->
   ?UE(author);
 update_entry(Entry, E, Chars) when E =:= guid; E =:= id ->
