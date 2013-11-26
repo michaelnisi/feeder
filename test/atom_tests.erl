@@ -19,12 +19,12 @@ setup() ->
 
 assert_feed({Feed, _}) ->
   Expected = feed(),
-  [?_assert(Feed =/= undefined), ?_assertMatch(Expected, Feed)].
+  [?_assertMatch(Expected, Feed)].
 
 assert_entries({_, Entries}) ->
   Expected = entries(),
   Actual = lists:reverse(Entries),
-  [?_assert(Entries =/= undefined), ?_assertMatch(Expected, Actual)].
+  [?_assertMatch(Expected, Actual)].
 
 feed() ->
   #feed{

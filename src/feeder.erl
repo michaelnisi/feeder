@@ -52,9 +52,9 @@ end_element(E, ?STATE) when E =:= item; E =:= entry ->
   UserFun({entry, _Entry}, UserState),
   {_Chars, _Feed, undefined, _User};
 end_element(E, ?STATE) when ?IS_FEED, ?RSS orelse ?ATOM ->
-  {_Chars, update_feed(_Feed, E, _Chars), _Entry, _User};
+  {_Chars, feed(_Feed, E, _Chars), _Entry, _User};
 end_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
-  {_Chars, _Feed, update_entry(_Entry, E, _Chars), _User};
+  {_Chars, _Feed, entry(_Entry, E, _Chars), _User};
 end_element(_, S) ->
   S.
 
@@ -79,11 +79,11 @@ qname({_, Name}) ->
   list_to_atom(Name).
 
 attribute(feed, F, link, [{_, _, "href", L}]) ->
-  update_feed(F, link, L);
+  feed(F, link, L);
 attribute(feed, F, _, _) ->
   F;
 attribute(entry, E, link, [{_, _, "href", L}]) ->
-  update_entry(E, link, L);
+  entry(E, link, L);
 attribute(entry, E, _, _) ->
   E.
 
@@ -95,20 +95,14 @@ attribute(entry, E, _, _) ->
       Feed
   end).
 
-update_feed(Feed, title, Chars)  ->
-  ?UF(title);
-update_feed(Feed, link, Chars)  ->
-  ?UF(link);
-update_feed(Feed, description, Chars)  ->
-  ?UF(summary);
-update_feed(Feed, name, Chars)  ->
-  ?UF(author);
-update_feed(Feed, updated, Chars)  ->
-  ?UF(updated);
-update_feed(Feed, id, Chars)  ->
-  ?UF(id);
-update_feed(Feed, _, _) ->
-  Feed.
+feed(Feed, title, Chars) -> ?UF(title);
+feed(Feed, link, Chars) -> ?UF(link);
+feed(Feed, description, Chars) -> ?UF(summary);
+feed(Feed, name, Chars) -> ?UF(author);
+feed(Feed, updated, Chars) -> ?UF(updated);
+feed(Feed, pubDate, Chars) -> ?UF(updated);
+feed(Feed, id, Chars) -> ?UF(id);
+feed(Feed, _, _) -> Feed.
 
 -define(UE(Atom),
   if
@@ -118,20 +112,14 @@ update_feed(Feed, _, _) ->
       Entry
   end).
 
-update_entry(Entry, author, Chars)  ->
-  ?UE(author);
-update_entry(Entry, E, Chars) when E =:= guid; E =:= id ->
-  ?UE(id);
-update_entry(Entry,link, Chars) ->
-  ?UE(link);
-update_entry(Entry, subtitle, Chars) ->
-  ?UE(subtitle);
-update_entry(Entry, E, Chars) when E =:= description; E =:= summary ->
-  ?UE(summary);
-update_entry(Entry, title, Chars) ->
-  ?UE(title);
-update_entry(Entry, E, Chars) when E =:= pubDate; E =:= updated ->
-  ?UE(updated);
-update_entry(Entry, _, _) ->
-  Entry.
+entry(Entry, author, Chars) -> ?UE(author);
+entry(Entry, E, Chars) when E =:= guid; E =:= id -> ?UE(id);
+entry(Entry,link, Chars) -> ?UE(link);
+entry(Entry, subtitle, Chars) -> ?UE(subtitle);
+entry(Entry, description, Chars) -> ?UE(summary);
+entry(Entry, summary, Chars) -> ?UE(summary);
+entry(Entry, title, Chars) -> ?UE(title);
+entry(Entry, pubDate, Chars) -> ?UE(updated);
+entry(Entry, updated, Chars) -> ?UE(updated);
+entry(Entry, _, _) -> Entry.
 

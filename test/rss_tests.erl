@@ -17,16 +17,22 @@ rss_test_() ->
 setup() ->
   util:file("../test/rss.xml").
 
-assert_feed({Feed, _}) -> [
-  ?_assert(Feed =/= undefined)
-, ?_assertEqual(<<"Liftoff News">>, Feed#feed.title)
-, ?_assertEqual(<<"Liftoff to Space Exploration.">>, Feed#feed.summary)
-].
+assert_feed({Feed, _}) ->
+  Expected = feed(),
+  [?_assertMatch(Expected, Feed)].
 
 assert_entries({_, Entries}) ->
   Expected = entries(),
   Actual = lists:reverse(Entries),
-  [?_assert(Entries =/= undefined), ?_assertMatch(Expected, Actual)].
+  [?_assertMatch(Expected, Actual)].
+
+feed() ->
+  #feed{
+    title = <<"Liftoff News">>,
+    summary = <<"Liftoff to Space Exploration.">>,
+    link = <<"http://liftoff.msfc.nasa.gov/">>,
+    updated = <<"Tue, 10 Jun 2003 04:00:00 GMT">>
+  }.
 
 entries() ->
   [#entry{

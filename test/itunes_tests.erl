@@ -21,7 +21,7 @@ setup() ->
 
 assert_feed({Feed, _}) ->
   Expected = expected(itunes, feed),
-  [?_assert(Feed =/= undefined), ?_assertMatch(Expected, Feed)].
+  [?_assertMatch(Expected, Feed)].
 
 assert_entries({_, Entries}) ->
   [?_assert(Entries =/= undefined)].
