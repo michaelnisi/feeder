@@ -32,13 +32,30 @@ state(User) ->
 
 %% Event handlers
 
+-define(STATE, {_Chars, _Feed, _Entry, _User}).
+-define(FEED, _Feed =/= undefined, _Entry =:= undefined).
+-define(ENTRY, _Entry =/= undefined).
+-define(ELEMENT,
+  E =:= title orelse
+  E =:= link orelse
+  E =:= description orelse
+  E =:= language orelse
+  E =:= pubDate orelse
+  E =:= guid orelse
+  E =:= updated orelse
+  E =:= name orelse
+  E =:= summary orelse
+  E =:= id orelse
+  E =:= author
+).
+
 start_element(E, _Attrs, ?STATE) when E =:= channel; E =:= feed ->
   {_Chars, #feed{}, _Entry, _User};
 start_element(E, _Attrs, ?STATE) when E =:= item; E =:= entry->
   {_Chars, _Feed, #entry{}, _User};
-start_element(E, Attrs, ?STATE) when ?IS_FEED, ?RSS orelse ?ATOM ->
+start_element(E, Attrs, ?STATE) when ?FEED, ?ELEMENT ->
   {[], attribute(feed, _Feed, E, Attrs), _Entry, _User};
-start_element(E, Attrs, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
+start_element(E, Attrs, ?STATE) when ?ENTRY, ?ELEMENT ->
   {[], _Feed, attribute(entry, _Entry, E, Attrs), _User};
 start_element(_, _, S) ->
   S.
@@ -51,9 +68,9 @@ end_element(E, ?STATE) when E =:= item; E =:= entry ->
   {UserState, UserFun} = _User,
   UserFun({entry, _Entry}, UserState),
   {_Chars, _Feed, undefined, _User};
-end_element(E, ?STATE) when ?IS_FEED, ?RSS orelse ?ATOM ->
+end_element(E, ?STATE) when ?FEED, ?ELEMENT ->
   {_Chars, feed(_Feed, E, _Chars), _Entry, _User};
-end_element(E, ?STATE) when ?IS_ENTRY, ?RSS orelse ?ATOM ->
+end_element(E, ?STATE) when ?ENTRY, ?ELEMENT->
   {_Chars, _Feed, entry(_Entry, E, _Chars), _User};
 end_element(_, S) ->
   S.
@@ -113,8 +130,9 @@ feed(Feed, _, _) -> Feed.
   end).
 
 entry(Entry, author, Chars) -> ?UE(author);
-entry(Entry, E, Chars) when E =:= guid; E =:= id -> ?UE(id);
-entry(Entry,link, Chars) -> ?UE(link);
+entry(Entry, id, Chars) -> ?UE(id);
+entry(Entry, guid, Chars) -> ?UE(id);
+entry(Entry, link, Chars) -> ?UE(link);
 entry(Entry, subtitle, Chars) -> ?UE(subtitle);
 entry(Entry, description, Chars) -> ?UE(summary);
 entry(Entry, summary, Chars) -> ?UE(summary);
