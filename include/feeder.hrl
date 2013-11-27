@@ -1,6 +1,4 @@
 
--include_lib("eunit/include/eunit.hrl").
-
 -record(feed, {
     author,
     copyright,
@@ -26,4 +24,10 @@
     summary,
     title,
     updated
+  }).
+
+-record(enclosure, {
+    url,
+    length,
+    type
   }).

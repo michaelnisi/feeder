@@ -39,24 +39,42 @@ entries() ->
   [
     #entry{
       title = <<"Shake Shake Shake Your Spices">>,
+      subtitle = <<"A short primer on table spices">>,
       author = <<"John Doe">>,
       summary = <<"This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!">>,
       updated = <<"Wed, 15 Jun 2005 19:00:00 GMT">>,
-      id = <<"http://example.com/podcasts/archive/aae20050615.m4a">>
+      id = <<"http://example.com/podcasts/archive/aae20050615.m4a">>,
+      enclosure = #enclosure{
+        url = <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a">>,
+        length = <<"8727310">>,
+        type = <<"audio/x-m4a">>
+      }
     },
     #entry{
       title = <<"Socket Wrench Shootout">>,
+      subtitle = <<"Comparing socket wrenches is fun!">>,
       author = <<"Jane Doe">>,
       summary = <<"This week we talk about metric vs. old english socket wrenches. Which one is better? Do you really need both? Get all of your answers here.">>,
       updated = <<"Wed, 8 Jun 2005 19:00:00 GMT">>,
-      id = <<"http://example.com/podcasts/archive/aae20050608.mp3">>
+      id = <<"http://example.com/podcasts/archive/aae20050608.mp3">>,
+      enclosure = #enclosure{
+        url = <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode2.mp3">>,
+        length = <<"5650889">>,
+        type = <<"audio/mpeg">>
+      }
     },
     #entry{
       title = <<"Red, Whine, & Blue">>,
+      subtitle = <<"Red + Blue != Purple">>,
       author = <<"Various">>,
       summary = <<"This week we talk about surviving in a Red state if you are a Blue person. Or vice versa.">>,
       updated = <<"Wed, 1 Jun 2005 19:00:00 GMT">>,
-      id = <<"http://example.com/podcasts/archive/aae20050601.mp3">>
+      id = <<"http://example.com/podcasts/archive/aae20050601.mp3">>,
+      enclosure = #enclosure{
+        url = <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode1.mp3">>,
+        length = <<"4989537">>,
+        type = <<"audio/mpeg">>
+      }
     }
   ].
 

@@ -4,6 +4,8 @@
 -module(feeder).
 -export([file/2, stream/2]).
 
+-export([feed/3, entry/3, enclosure/1]).
+
 -include("../include/feeder.hrl").
 
 %% API
@@ -37,16 +39,18 @@ state(User) ->
 -define(ENTRY, _Entry =/= undefined).
 -define(ELEMENT,
   E =:= title orelse
-  E =:= link orelse
+  E =:= subtitle orelse
   E =:= description orelse
+  E =:= summary orelse
+  E =:= link orelse
   E =:= language orelse
   E =:= pubDate orelse
-  E =:= guid orelse
   E =:= updated orelse
-  E =:= name orelse
-  E =:= summary orelse
+  E =:= guid orelse
   E =:= id orelse
-  E =:= author
+  E =:= name orelse
+  E =:= author orelse
+  E =:= enclosure
 ).
 
 start_element(E, _Attrs, ?STATE) when E =:= channel; E =:= feed ->
@@ -101,43 +105,58 @@ attribute(feed, F, _, _) ->
   F;
 attribute(entry, E, link, [{_, _, "href", L}]) ->
   entry(E, link, L);
+attribute(entry, Entry, enclosure, Attrs) ->
+  Entry#entry{enclosure=enclosure(Attrs)};
 attribute(entry, E, _, _) ->
   E.
 
+enclosure(Attrs) ->
+  enclosure(#enclosure{}, Attrs).
+
+enclosure(E, [H|T]) ->
+  {_, _, K, V} = H,
+  enclosure(update_enclosure(E, list_to_atom(K), list_to_binary(V)), T);
+enclosure(E, []) ->
+  E.
+
+update_enclosure(E, url, V) -> E#enclosure{url=V};
+update_enclosure(E, length, V) -> E#enclosure{length=V};
+update_enclosure(E, type, V) -> E#enclosure{type=V};
+update_enclosure(E, _, _) -> E. % defensive
+
 -define(UF(Atom),
   if
-    Feed#feed.Atom =:= undefined ->
-      Feed#feed{Atom=iolist_to_binary(Chars)};
+    F#feed.Atom =:= undefined ->
+      F#feed{Atom=iolist_to_binary(L)};
     true ->
-      Feed
+      F
   end).
 
-feed(Feed, title, Chars) -> ?UF(title);
-feed(Feed, link, Chars) -> ?UF(link);
-feed(Feed, description, Chars) -> ?UF(summary);
-feed(Feed, name, Chars) -> ?UF(author);
-feed(Feed, updated, Chars) -> ?UF(updated);
-feed(Feed, pubDate, Chars) -> ?UF(updated);
-feed(Feed, id, Chars) -> ?UF(id);
-feed(Feed, _, _) -> Feed.
+feed(F, title, L) -> ?UF(title);
+feed(F, link, L) -> ?UF(link);
+feed(F, description, L) -> ?UF(summary);
+feed(F, name, L) -> ?UF(author);
+feed(F, updated, L) -> ?UF(updated);
+feed(F, pubDate, L) -> ?UF(updated);
+feed(F, id, L) -> ?UF(id);
+feed(F, _, _) -> F. % defensive
 
 -define(UE(Atom),
   if
-    Entry#entry.Atom =:= undefined ->
-      Entry#entry{Atom=iolist_to_binary(Chars)};
+    E#entry.Atom =:= undefined ->
+      E#entry{Atom=iolist_to_binary(L)};
     true ->
-      Entry
+      E
   end).
 
-entry(Entry, author, Chars) -> ?UE(author);
-entry(Entry, id, Chars) -> ?UE(id);
-entry(Entry, guid, Chars) -> ?UE(id);
-entry(Entry, link, Chars) -> ?UE(link);
-entry(Entry, subtitle, Chars) -> ?UE(subtitle);
-entry(Entry, description, Chars) -> ?UE(summary);
-entry(Entry, summary, Chars) -> ?UE(summary);
-entry(Entry, title, Chars) -> ?UE(title);
-entry(Entry, pubDate, Chars) -> ?UE(updated);
-entry(Entry, updated, Chars) -> ?UE(updated);
-entry(Entry, _, _) -> Entry.
-
+entry(E, author, L) -> ?UE(author);
+entry(E, id, L) -> ?UE(id);
+entry(E, guid, L) -> ?UE(id);
+entry(E, link, L) -> ?UE(link);
+entry(E, subtitle, L) -> ?UE(subtitle);
+entry(E, description, L) -> ?UE(summary);
+entry(E, summary, L) -> ?UE(summary);
+entry(E, title, L) -> ?UE(title);
+entry(E, pubDate, L) -> ?UE(updated);
+entry(E, updated, L) -> ?UE(updated);
+entry(E, _, _) -> E. % defensive
