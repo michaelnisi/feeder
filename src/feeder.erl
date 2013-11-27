@@ -4,8 +4,6 @@
 -module(feeder).
 -export([file/2, stream/2]).
 
--export([feed/3, entry/3, enclosure/1]).
-
 -include("../include/feeder.hrl").
 
 %% API
@@ -86,7 +84,7 @@ event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
 event({endElement, _, _LocalName, QName}, _, S) ->
   end_element(qname(QName), S);
 event({characters, C}, _, ?STATE) ->
-  {[_Chars, C], _Feed, _Entry, _User};
+  {[_Chars, trim(C)], _Feed, _Entry, _User};
 event(endDocument, _, S) ->
   {_, _, _, {UserState, UserFun}} = S,
   UserFun(endFeed, UserState),
@@ -99,6 +97,9 @@ event(_, _, S) ->
 qname({_, Name}) ->
   list_to_atom(Name).
 
+trim(Chars) ->
+  [C || C <- Chars, C =< 255].
+
 attribute(feed, F, link, [{_, _, "href", L}]) ->
   feed(F, link, L);
 attribute(feed, F, _, _) ->
@@ -110,20 +111,6 @@ attribute(entry, Entry, enclosure, Attrs) ->
 attribute(entry, E, _, _) ->
   E.
 
-enclosure(Attrs) ->
-  enclosure(#enclosure{}, Attrs).
-
-enclosure(E, [H|T]) ->
-  {_, _, K, V} = H,
-  enclosure(update_enclosure(E, list_to_atom(K), list_to_binary(V)), T);
-enclosure(E, []) ->
-  E.
-
-update_enclosure(E, url, V) -> E#enclosure{url=V};
-update_enclosure(E, length, V) -> E#enclosure{length=V};
-update_enclosure(E, type, V) -> E#enclosure{type=V};
-update_enclosure(E, _, _) -> E. % defensive
-
 -define(UF(Atom),
   if
     F#feed.Atom =:= undefined ->
@@ -133,6 +120,7 @@ update_enclosure(E, _, _) -> E. % defensive
   end).
 
 feed(F, title, L) -> ?UF(title);
+feed(F, subtitle, L) -> ?UF(subtitle);
 feed(F, link, L) -> ?UF(link);
 feed(F, description, L) -> ?UF(summary);
 feed(F, name, L) -> ?UF(author);
@@ -160,3 +148,18 @@ entry(E, title, L) -> ?UE(title);
 entry(E, pubDate, L) -> ?UE(updated);
 entry(E, updated, L) -> ?UE(updated);
 entry(E, _, _) -> E. % defensive
+
+enclosure(Attrs) ->
+  enc(#enclosure{}, Attrs).
+
+enc(E, [H|T]) ->
+  {_, _, K, V} = H,
+  enc(enc(E, list_to_atom(K), list_to_binary(V)), T);
+enc(E, []) ->
+  E.
+
+enc(E, url, V) -> E#enclosure{url=V};
+enc(E, length, V) -> E#enclosure{length=V};
+enc(E, type, V) -> E#enclosure{type=V};
+enc(E, _, _) -> E. % defensive
+

@@ -30,6 +30,7 @@ assert_entries({_, Entries}) ->
 feed() ->
   #feed{
     title = <<"All About Everything">>,
+    subtitle = <<"A show about everything">>,
     author = <<"John Doe">>,
     link = <<"http://www.example.com/podcasts/everything/index.html">>,
     summary = <<"All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Store">>
