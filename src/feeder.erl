@@ -5,6 +5,7 @@
 -export([file/2, stream/2]).
 
 -include("../include/feeder.hrl").
+-include_lib("eunit/include/eunit.hrl").
 
 %% API
 
@@ -35,44 +36,33 @@ state(User) ->
 -define(STATE, {_Chars, _Feed, _Entry, _User}).
 -define(FEED, _Feed =/= undefined, _Entry =:= undefined).
 -define(ENTRY, _Entry =/= undefined).
--define(ELEMENT,
-  E =:= title orelse
-  E =:= subtitle orelse
-  E =:= description orelse
-  E =:= summary orelse
-  E =:= link orelse
-  E =:= language orelse
-  E =:= pubDate orelse
-  E =:= updated orelse
-  E =:= guid orelse
-  E =:= id orelse
-  E =:= name orelse
-  E =:= author orelse
-  E =:= enclosure
-).
 
-start_element(E, _Attrs, ?STATE) when E =:= channel; E =:= feed ->
+start_element(undefined, _, S) ->
+  S;
+start_element(feed, _Attrs, ?STATE) ->
   {_Chars, #feed{}, _Entry, _User};
-start_element(E, _Attrs, ?STATE) when E =:= item; E =:= entry->
+start_element(entry, _Attrs, ?STATE) ->
   {_Chars, _Feed, #entry{}, _User};
-start_element(E, Attrs, ?STATE) when ?FEED, ?ELEMENT ->
+start_element(E, Attrs, ?STATE) when ?FEED ->
   {[], attribute(feed, _Feed, E, Attrs), _Entry, _User};
-start_element(E, Attrs, ?STATE) when ?ENTRY, ?ELEMENT ->
+start_element(E, Attrs, ?STATE) when ?ENTRY ->
   {[], _Feed, attribute(entry, _Entry, E, Attrs), _User};
 start_element(_, _, S) ->
   S.
 
-end_element(E, ?STATE) when E =:= channel; E =:= feed ->
+end_element(undefined, S) ->
+  S;
+end_element(feed, ?STATE) ->
   {UserState, UserFun} = _User,
   UserFun({feed, _Feed}, UserState),
   {_Chars, undefined, _Entry, _User};
-end_element(E, ?STATE) when E =:= item; E =:= entry ->
+end_element(entry, ?STATE) ->
   {UserState, UserFun} = _User,
   UserFun({entry, _Entry}, UserState),
   {_Chars, _Feed, undefined, _User};
-end_element(E, ?STATE) when ?FEED, ?ELEMENT ->
+end_element(E, ?STATE) when ?FEED ->
   {_Chars, feed(_Feed, E, _Chars), _Entry, _User};
-end_element(E, ?STATE) when ?ENTRY, ?ELEMENT->
+end_element(E, ?STATE) when ?ENTRY ->
   {_Chars, _Feed, entry(_Entry, E, _Chars), _User};
 end_element(_, S) ->
   S.
@@ -94,8 +84,23 @@ event(_, _, S) ->
 
 %% Internal funs
 
-qname({_, Name}) ->
-  list_to_atom(Name).
+qname({_, "channel"}) -> feed;
+qname({_, "feed"}) -> feed;
+qname({_, "item"}) -> entry;
+qname({_, "entry"}) -> entry;
+qname({_, "title"}) -> title;
+qname({_, "subtitle"}) -> subtitle;
+qname({_, "description"}) -> summary;
+qname({_, "summary"}) -> summary;
+qname({_, "link"}) -> link;
+qname({_, "pubDate"}) -> updated;
+qname({_, "updated"}) -> updated;
+qname({_, "guid"}) -> id;
+qname({_, "id"}) -> id;
+qname({_, "name"}) -> name;
+qname({_, "author"}) -> author;
+qname({_, "enclosure"}) -> enclosure;
+qname({_, _}) -> undefined.
 
 trim(S) ->
   Bin = unicode:characters_to_binary(S, utf8),
@@ -124,12 +129,11 @@ attribute(entry, E, _, _) ->
 feed(F, title, L) -> ?UF(title);
 feed(F, subtitle, L) -> ?UF(subtitle);
 feed(F, link, L) -> ?UF(link);
-feed(F, description, L) -> ?UF(summary);
+feed(F, summary, L) -> ?UF(summary);
 feed(F, name, L) -> ?UF(author);
+feed(F, author, L) -> ?UF(author);
 feed(F, updated, L) -> ?UF(updated);
-feed(F, pubDate, L) -> ?UF(updated);
-feed(F, id, L) -> ?UF(id);
-feed(F, _, _) -> F. % defensive
+feed(F, id, L) -> ?UF(id).
 
 -define(UE(Atom),
   if
@@ -141,15 +145,12 @@ feed(F, _, _) -> F. % defensive
 
 entry(E, author, L) -> ?UE(author);
 entry(E, id, L) -> ?UE(id);
-entry(E, guid, L) -> ?UE(id);
 entry(E, link, L) -> ?UE(link);
 entry(E, subtitle, L) -> ?UE(subtitle);
-entry(E, description, L) -> ?UE(summary);
 entry(E, summary, L) -> ?UE(summary);
 entry(E, title, L) -> ?UE(title);
-entry(E, pubDate, L) -> ?UE(updated);
 entry(E, updated, L) -> ?UE(updated);
-entry(E, _, _) -> E. % defensive
+entry(E, enclosure, _L) -> E.
 
 enclosure(Attrs) ->
   enc(#enclosure{}, Attrs).

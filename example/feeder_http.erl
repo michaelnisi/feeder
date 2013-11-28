@@ -12,7 +12,8 @@ url(Url) ->
   after
     3000 ->
       {error, timeout}
-  end.
+  end,
+  ok.
 
 resume(Pid) ->
   httpc:stream_next(Pid),
@@ -29,7 +30,6 @@ feeder_opts(Pid) ->
    {continuation_state, Pid}, {continuation_fun, fun resume/1}].
 
 event({entry, Entry}, S) ->
-  io:format("~p~n", [Entry]),
   S;
 event({feed, _Feed}, S) ->
   S;
