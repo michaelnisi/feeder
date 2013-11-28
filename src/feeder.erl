@@ -5,7 +5,6 @@
 -export([file/2, stream/2]).
 
 -include("../include/feeder.hrl").
--include_lib("eunit/include/eunit.hrl").
 
 %% API
 
@@ -15,55 +14,64 @@ file(Filename, Opts) ->
 stream(Xml, Opts) ->
   xmerl_sax_parser:stream(Xml, opts(stream, Opts)).
 
-%% State
+%% Setup
+
+-record(state, {
+    chars,
+    feed,
+    entry,
+    user
+  }).
 
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
   UserFun = proplists:get_value(event_fun, Opts),
   User = {UserState, UserFun},
-  [{event_state, state(User)}, {event_fun, fun event/3}];
+  [{event_state, #state{user=User}}, {event_fun, fun event/3}];
 opts(stream, Opts) ->
   ContinuationState = proplists:get_value(continuation_state, Opts),
   ContinuationFun = proplists:get_value(continuation_fun, Opts),
   [{continuation_state, ContinuationState},
    {continuation_fun, ContinuationFun}] ++ opts(file, Opts).
 
-state(User) ->
-  {undefined, undefined, undefined, User}.
-
 %% Event handlers
 
--define(STATE, {_Chars, _Feed, _Entry, _User}).
--define(FEED, _Feed =/= undefined, _Entry =:= undefined).
--define(ENTRY, _Entry =/= undefined).
+-define(FEED, State#state.feed =/= undefined,
+              State#state.entry =:= undefined).
+
+-define(ENTRY, State#state.entry =/= undefined).
 
 start_element(undefined, _, S) ->
   S;
-start_element(feed, _Attrs, ?STATE) ->
-  {_Chars, #feed{}, _Entry, _User};
-start_element(entry, _Attrs, ?STATE) ->
-  {_Chars, _Feed, #entry{}, _User};
-start_element(E, Attrs, ?STATE) when ?FEED ->
-  {[], attribute(feed, _Feed, E, Attrs), _Entry, _User};
-start_element(E, Attrs, ?STATE) when ?ENTRY ->
-  {[], _Feed, attribute(entry, _Entry, E, Attrs), _User};
+start_element(feed, _Attrs, State) ->
+  State#state{feed=#feed{}};
+start_element(entry, _Attrs, State) ->
+  State#state{entry=#entry{}};
+start_element(E, Attrs, State) when ?FEED ->
+  Feed = attribute(feed, State#state.feed, E, Attrs),
+  State#state{chars=[], feed=Feed};
+start_element(E, Attrs, State) when ?ENTRY ->
+  Entry = attribute(entry, State#state.entry, E, Attrs),
+  State#state{chars=[], entry=Entry};
 start_element(_, _, S) ->
   S.
 
 end_element(undefined, S) ->
   S;
-end_element(feed, ?STATE) ->
-  {UserState, UserFun} = _User,
-  UserFun({feed, _Feed}, UserState),
-  {_Chars, undefined, _Entry, _User};
-end_element(entry, ?STATE) ->
-  {UserState, UserFun} = _User,
-  UserFun({entry, _Entry}, UserState),
-  {_Chars, _Feed, undefined, _User};
-end_element(E, ?STATE) when ?FEED ->
-  {_Chars, feed(_Feed, E, _Chars), _Entry, _User};
-end_element(E, ?STATE) when ?ENTRY ->
-  {_Chars, _Feed, entry(_Entry, E, _Chars), _User};
+end_element(feed, State) ->
+  {UserState, UserFun} = State#state.user,
+  UserFun({feed, State#state.feed}, UserState),
+  State#state{feed=undefined};
+end_element(entry, State) ->
+  {UserState, UserFun} = State#state.user,
+  UserFun({entry, State#state.entry}, UserState),
+  State#state{entry=undefined};
+end_element(E, State) when ?FEED ->
+  Feed = feed(State#state.feed, E, State#state.chars),
+  State#state{feed=Feed};
+end_element(E, State) when ?ENTRY ->
+  Entry = entry(State#state.entry, E, State#state.chars),
+  State#state{entry=Entry};
 end_element(_, S) ->
   S.
 
@@ -73,10 +81,10 @@ event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
   start_element(qname(QName), Attrs, S);
 event({endElement, _, _LocalName, QName}, _, S) ->
   end_element(qname(QName), S);
-event({characters, C}, _, ?STATE) ->
-  {[_Chars, C], _Feed, _Entry, _User};
+event({characters, C}, _, S) ->
+  S#state{chars=[S#state.chars, C]};
 event(endDocument, _, S) ->
-  {_, _, _, {UserState, UserFun}} = S,
+  {UserState, UserFun} = S#state.user,
   UserFun(endFeed, UserState),
   S;
 event(_, _, S) ->
@@ -165,4 +173,3 @@ enc(E, url, V) -> E#enclosure{url=V};
 enc(E, length, V) -> E#enclosure{length=V};
 enc(E, type, V) -> E#enclosure{type=V};
 enc(E, _, _) -> E. % defensive
-
