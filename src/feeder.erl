@@ -84,7 +84,7 @@ event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
 event({endElement, _, _LocalName, QName}, _, S) ->
   end_element(qname(QName), S);
 event({characters, C}, _, ?STATE) ->
-  {[_Chars, trim(C)], _Feed, _Entry, _User};
+  {[_Chars, C], _Feed, _Entry, _User};
 event(endDocument, _, S) ->
   {_, _, _, {UserState, UserFun}} = S,
   UserFun(endFeed, UserState),
@@ -97,8 +97,10 @@ event(_, _, S) ->
 qname({_, Name}) ->
   list_to_atom(Name).
 
-trim(Chars) ->
-  [C || C <- Chars, C =< 255].
+trim(S) ->
+  Bin = unicode:characters_to_binary(S, utf8),
+  RE = "^[ \t\n\r]+|[ \t\n\r]+$",
+  re:replace(Bin, RE, "", [global, {return, binary}]).
 
 attribute(feed, F, link, [{_, _, "href", L}]) ->
   feed(F, link, L);
@@ -114,7 +116,7 @@ attribute(entry, E, _, _) ->
 -define(UF(Atom),
   if
     F#feed.Atom =:= undefined ->
-      F#feed{Atom=iolist_to_binary(L)};
+      F#feed{Atom=trim(L)};
     true ->
       F
   end).
@@ -132,7 +134,7 @@ feed(F, _, _) -> F. % defensive
 -define(UE(Atom),
   if
     E#entry.Atom =:= undefined ->
-      E#entry{Atom=iolist_to_binary(L)};
+      E#entry{Atom=trim(L)};
     true ->
       E
   end).

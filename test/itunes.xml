@@ -44,7 +44,9 @@
 
             <itunes:author>John Doe</itunes:author>
 
-            <itunes:subtitle>A short primer on table spices</itunes:subtitle>
+            <itunes:subtitle>
+                Rückblicke, Einblicke und Ausblicke auf das netzpolitische Geschehen als wöchentlicher Podcast
+        </itunes:subtitle>
 
             <itunes:summary>This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!</itunes:summary>
 

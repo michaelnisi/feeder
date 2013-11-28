@@ -10,8 +10,8 @@ itunes_test_() ->
      fun setup/0,
      fun teardown/1,
      fun (D) ->
-       [assert_feed(D),
-        assert_entries(D)]
+       [feed(D),
+        entries(D)]
      end}}.
 
 %% Details
@@ -19,15 +19,15 @@ itunes_test_() ->
 setup() ->
   util:file("../test/itunes.xml").
 
-assert_feed({Feed, _}) ->
-  Expected = feed(),
+feed({Feed, _}) ->
+  Expected = expected_feed(),
   [?_assertMatch(Expected, Feed)].
 
-assert_entries({_, Entries}) ->
-  Expected = entries(),
+entries({_, Entries}) ->
+  Expected = expected_entries(),
   [?_assertMatch(Expected, lists:reverse(Entries))].
 
-feed() ->
+expected_feed() ->
   #feed{
     title = <<"All About Everything">>,
     subtitle = <<"A show about everything">>,
@@ -36,11 +36,11 @@ feed() ->
     summary = <<"All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Store">>
   }.
 
-entries() ->
+expected_entries() ->
   [
     #entry{
       title = <<"Shake Shake Shake Your Spices">>,
-      subtitle = <<"A short primer on table spices">>,
+      subtitle = <<"Rückblicke, Einblicke und Ausblicke auf das netzpolitische Geschehen als wöchentlicher Podcast">>,
       author = <<"John Doe">>,
       summary = <<"This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!">>,
       updated = <<"Wed, 15 Jun 2005 19:00:00 GMT">>,
