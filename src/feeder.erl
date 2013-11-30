@@ -16,12 +16,7 @@ stream(Xml, Opts) ->
 
 %% Setup
 
--record(state, {
-    chars,
-    feed,
-    entry,
-    user
-  }).
+-record(state, {chars, feed, entry, user}).
 
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
@@ -36,10 +31,12 @@ opts(stream, Opts) ->
 
 %% Event handlers
 
--define(FEED, State#state.feed =/= undefined,
-              State#state.entry =:= undefined).
+-define(FEED,
+  State#state.feed =/= undefined,
+  State#state.entry =:= undefined).
 
--define(ENTRY, State#state.entry =/= undefined).
+-define(ENTRY,
+  State#state.entry =/= undefined).
 
 start_element(undefined, _, S) ->
   S;
