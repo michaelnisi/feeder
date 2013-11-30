@@ -1,5 +1,5 @@
 
-%% feed - consume xml feed
+%% feeder_httpc - stream feeds over http
 
 -module(feeder_httpc).
 -export([start_link/0, stop/0, request/1]).
