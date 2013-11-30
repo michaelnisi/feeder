@@ -2,9 +2,7 @@
 %% feed - consume xml feed
 
 -module(feed).
--export([start_link/0, stop/0, parse/1, feed/0, entries/0]).
-
--export([set_feed/1, add_entry/1]).
+-export([start_link/0, stop/0, parse/1]).
 
 -behaviour(gen_server).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
@@ -12,42 +10,23 @@
 
 -define(SERVER, ?MODULE).
 
--record(state, {url, feed, entries=[]}).
-
 % public
 
 start_link() -> gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 parse(Url) -> gen_server:call(?SERVER, {parse, Url}).
-feed() -> gen_server:call(?SERVER, feed).
-entries() -> gen_server:call(?SERVER, entries).
 stop() -> gen_server:cast(?SERVER, stop).
-
-% private
-
-set_feed(F) -> gen_server:cast(?SERVER, {set_feed, F}).
-add_entry(E) -> gen_server:cast(?SERVER, {add_entry, E}).
 
 % callback functions
 
 init([]) ->
-  {ok, #state{}}.
+  {ok, []}.
 
-handle_call({parse, Url}, From, _State) ->
+handle_call({parse, Url}, From, State) ->
   request(Url, From),
-  {reply, ok, #state{url=Url}}; % new state
-handle_call(feed, _From, State) ->
-  {reply, State#state.feed, State};
-handle_call(entries, _From, State) ->
-  {reply, State#state.entries, State}.
+  {reply, ok, State}.
 
 handle_cast(stop, State) ->
   {stop, normal, State};
-handle_cast({set_feed, Feed}, State) ->
-  {noreply, State#state{feed=Feed}};
-handle_cast({add_entry, Entry}, State) ->
-  Entries = [Entry|State#state.entries],
-  {noreply, State#state{entries=Entries}};
-
 handle_cast(_Msg, State) ->
   {noreply, State}.
 
