@@ -17,6 +17,7 @@
 %% ===================================================================
 
 start_link() ->
+
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ===================================================================
@@ -24,5 +25,13 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, []} }.
+  FeederSpec = {
+    feeder_httpc,
+    {feeder_httpc, start_link, []},
+    permanent,
+    5000,
+    worker,
+    [feeder_httpc]},
+
+  {ok, { {one_for_one, 5, 10}, [FeederSpec]} }.
 

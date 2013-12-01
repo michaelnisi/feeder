@@ -1,7 +1,7 @@
 
-%% feeder - parse RSS and Atom feeds
+%% feeder_parser - parse RSS and Atom formatted XML feeds
 
--module(feeder).
+-module(feeder_parser).
 -export([file/2, stream/2]).
 
 -include("../include/feeder.hrl").

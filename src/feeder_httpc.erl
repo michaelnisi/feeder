@@ -22,8 +22,7 @@ init([]) ->
   {ok, []}.
 
 handle_call({request, Url}, From, State) ->
-  httpc_request(Url, From),
-  {reply, ok, State}.
+  {reply, httpc_request(Url, From), State}.
 
 handle_cast(stop, State) ->
   {stop, normal, State}.
@@ -49,7 +48,8 @@ httpc_request(Url, {From, _}) ->
   receive
     {http, {_RequestId, stream_start, _Headers, Pid}} ->
       CS = #c_state{pid=Pid, from=From},
-      resume(CS)
+      resume(CS),
+      ok
   after
     3000 ->
       {error, timeout}
@@ -65,7 +65,7 @@ event_fun(endFeed, From) ->
   From ! endFeed,
   From.
 
-feeder_opts(CS) ->
+parser_opts(CS) ->
   [{event_state, CS#c_state.from}, {event_fun, fun event_fun/2},
    {continuation_state, CS}, {continuation_fun, fun resume/1}].
 
@@ -77,9 +77,9 @@ resume(CS) ->
         CS#c_state.started ->
           {BinBodyPart, CS};
         true ->
-          feeder:stream(BinBodyPart, feeder_opts(CS)),
+          feeder_parser:stream(BinBodyPart, parser_opts(CS)),
           {BinBodyPart, CS#c_state{started=true}}
         end;
     {http, {_RequestId, stream_end, _Headers}} ->
-      {<<"">>, CS}
+      {<<>>, CS}
   end.

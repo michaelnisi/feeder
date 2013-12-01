@@ -10,11 +10,11 @@ is([AH|AT], [BH|BT]) ->
   is(AT, BT).
 
 file(Filename) ->
-  {ok, _EventState, _Rest} = feeder:file(Filename, opts()),
+  {ok, _EventState, _Rest} = feeder_parser:file(Filename, opts()),
   loop({{}, []}).
 
 stream(Chunk) ->
-  feeder:stream(Chunk, opts()),
+  feeder_parser:stream(Chunk, opts()),
   loop({{}, []}).
 
 opts() ->

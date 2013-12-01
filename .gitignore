@@ -1,5 +1,6 @@
 *.app
 *.beam
+*.dump
 *.o
 *.so
 .eunit

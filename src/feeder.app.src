@@ -1,11 +1,12 @@
 {application, feeder,
  [
-  {description, ""},
+  {description, "event-based feed parsing over http"},
   {vsn, "1"},
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  inets
                  ]},
   {mod, { feeder_app, []}},
   {env, []}
