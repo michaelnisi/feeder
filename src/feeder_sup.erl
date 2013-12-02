@@ -25,13 +25,15 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
+  RestartStrategy = {one_for_one, 5, 10},
   FeederSpec = {
     feeder_httpc,
     {feeder_httpc, start_link, []},
     permanent,
     5000,
     worker,
-    [feeder_httpc]},
-
-  {ok, { {one_for_one, 5, 10}, [FeederSpec]} }.
+    [feeder_httpc]
+  },
+  Children = [FeederSpec],
+  {ok, {RestartStrategy, Children}}.
 

@@ -75,7 +75,6 @@ end_element(_, S) ->
 %% SAX events
 
 event(startDocument, _, S) ->
-  io:format("startDocument~n"),
   S;
 event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
   start_element(qname(QName), Attrs, S);
@@ -84,15 +83,9 @@ event({endElement, _, _LocalName, QName}, _, S) ->
 event({characters, C}, _, S) ->
   S#state{chars=[S#state.chars, C]};
 event(endDocument, _, S) ->
-  if
-    S#state.ended ->
-      S;
-    true ->
-      io:format("** xxx~n"),
-      {UserState, UserFun} = S#state.user,
-      UserFun(endFeed, UserState),
-      S#state{ended=true}
-  end;
+  {UserState, UserFun} = S#state.user,
+  UserFun(endFeed, UserState),
+  S#state{ended=true};
 event(_, _, S) ->
   S.
 

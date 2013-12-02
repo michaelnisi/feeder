@@ -8,6 +8,8 @@
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
          terminate/2, code_change/3]).
 
+-record(sstate, {pid, from, started=false, ended=false, id}).
+
 -define(SERVER, ?MODULE).
 
 %% API
@@ -22,12 +24,20 @@ init([]) ->
   {ok, []}.
 
 handle_call({request, Url}, {Pid, _}, State) ->
+  Reply = httpc:request(get, {Url, []}, [], req_opts()),
   gen_server:cast(?SERVER, {request, Pid, Url}),
-  {reply, ok, State}.
+  {reply, Reply, State}.
 
-handle_cast({request, From, Url}, State) ->
-  request(From, Url),
-  {noreply, State};
+handle_cast({request, From, _Url}, State) ->
+  receive
+    {http, {RequestId, stream_start, _Headers, Pid}} ->
+      StreamState = #sstate{pid=Pid, from=From, id=RequestId},
+      resume(StreamState),
+      {noreply, State}
+  after
+    3000 ->
+      {noreply, State}
+  end;
 
 handle_cast(stop, State) ->
   {stop, normal, State}.
@@ -41,49 +51,37 @@ terminate(_Reason, _State) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
--record(c_state, {pid, from, started=false, ended=false, id}).
+%% Details
 
 req_opts() ->
   [{sync, false}, {stream, {self, once}}, {body_format, binary}].
 
-request(From, Url) ->
-  httpc:request(get, {Url, []}, [], req_opts()),
-  receive
-    {http, {RequestId, stream_start, _Headers, Pid}} ->
-      CS = #c_state{pid=Pid, from=From, id=RequestId},
-      resume(CS),
-      ok
-  after
-    3000 ->
-      {error, timeout}
-  end.
+event_fun({entry, Entry}, StreamState) ->
+  StreamState#sstate.from ! {feeder, {StreamState#sstate.id, entry, Entry}},
+  StreamState;
+event_fun({feed, Feed}, StreamState) ->
+  StreamState#sstate.from ! {feeder, {StreamState#sstate.id, feed, Feed}},
+  StreamState;
+event_fun(endFeed, StreamState) ->
+  StreamState#sstate.from ! {feeder, {StreamState#sstate.id, stream_end}},
+  StreamState.
 
-event_fun({entry, Entry}, From) ->
-  From ! {entry, Entry},
-  From;
-event_fun({feed, Feed}, From) ->
-  From ! {feed, Feed},
-  From;
-event_fun(endFeed, From) ->
-  From ! endFeed,
-  From.
+parser_opts(StreamState) ->
+  [{event_state, StreamState}, {event_fun, fun event_fun/2},
+   {continuation_state, StreamState}, {continuation_fun, fun resume/1}].
 
-parser_opts(CS) ->
-  [{event_state, CS#c_state.from}, {event_fun, fun event_fun/2},
-   {continuation_state, CS}, {continuation_fun, fun resume/1}].
-
-resume(State) ->
-  RequestId = State#c_state.id,
-  httpc:stream_next(State#c_state.pid),
+resume(StreamState) ->
+  RequestId = StreamState#sstate.id,
+  httpc:stream_next(StreamState#sstate.pid),
   receive
     {http, {RequestId, stream, BinBodyPart}} ->
       if
-        not State#c_state.started ->
-          NewState = State#c_state{started=true},
+        not StreamState#sstate.started ->
+          NewState = StreamState#sstate{started=true},
           feeder_parser:stream(BinBodyPart, parser_opts(NewState));
         true ->
-          {BinBodyPart, State}
+          {BinBodyPart, StreamState}
       end;
     {http, {RequestId, stream_end, _Headers}} ->
-      {<<>>, State}
+      {<<>>, StreamState}
   end.
