@@ -1,5 +1,5 @@
 
-%% feeder_httpc - stream feeds over http
+%% feeder_httpc - stream XML feed at URL to tuples
 
 -module(feeder_httpc).
 -export([start_link/0, stop/0, request/1]).
@@ -10,19 +10,24 @@
 
 -define(SERVER, ?MODULE).
 
-% public
+%% API
 
 start_link() -> gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 request(Url) -> gen_server:call(?SERVER, {request, Url}).
 stop() -> gen_server:cast(?SERVER, stop).
 
-% callback functions
+%% Gen_Server callbacks
 
 init([]) ->
   {ok, []}.
 
-handle_call({request, Url}, From, State) ->
-  {reply, httpc_request(Url, From), State}.
+handle_call({request, Url}, {Pid, _}, State) ->
+  gen_server:cast(?SERVER, {request, Pid, Url}),
+  {reply, ok, State}.
+
+handle_cast({request, From, Url}, State) ->
+  request(From, Url),
+  {noreply, State};
 
 handle_cast(stop, State) ->
   {stop, normal, State}.
@@ -36,18 +41,16 @@ terminate(_Reason, _State) ->
 code_change(_OldVsn, State, _Extra) ->
   {ok, State}.
 
-% details
+-record(c_state, {pid, from, started=false, ended=false, id}).
 
 req_opts() ->
   [{sync, false}, {stream, {self, once}}, {body_format, binary}].
 
--record(c_state, {pid, from, started=false}).
-
-httpc_request(Url, {From, _}) ->
+request(From, Url) ->
   httpc:request(get, {Url, []}, [], req_opts()),
   receive
-    {http, {_RequestId, stream_start, _Headers, Pid}} ->
-      CS = #c_state{pid=Pid, from=From},
+    {http, {RequestId, stream_start, _Headers, Pid}} ->
+      CS = #c_state{pid=Pid, from=From, id=RequestId},
       resume(CS),
       ok
   after
@@ -69,17 +72,18 @@ parser_opts(CS) ->
   [{event_state, CS#c_state.from}, {event_fun, fun event_fun/2},
    {continuation_state, CS}, {continuation_fun, fun resume/1}].
 
-resume(CS) ->
-  httpc:stream_next(CS#c_state.pid),
+resume(State) ->
+  RequestId = State#c_state.id,
+  httpc:stream_next(State#c_state.pid),
   receive
-    {http, {_RequestId, stream, BinBodyPart}} ->
+    {http, {RequestId, stream, BinBodyPart}} ->
       if
-        CS#c_state.started ->
-          {BinBodyPart, CS};
+        not State#c_state.started ->
+          NewState = State#c_state{started=true},
+          feeder_parser:stream(BinBodyPart, parser_opts(NewState));
         true ->
-          feeder_parser:stream(BinBodyPart, parser_opts(CS)),
-          {BinBodyPart, CS#c_state{started=true}}
-        end;
-    {http, {_RequestId, stream_end, _Headers}} ->
-      {<<>>, CS}
+          {BinBodyPart, State}
+      end;
+    {http, {RequestId, stream_end, _Headers}} ->
+      {<<>>, State}
   end.

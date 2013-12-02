@@ -16,7 +16,7 @@ stream(Xml, Opts) ->
 
 %% Setup
 
--record(state, {chars, feed, entry, user}).
+-record(state, {chars, feed, entry, user, ended=false}).
 
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
@@ -74,6 +74,9 @@ end_element(_, S) ->
 
 %% SAX events
 
+event(startDocument, _, S) ->
+  io:format("startDocument~n"),
+  S;
 event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
   start_element(qname(QName), Attrs, S);
 event({endElement, _, _LocalName, QName}, _, S) ->
@@ -81,9 +84,15 @@ event({endElement, _, _LocalName, QName}, _, S) ->
 event({characters, C}, _, S) ->
   S#state{chars=[S#state.chars, C]};
 event(endDocument, _, S) ->
-  {UserState, UserFun} = S#state.user,
-  UserFun(endFeed, UserState),
-  S;
+  if
+    S#state.ended ->
+      S;
+    true ->
+      io:format("** xxx~n"),
+      {UserState, UserFun} = S#state.user,
+      UserFun(endFeed, UserState),
+      S#state{ended=true}
+  end;
 event(_, _, S) ->
   S.
 

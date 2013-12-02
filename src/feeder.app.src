@@ -1,6 +1,6 @@
 {application, feeder,
  [
-  {description, "event-based feed parsing over http"},
+  {description, "parse RSS or Atom formatted XML"},
   {vsn, "1"},
   {registered, []},
   {applications, [
