@@ -36,6 +36,7 @@ handle_cast({request, From, _Url}, State) ->
       {noreply, State}
   after
     3000 ->
+      From ! {feeder, {error, timeout}},
       {noreply, State}
   end;
 
