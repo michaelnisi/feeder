@@ -1,6 +1,6 @@
 {application, feeder,
  [
-  {description, "parse RSS or Atom formatted XML"},
+  {description, "RSS/Atom parser"},
   {vsn, "1"},
   {registered, []},
   {applications, [
@@ -8,6 +8,5 @@
                   stdlib,
                   inets
                  ]},
-  {mod, { feeder_app, []}},
   {env, []}
  ]}.

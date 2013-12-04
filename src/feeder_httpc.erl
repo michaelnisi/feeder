@@ -1,88 +1,62 @@
 
-%% feeder_httpc - stream XML feed at URL to tuples
+%% feeder_httpc - stream parse document at URL
 
 -module(feeder_httpc).
--export([start_link/0, stop/0, request/1]).
+-export([request/2]).
 
--behaviour(gen_server).
--export([init/1, handle_call/3, handle_cast/2, handle_info/2,
-         terminate/2, code_change/3]).
+-include("../include/feeder.hrl").
 
--record(sstate, {pid, from, started=false, ended=false, id}).
-
--define(SERVER, ?MODULE).
-
-%% API
-
-start_link() -> gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
-request(Url) -> gen_server:call(?SERVER, {request, Url}).
-stop() -> gen_server:cast(?SERVER, stop).
-
-%% Gen_Server callbacks
-
-init([]) ->
-  {ok, []}.
-
-handle_call({request, Url}, {Pid, _}, State) ->
-  Reply = httpc:request(get, {Url, []}, [], req_opts()),
-  gen_server:cast(?SERVER, {request, Pid, Url}),
-  {reply, Reply, State}.
-
-handle_cast({request, From, _Url}, State) ->
-  receive
-    {http, {RequestId, stream_start, _Headers, Pid}} ->
-      StreamState = #sstate{pid=Pid, from=From, id=RequestId},
-      resume(StreamState),
-      {noreply, State}
-  after
-    3000 ->
-      From ! {feeder, {error, timeout}},
-      {noreply, State}
-  end;
-
-handle_cast(stop, State) ->
-  {stop, normal, State}.
-
-handle_info(_Info, State) ->
-  {noreply, State}.
-
-terminate(_Reason, _State) ->
-  ok.
-
-code_change(_OldVsn, State, _Extra) ->
-  {ok, State}.
-
-%% Details
+-record(state, {from, reqId, httpcPid, started=false}).
 
 req_opts() ->
   [{sync, false}, {stream, {self, once}}, {body_format, binary}].
 
-event_fun({entry, Entry}, StreamState) ->
-  StreamState#sstate.from ! {feeder, {StreamState#sstate.id, entry, Entry}},
-  StreamState;
-event_fun({feed, Feed}, StreamState) ->
-  StreamState#sstate.from ! {feeder, {StreamState#sstate.id, feed, Feed}},
-  StreamState;
-event_fun(endFeed, StreamState) ->
-  StreamState#sstate.from ! {feeder, {StreamState#sstate.id, stream_end}},
-  StreamState.
-
-parser_opts(StreamState) ->
-  [{event_state, StreamState}, {event_fun, fun event_fun/2},
-   {continuation_state, StreamState}, {continuation_fun, fun resume/1}].
-
-resume(StreamState) ->
-  RequestId = StreamState#sstate.id,
-  httpc:stream_next(StreamState#sstate.pid),
+request(Url, From) ->
+  {ok, ReqId} = httpc:request(get, {Url, []}, [], req_opts()),
   receive
-    {http, {RequestId, stream, BinBodyPart}} ->
+    {http, {ReqId, stream_start, _Headers, Pid}} ->
+      State = #state{from=From, reqId=ReqId, httpcPid=Pid},
+      resume(State)
+    % TODO: {http, {error, etc.
+  after
+    3000 ->
+      {error, timeout}
+  end.
+
+parser_opts(State) ->
+  [{event_state, State}, {event_fun, fun event_fun/2},
+   {continuation_state, State}, {continuation_fun, fun resume/1}].
+
+resume(State) ->
+  RequestId = State#state.reqId,
+  Pid = State#state.httpcPid,
+  Started = State#state.started,
+  httpc:stream_next(Pid),
+  receive
+    {http, {RequestId, stream, Chunk}} ->
       if
-        not StreamState#sstate.started ->
-          NewState = StreamState#sstate{started=true},
-          feeder_parser:stream(BinBodyPart, parser_opts(NewState));
+        not Started ->
+          NState = State#state{started=true},
+          feeder_parser:stream(Chunk, parser_opts(NState));
         true ->
-          {BinBodyPart, StreamState}
+          {Chunk, State}
       end;
     {http, {RequestId, stream_end, _Headers}} ->
-      {<<>>, StreamState}
+      {<<>>, State}
   end.
+
+event_fun({entry, Entry}, State) ->
+  From = State#state.from,
+  ReqId = State#state.reqId,
+  From ! {feeder, {ReqId, entry, Entry}},
+  State;
+event_fun({feed, Feed}, State) ->
+  From = State#state.from,
+  ReqId = State#state.reqId,
+  From ! {feeder, {ReqId, feed, Feed}},
+  State;
+event_fun(endFeed, State) ->
+  From = State#state.from,
+  ReqId = State#state.reqId,
+  From ! {feeder, {ReqId, stream_end}},
+  State.

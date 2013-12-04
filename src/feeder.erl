@@ -1,12 +1,13 @@
+
+%% feeder - parse RSS/Atom
+
 -module(feeder).
--export([start/0, request/1]).
+-export([start/0, request/2]).
 
 -include("../include/feeder.hrl").
 
 start() ->
-  application:start(inets),
-  application:load(feeder),
-  application:start(feeder).
+  application:start(inets).
 
-request(Url) ->
-  feeder_httpc:request(Url).
+request(Url, From) ->
+  feeder_httpc:request(Url, From).

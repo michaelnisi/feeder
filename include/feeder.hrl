@@ -31,4 +31,3 @@
     length,
     type
   }).
-

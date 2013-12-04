@@ -1,36 +1,15 @@
-# feeder - parse feeds (well, eventually)
+# feeder - parse RSS/Atom
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.png)](http://travis-ci.org/michaelnisi/feeder)
 
-Word on the street has it that Erlang is terrible at parsing strings. A fair reason for me to write an XML parser for RSS and Atom feeds in it. Let's see how this goes.
+Word on the street has it that Erlang is terrible at parsing strings. While I'm learning the language—why not write an XML parser for RSS and Atom feeds.
 
 ## Usage
 
-### HTTP
-
 ```Erlang
--module(feeder_example).
-
--export([start/0, request/1]).
-
-start() ->
-  feeder:start().
-
-request(Url) ->
-  {ok, RequestId} = feeder:request(Url),
-  loop(RequestId).
-
-loop(RequestId) ->
-  receive
-    {feeder, {RequestId, feed, Feed}} ->
-      io:format("feed: ~p~n", [Feed]),
-      loop(RequestId);
-    {feeder, {RequestId, entry, Entry}} ->
-      io:format("entry: ~p~n", [Entry]),
-      loop(RequestId);
-    {feeder, {RequestId, stream_end}} ->
-      io:format("stream_end~n")
-  end.
+feeder:start().
+feeder:request("http://5by5.tv/rss", self()).
+flush().
 ```
 
 ## License
