@@ -6,6 +6,13 @@
 
 -include("../include/feeder.hrl").
 
+-record(state, {
+    chars,
+    feed,
+    entry,
+    user,
+    ended=false}).
+
 %% API
 
 file(Filename, Opts) ->
@@ -16,8 +23,6 @@ stream(Xml, Opts) ->
 
 %% Setup
 
--record(state, {chars, feed, entry, user, ended=false}).
-
 opts(file, Opts) ->
   UserState = proplists:get_value(event_state, Opts),
   UserFun = proplists:get_value(event_fun, Opts),
@@ -27,7 +32,7 @@ opts(stream, Opts) ->
   ContinuationState = proplists:get_value(continuation_state, Opts),
   ContinuationFun = proplists:get_value(continuation_fun, Opts),
   [{continuation_state, ContinuationState},
-   {continuation_fun, ContinuationFun}] ++ opts(file, Opts).
+    {continuation_fun, ContinuationFun}] ++ opts(file, Opts).
 
 %% Event handlers
 
@@ -85,7 +90,7 @@ event({characters, C}, _, S) ->
 event(endDocument, _, S) ->
   {UserState, UserFun} = S#state.user,
   UserFun(endFeed, UserState),
-  S#state{ended=true};
+  S#state{ended=true}; % TODO: Still necessary?
 event(_, _, S) ->
   S.
 

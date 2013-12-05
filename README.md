@@ -8,8 +8,18 @@ Word on the street has it that Erlang is terrible at parsing strings. While I'm 
 
 ```Erlang
 feeder:start().
-feeder:request("http://5by5.tv/rss", self()).
-flush().
+```
+
+```Erlang
+feeder:file(Filename, Opts) ->
+```
+
+```Erlang
+feeder:stream(Xml, Opts) ->
+```
+
+```Erlang
+feeder:url("http://5by5.tv/rss", self()).
 ```
 
 ## License

@@ -6,7 +6,12 @@
 
 -include("../include/feeder.hrl").
 
--record(state, {from, reqId, httpcPid, started=false}).
+-record(state, {
+    from,
+    reqId,
+    httpcPid,
+    started=false
+  }).
 
 req_opts() ->
   [{sync, false}, {stream, {self, once}}, {body_format, binary}].
@@ -16,8 +21,9 @@ request(Url, From) ->
   receive
     {http, {ReqId, stream_start, _Headers, Pid}} ->
       State = #state{from=From, reqId=ReqId, httpcPid=Pid},
-      resume(State)
-    % TODO: {http, {error, etc.
+      resume(State);
+    {http, {error, Reason}} ->
+      {error, Reason}
   after
     3000 ->
       {error, timeout}
@@ -25,7 +31,7 @@ request(Url, From) ->
 
 parser_opts(State) ->
   [{event_state, State}, {event_fun, fun event_fun/2},
-   {continuation_state, State}, {continuation_fun, fun resume/1}].
+    {continuation_state, State}, {continuation_fun, fun resume/1}].
 
 resume(State) ->
   RequestId = State#state.reqId,
@@ -41,22 +47,24 @@ resume(State) ->
         true ->
           {Chunk, State}
       end;
+    {http, {error, Reason}} ->
+      {error, Reason};
     {http, {RequestId, stream_end, _Headers}} ->
       {<<>>, State}
   end.
 
+from(State) ->
+  State#state.from.
+
+reqId(State) ->
+  State#state.reqId.
+
 event_fun({entry, Entry}, State) ->
-  From = State#state.from,
-  ReqId = State#state.reqId,
-  From ! {feeder, {ReqId, entry, Entry}},
+  from(State) ! {feeder, {reqId(State), entry, Entry}},
   State;
 event_fun({feed, Feed}, State) ->
-  From = State#state.from,
-  ReqId = State#state.reqId,
-  From ! {feeder, {ReqId, feed, Feed}},
+  from(State) ! {feeder, {reqId(State), feed, Feed}},
   State;
 event_fun(endFeed, State) ->
-  From = State#state.from,
-  ReqId = State#state.reqId,
-  From ! {feeder, {ReqId, stream_end}},
+  from(State) ! {feeder, {reqId(State), stream_end}},
   State.
