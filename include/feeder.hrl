@@ -19,6 +19,7 @@
     enclosure,
     duration,
     id,
+    image,
     link,
     subtitle,
     summary,

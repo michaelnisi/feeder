@@ -33,7 +33,8 @@ expected_feed() ->
     subtitle = <<"A show about everything">>,
     author = <<"John Doe">>,
     link = <<"http://www.example.com/podcasts/everything/index.html">>,
-    summary = <<"All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Store">>
+    summary = <<"All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Store">>,
+    image = <<"http://example.com/podcasts/everything/AllAboutEverything.jpg">>
   }.
 
 expected_entries() ->
@@ -49,7 +50,8 @@ expected_entries() ->
         url = <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a">>,
         length = <<"8727310">>,
         type = <<"audio/x-m4a">>
-      }
+      },
+      image = <<"http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg">>
     },
     #entry{
       title = <<"Socket Wrench Shootout">>,
@@ -62,7 +64,8 @@ expected_entries() ->
         url = <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode2.mp3">>,
         length = <<"5650889">>,
         type = <<"audio/mpeg">>
-      }
+      },
+      image = <<"http://example.com/podcasts/everything/AllAboutEverything/Episode2.jpg">>
     },
     #entry{
       title = <<"Red, Whine, & Blue">>,
@@ -75,7 +78,8 @@ expected_entries() ->
         url = <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode1.mp3">>,
         length = <<"4989537">>,
         type = <<"audio/mpeg">>
-      }
+      },
+      image = <<"http://example.com/podcasts/everything/AllAboutEverything/Episode3.jpg">>
     }
   ].
 

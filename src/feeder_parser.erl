@@ -6,6 +6,10 @@
 
 -include("../include/feeder.hrl").
 
+-ifdef(TEST).
+-include_lib("eunit/include/eunit.hrl").
+-endif.
+
 -record(state, {
     chars,
     feed,
@@ -112,6 +116,7 @@ qname({_, "id"}) -> id;
 qname({_, "name"}) -> name;
 qname({_, "author"}) -> author;
 qname({_, "enclosure"}) -> enclosure;
+qname({_, "image"}) -> image;
 qname({_, _}) -> undefined.
 
 trim(S) ->
@@ -121,12 +126,16 @@ trim(S) ->
 
 attribute(feed, F, link, [{_, _, "href", L}]) ->
   feed(F, link, L);
+attribute(feed, F, image, [{_, _, "href", L}]) ->
+  feed(F, image, L);
 attribute(feed, F, _, _) ->
   F;
 attribute(entry, E, link, [{_, _, "href", L}]) ->
   entry(E, link, L);
 attribute(entry, Entry, enclosure, Attrs) ->
   Entry#entry{enclosure=enclosure(Attrs)};
+attribute(entry, E, image, [{_, _, "href", L}]) ->
+  entry(E, image, L);
 attribute(entry, E, _, _) ->
   E.
 
@@ -145,6 +154,7 @@ feed(F, summary, L) -> ?UF(summary);
 feed(F, name, L) -> ?UF(author);
 feed(F, author, L) -> ?UF(author);
 feed(F, updated, L) -> ?UF(updated);
+feed(F, image, L) -> ?UF(image);
 feed(F, id, L) -> ?UF(id).
 
 -define(UE(Atom),
@@ -162,6 +172,7 @@ entry(E, subtitle, L) -> ?UE(subtitle);
 entry(E, summary, L) -> ?UE(summary);
 entry(E, title, L) -> ?UE(title);
 entry(E, updated, L) -> ?UE(updated);
+entry(E, image, L) -> ?UE(image);
 entry(E, enclosure, _L) -> E.
 
 enclosure(Attrs) ->
