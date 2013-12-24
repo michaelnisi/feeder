@@ -141,7 +141,7 @@ attribute(entry, E, _, _) ->
 
 -define(UF(Atom),
   if
-    F#feed.Atom =:= undefined ->
+    F#feed.Atom =:= undefined, L =/= []->
       F#feed{Atom=trim(L)};
     true ->
       F
@@ -159,7 +159,7 @@ feed(F, id, L) -> ?UF(id).
 
 -define(UE(Atom),
   if
-    E#entry.Atom =:= undefined ->
+    E#entry.Atom =:= undefined, L =/= []->
       E#entry{Atom=trim(L)};
     true ->
       E
@@ -186,5 +186,4 @@ enc(E, []) ->
 
 enc(E, url, V) -> E#enclosure{url=V};
 enc(E, length, V) -> E#enclosure{length=V};
-enc(E, type, V) -> E#enclosure{type=V};
-enc(E, _, _) -> E. % defensive
+enc(E, type, V) -> E#enclosure{type=V}.
