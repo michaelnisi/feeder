@@ -1,5 +1,5 @@
 
-%% feeder_httpc - stream parse document at URL
+%% feeder_httpc - stream parse document from URL
 
 -module(feeder_httpc).
 -export([request/2]).
@@ -13,20 +13,14 @@
     started=false
   }).
 
-from(State) ->
-  State#state.from.
-
-reqId(State) ->
-  State#state.reqId.
-
 event_fun({entry, Entry}, State) ->
-  from(State) ! {feeder, {reqId(State), entry, Entry}},
+  State#state.from ! {feeder, {State#state.reqId, entry, Entry}},
   State;
 event_fun({feed, Feed}, State) ->
-  from(State) ! {feeder, {reqId(State), feed, Feed}},
+  State#state.from ! {feeder, {State#state.reqId, feed, Feed}},
   State;
 event_fun(endFeed, State) ->
-  from(State) ! {feeder, {reqId(State), stream_end}},
+  State#state.from ! {feeder, {State#state.reqId, stream_end}},
   State.
 
 parser_opts(State) ->
@@ -34,14 +28,11 @@ parser_opts(State) ->
     {continuation_state, State}, {continuation_fun, fun resume/1}].
 
 resume(State) ->
-  RequestId = State#state.reqId,
-  Pid = State#state.httpcPid,
-  Started = State#state.started,
   httpc:stream_next(Pid),
   receive
-    {http, {RequestId, stream, Chunk}} ->
+    {http, {State#state.reqId, stream, Chunk}} ->
       if
-        not Started ->
+        not State#state.started ->
           NState = State#state{started=true},
           feeder_parser:stream(Chunk, parser_opts(NState));
         true ->
@@ -49,7 +40,7 @@ resume(State) ->
       end;
     {http, {error, Reason}} ->
       {error, Reason};
-    {http, {RequestId, stream_end, _Headers}} ->
+    {http, {State#state.reqId, stream_end, _Headers}} ->
       {<<>>, State}
   end.
 

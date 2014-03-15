@@ -6,12 +6,11 @@
     feeder,
     feeder_parser,
     feeder_httpc
-    ]},
+  ]},
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib,
-                  inets
+                  stdlib
                  ]},
   {env, []}
  ]}.
