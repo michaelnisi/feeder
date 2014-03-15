@@ -5,7 +5,7 @@ all: build
 clean:
 	$(REBAR) clean
 	rm -rf logs
-	rm -f test/*.beam
+	rm -f *.beam **/*.beam
 
 build: 
 	$(REBAR) compile

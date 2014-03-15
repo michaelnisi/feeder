@@ -13,21 +13,21 @@
     started=false
   }).
 
-req_opts() ->
-  [{sync, false}, {stream, {self, once}}, {body_format, binary}].
+from(State) ->
+  State#state.from.
 
-request(Url, From) ->
-  {ok, ReqId} = httpc:request(get, {Url, []}, [], req_opts()),
-  receive
-    {http, {ReqId, stream_start, _Headers, Pid}} ->
-      State = #state{from=From, reqId=ReqId, httpcPid=Pid},
-      resume(State);
-    {http, {error, Reason}} ->
-      {error, Reason}
-  after
-    3000 ->
-      {error, timeout}
-  end.
+reqId(State) ->
+  State#state.reqId.
+
+event_fun({entry, Entry}, State) ->
+  from(State) ! {feeder, {reqId(State), entry, Entry}},
+  State;
+event_fun({feed, Feed}, State) ->
+  from(State) ! {feeder, {reqId(State), feed, Feed}},
+  State;
+event_fun(endFeed, State) ->
+  from(State) ! {feeder, {reqId(State), stream_end}},
+  State.
 
 parser_opts(State) ->
   [{event_state, State}, {event_fun, fun event_fun/2},
@@ -53,18 +53,18 @@ resume(State) ->
       {<<>>, State}
   end.
 
-from(State) ->
-  State#state.from.
+req_opts() ->
+  [{sync, false}, {stream, {self, once}}, {body_format, binary}].
 
-reqId(State) ->
-  State#state.reqId.
-
-event_fun({entry, Entry}, State) ->
-  from(State) ! {feeder, {reqId(State), entry, Entry}},
-  State;
-event_fun({feed, Feed}, State) ->
-  from(State) ! {feeder, {reqId(State), feed, Feed}},
-  State;
-event_fun(endFeed, State) ->
-  from(State) ! {feeder, {reqId(State), stream_end}},
-  State.
+request(Url, From) ->
+  {ok, ReqId} = httpc:request(get, {Url, []}, [], req_opts()),
+  receive
+    {http, {ReqId, stream_start, _Headers, Pid}} ->
+      State = #state{from=From, reqId=ReqId, httpcPid=Pid},
+      resume(State);
+    {http, {error, Reason}} ->
+      {error, Reason}
+  after
+    3000 ->
+      {error, timeout}
+  end.

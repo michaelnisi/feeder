@@ -10,12 +10,15 @@
 -include_lib("eunit/include/eunit.hrl").
 -endif.
 
+-type user_state() :: term().
+-type user_fun() :: term().
+
 -record(state, {
-    chars,
-    feed,
-    entry,
-    user,
-    ended=false}).
+    chars :: undefined | [binary()],
+    feed :: #feed{},
+    entry :: #entry{},
+    user :: {user_state(), user_fun()}
+  }).
 
 %% API
 
@@ -94,7 +97,7 @@ event({characters, C}, _, S) ->
 event(endDocument, _, S) ->
   {UserState, UserFun} = S#state.user,
   UserFun(endFeed, UserState),
-  S#state{ended=true}; % TODO: Still necessary?
+  S;
 event(_, _, S) ->
   S.
 
@@ -141,7 +144,7 @@ attribute(entry, E, _, _) ->
 
 -define(UF(Atom),
   if
-    F#feed.Atom =:= undefined, L =/= []->
+    F#feed.Atom =:= undefined, L =/= [] ->
       F#feed{Atom=trim(L)};
     true ->
       F
@@ -159,7 +162,7 @@ feed(F, id, L) -> ?UF(id).
 
 -define(UE(Atom),
   if
-    E#entry.Atom =:= undefined, L =/= []->
+    E#entry.Atom =:= undefined, L =/= [] ->
       E#entry{Atom=trim(L)};
     true ->
       E

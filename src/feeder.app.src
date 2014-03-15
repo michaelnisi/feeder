@@ -2,6 +2,11 @@
  [
   {description, "RSS/Atom parser"},
   {vsn, "1"},
+  {modules, [
+    feeder,
+    feeder_parser,
+    feeder_httpc
+    ]},
   {registered, []},
   {applications, [
                   kernel,
