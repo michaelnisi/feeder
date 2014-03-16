@@ -36,8 +36,8 @@ parse(Chunk, State) when State#state.started ->
 parse(Chunk, State) ->
   feeder_parser:stream(Chunk, parser_opts(State#state{started=true})).
 
-resume(State=#state{reqId=ReqId}) ->
-  httpc:stream_next(State#state.httpcPid),
+resume(State=#state{reqId=ReqId, httpcPid=Pid}) ->
+  httpc:stream_next(Pid),
   receive
     {http, {ReqId, stream, Chunk}} ->
       parse(Chunk, State);

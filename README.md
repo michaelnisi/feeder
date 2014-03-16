@@ -40,8 +40,8 @@ parse(Chunk, State) when State#state.started ->
 parse(Chunk, State) ->
   feeder_parser:stream(Chunk, parser_opts(State#state{started=true})).
 
-resume(State=#state{reqId=ReqId}) ->
-  httpc:stream_next(State#state.httpcPid),
+resume(State=#state{reqId=ReqId, httpcPid=Pid}) ->
+  httpc:stream_next(Pid),
   receive
     {http, {ReqId, stream, Chunk}} ->
       parse(Chunk, State);
@@ -67,7 +67,7 @@ request(Url, From) ->
       {error, timeout}
   end.
 ```
-To the try this in the shell you might want to use the feeder module:
+You can try this in the shell with the feeder module:
 
 ```
 make
