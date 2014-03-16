@@ -35,20 +35,19 @@ parser_opts(State) ->
   [{event_state, State}, {event_fun, fun event_fun/2},
     {continuation_state, State}, {continuation_fun, fun resume/1}].
 
-resume(State) ->
-  httpc:stream_next(Pid),
+parse(Chunk, State) when State#state.started ->
+  {Chunk, State};
+parse(Chunk, State) ->
+  feeder_parser:stream(Chunk, parser_opts(State#state{started=true})).
+
+resume(State=#state{reqId=ReqId}) ->
+  httpc:stream_next(State#state.httpcPid),
   receive
-    {http, {State#state.reqId, stream, Chunk}} ->
-      if
-        not State#state.started ->
-          NState = State#state{started=true},
-          feeder_parser:stream(Chunk, parser_opts(NState));
-        true ->
-          {Chunk, State}
-      end;
+    {http, {ReqId, stream, Chunk}} ->
+      parse(Chunk, State);
     {http, {error, Reason}} ->
       {error, Reason};
-    {http, {State#state.reqId, stream_end, _Headers}} ->
+    {http, {ReqId, stream_end, _Headers}} ->
       {<<>>, State}
   end.
 
