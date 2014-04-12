@@ -1,7 +1,6 @@
 
 -module(atom_tests).
 
--include_lib("eunit/include/eunit.hrl").
 -include("../include/feeder.hrl").
 
 atom_test_() ->

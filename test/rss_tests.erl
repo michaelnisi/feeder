@@ -1,7 +1,6 @@
 
 -module(rss_tests).
 
--include_lib("eunit/include/eunit.hrl").
 -include("../include/feeder.hrl").
 
 rss_test_() ->
