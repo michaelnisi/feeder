@@ -17,6 +17,8 @@
     started=false
   }).
 
+-define(TIMEOUT, 3000).
+
 event_fun({entry, Entry}, State) ->
   State#state.from ! {feeder, {State#state.reqId, entry, Entry}},
   State;
@@ -59,6 +61,6 @@ request(Url, From) ->
     {http, {error, Reason}} ->
       {error, Reason}
   after
-    3000 ->
+    ?TIMEOUT ->
       {error, timeout}
   end.

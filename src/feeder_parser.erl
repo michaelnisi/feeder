@@ -4,6 +4,10 @@
 -module(feeder_parser).
 -export([file/2, stream/2]).
 
+-ifdef(TEST).
+-compile(export_all).
+-endif.
+
 -include("../include/feeder.hrl").
 
 -type user_state() :: term().
@@ -21,7 +25,7 @@ trim(S) ->
   RE = "^[ \t\n\r]+|[ \t\n\r]+$",
   re:replace(Bin, RE, "", [global, {return, binary}]).
 
--define(UF(Atom),
+-define(updateFeed(Atom),
   if
     F#feed.Atom =:= undefined, L =/= [] ->
       F#feed{Atom=trim(L)};
@@ -29,17 +33,17 @@ trim(S) ->
       F
   end).
 
-feed(F, title, L) -> ?UF(title);
-feed(F, subtitle, L) -> ?UF(subtitle);
-feed(F, link, L) -> ?UF(link);
-feed(F, summary, L) -> ?UF(summary);
-feed(F, name, L) -> ?UF(author);
-feed(F, author, L) -> ?UF(author);
-feed(F, updated, L) -> ?UF(updated);
-feed(F, image, L) -> ?UF(image);
-feed(F, id, L) -> ?UF(id).
+feed(F, title, L) -> ?updateFeed(title);
+feed(F, subtitle, L) -> ?updateFeed(subtitle);
+feed(F, link, L) -> ?updateFeed(link);
+feed(F, summary, L) -> ?updateFeed(summary);
+feed(F, name, L) -> ?updateFeed(author);
+feed(F, author, L) -> ?updateFeed(author);
+feed(F, updated, L) -> ?updateFeed(updated);
+feed(F, image, L) -> ?updateFeed(image);
+feed(F, id, L) -> ?updateFeed(id).
 
--define(UE(Atom),
+-define(updateEntry(Atom),
   if
     E#entry.Atom =:= undefined, L =/= [] ->
       E#entry{Atom=trim(L)};
@@ -47,14 +51,14 @@ feed(F, id, L) -> ?UF(id).
       E
   end).
 
-entry(E, author, L) -> ?UE(author);
-entry(E, id, L) -> ?UE(id);
-entry(E, link, L) -> ?UE(link);
-entry(E, subtitle, L) -> ?UE(subtitle);
-entry(E, summary, L) -> ?UE(summary);
-entry(E, title, L) -> ?UE(title);
-entry(E, updated, L) -> ?UE(updated);
-entry(E, image, L) -> ?UE(image);
+entry(E, author, L) -> ?updateEntry(author);
+entry(E, id, L) -> ?updateEntry(id);
+entry(E, link, L) -> ?updateEntry(link);
+entry(E, subtitle, L) -> ?updateEntry(subtitle);
+entry(E, summary, L) -> ?updateEntry(summary);
+entry(E, title, L) -> ?updateEntry(title);
+entry(E, updated, L) -> ?updateEntry(updated);
+entry(E, image, L) -> ?updateEntry(image);
 entry(E, enclosure, _L) -> E.
 
 enc(E, [H|T]) ->
@@ -85,27 +89,12 @@ attribute(entry, E, image, [{_, _, "href", L}]) ->
 attribute(entry, E, _, _) ->
   E.
 
--define(FEED,
+-define(isFeed,
   State#state.feed =/= undefined,
   State#state.entry =:= undefined).
 
--define(ENTRY,
+-define(isEntry,
   State#state.entry =/= undefined).
-
-start_element(undefined, _, S) ->
-  S;
-start_element(feed, _Attrs, State) ->
-  State#state{feed=#feed{}};
-start_element(entry, _Attrs, State) ->
-  State#state{entry=#entry{}};
-start_element(E, Attrs, State) when ?FEED ->
-  Feed = attribute(feed, State#state.feed, E, Attrs),
-  State#state{chars=[], feed=Feed};
-start_element(E, Attrs, State) when ?ENTRY ->
-  Entry = attribute(entry, State#state.entry, E, Attrs),
-  State#state{chars=[], entry=Entry};
-start_element(_, _, S) ->
-  S.
 
 end_element(undefined, S) ->
   S;
@@ -121,15 +110,31 @@ end_element(entry, State) ->
   {UserState, UserFun} = State#state.user,
   NewUserState = UserFun({entry, State#state.entry}, UserState),
   State#state{entry=undefined, user={NewUserState, UserFun}};
-end_element(E, State) when ?FEED ->
+end_element(E, State) when ?isFeed ->
   Feed = feed(State#state.feed, E, State#state.chars),
   State#state{feed=Feed};
-end_element(E, State) when ?ENTRY ->
+end_element(E, State) when ?isEntry ->
   Entry = entry(State#state.entry, E, State#state.chars),
   State#state{entry=Entry};
 end_element(_, S) ->
   S.
 
+start_element(undefined, _, S) ->
+  S;
+start_element(feed, _Attrs, State) ->
+  State#state{feed=#feed{}};
+start_element(entry, _Attrs, State) ->
+  State#state{entry=#entry{}};
+start_element(E, Attrs, State) when ?isFeed ->
+  Feed = attribute(feed, State#state.feed, E, Attrs),
+  State#state{chars=[], feed=Feed};
+start_element(E, Attrs, State) when ?isEntry ->
+  Entry = attribute(entry, State#state.entry, E, Attrs),
+  State#state{chars=[], entry=Entry};
+start_element(_, _, S) ->
+  S.
+
+%% Normalize qualified names
 qname({_, "channel"}) -> feed;
 qname({_, "feed"}) -> feed;
 qname({_, "item"}) -> entry;
