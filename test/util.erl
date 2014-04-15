@@ -13,5 +13,5 @@ opts() ->
   [{event_state, {[],[]}}, {event_fun, fun event/2}].
 
 file(Filename) ->
-  {ok, EventState, _Rest} = feeder_parser:file(Filename, opts()),
+  {ok, EventState, _Rest} = feeder:file(Filename, opts()),
   EventState.

@@ -67,18 +67,6 @@ request(Url, From) ->
       {error, timeout}
   end.
 ```
-You can try this in the shell with the feeder module:
-
-```
-make
-erl -pa ebin
-```
-```Erlang
-feeder:start().
-feeder:request("http://5by5.tv/rss", self()).
-flush().
-```
-
 ## License
 
 [MIT License](https://raw.github.com/michaelnisi/feeder/master/LICENSE)
