@@ -36,7 +36,7 @@ parser_opts(State) ->
 parse(Chunk, State) when State#state.started ->
   {Chunk, State};
 parse(Chunk, State) ->
-  feeder_parser:stream(Chunk, parser_opts(State#state{started=true})).
+  feeder:stream(Chunk, parser_opts(State#state{started=true})).
 
 resume(State=#state{reqId=ReqId, httpcPid=Pid}) ->
   httpc:stream_next(Pid),
