@@ -1,0 +1,5 @@
+{application, feeder, [
+  {description, "Event based RSS and Atom parser."},
+  {vsn, "0.0.1"},
+  {modules, [feeder]}
+]}.

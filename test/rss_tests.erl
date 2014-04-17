@@ -14,7 +14,7 @@ rss_test_() ->
      end}}.
 
 setup() ->
-  util:file("../test/rss.xml").
+  acc:file("../test/rss.xml").
 
 assert_feed({Feed, _}) ->
   Expected = feed(),

@@ -16,7 +16,7 @@ itunes_test_() ->
 %% Details
 
 setup() ->
-  util:file("../test/itunes.xml").
+  acc:file("../test/itunes.xml").
 
 feed({Feed, _}) ->
   Expected = expected_feed(),

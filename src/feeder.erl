@@ -1,5 +1,5 @@
 
-%% feeder - parse RSS and Atom formatted XML feeds
+%% feeder - parse RSS and Atom formatted XML documents
 
 -module(feeder).
 -export([file/2, stream/2]).
@@ -37,7 +37,7 @@ feed(F, title, L) -> ?updateFeed(title);
 feed(F, subtitle, L) -> ?updateFeed(subtitle);
 feed(F, link, L) -> ?updateFeed(link);
 feed(F, summary, L) -> ?updateFeed(summary);
-feed(F, name, L) -> ?updateFeed(author);
+feed(F, name, L) -> ?updateFeed(author); % TODO: Huh?
 feed(F, author, L) -> ?updateFeed(author);
 feed(F, updated, L) -> ?updateFeed(updated);
 feed(F, image, L) -> ?updateFeed(image);
@@ -161,7 +161,7 @@ event({startElement, _, _LocalName, QName, Attrs}, _, S) ->
 event({endElement, _, _LocalName, QName}, _, S) ->
   end_element(qname(QName), S);
 event({characters, C}, _, S) ->
-  S#state{chars=[S#state.chars, C]};
+  S#state{chars=[S#state.chars|C]};
 event(endDocument, _, S) ->
   end_element(document, S);
 event(_, _, S) ->

@@ -1,5 +1,7 @@
 
--module(util).
+%% acc - accumulate parser events
+
+-module(acc).
 -export([file/1]).
 
 event({entry, Entry}, {Feed, Entries}) ->

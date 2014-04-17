@@ -14,7 +14,7 @@ atom_test_() ->
       end}}.
 
 setup() ->
-  util:file("../test/atom.xml").
+  acc:file("../test/atom.xml").
 
 assert_feed({Feed, _}) ->
   Expected = feed(),
