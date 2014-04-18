@@ -1,4 +1,4 @@
-# feeder - parse RSS/Atom
+# feeder - parse RSS and Atom
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.png)](http://travis-ci.org/michaelnisi/feeder)
 
