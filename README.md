@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.png)](http://travis-ci.org/michaelnisi/feeder)
 
-Feeder is an Erlang library to parse RSS and Atom formatted XML feeds. It is a stream based parser that sends the events through a callback interface.
+The Feeder [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
 
 ## Usage
 
