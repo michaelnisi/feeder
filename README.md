@@ -67,6 +67,22 @@ request(Url, From) ->
       {error, timeout}
   end.
 ```
+
+To try this in the shell:
+
+```
+1>c("src/feeder").
+{ok,feeder}
+2>c("example/feeder_httpc").
+{ok,feeder_httpc}
+inets:start().
+ok
+feeder_httpc:request("http://feeds.muleradio.net/thetalkshow", self()).
+ok,{state,<0.32.0>,#Ref<0.0.0.242>,<0.60.0>,true},<<>>}
+flush().
+Shell got {feeder,{#Ref<0.0.0.242>,entry,...}}
+```
+
 ## License
 
 [MIT License](https://raw.github.com/michaelnisi/feeder/master/LICENSE)
