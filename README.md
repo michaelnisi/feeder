@@ -75,12 +75,15 @@ To try this in the shell:
 {ok,feeder}
 2>c("example/feeder_httpc").
 {ok,feeder_httpc}
-inets:start().
+3>inets:start().
 ok
-feeder_httpc:request("http://feeds.muleradio.net/thetalkshow", self()).
+4>feeder_httpc:request("http://feeds.muleradio.net/thetalkshow", self()).
 ok,{state,<0.32.0>,#Ref<0.0.0.242>,<0.60.0>,true},<<>>}
-flush().
+5>flush().
 Shell got {feeder,{#Ref<0.0.0.242>,entry,...}}
+...
+Shell got {feeder,{#Ref<0.0.0.242>,stream_end}}
+ok
 ```
 
 ## License
