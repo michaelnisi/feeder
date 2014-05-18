@@ -3,6 +3,14 @@
 
 -include("../include/feeder.hrl").
 
+date_test_() -> [
+  ?_assertError({badmatch, ["WTF"]}, feeder:unix_time("WTF")),
+  ?_assertEqual(0,
+    feeder:unix_time("WTF, 1 Jan 1970 00:00:00 GMT")),
+  ?_assertEqual(1055217600,
+    feeder:unix_time("Tue, 10 Jun 2003 04:00:00 GMT"))
+].
+
 trim_test_() -> [
   ?_assertMatch(<<"">>, feeder:trim("")),
   ?_assertMatch(<<"hello">>, feeder:trim(" hello "))

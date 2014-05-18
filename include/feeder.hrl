@@ -4,30 +4,30 @@
 -endif.
 
 -record(feed, {
-    author,
-    id,
-    image,
-    link,
-    subtitle,
-    summary,
-    title,
-    updated
-  }).
-
--record(entry, {
-    author,
-    enclosure,
-    id,
-    image,
-    link,
-    subtitle,
-    summary,
-    title,
-    updated
+    author :: binary(),
+    id :: binary(),
+    image :: binary(),
+    link :: binary(),
+    subtitle :: binary(),
+    summary :: binary(),
+    title :: binary(),
+    updated :: integer()
   }).
 
 -record(enclosure, {
-    url,
-    length,
-    type
+    url :: binary(),
+    length :: binary(),
+    type :: binary()
+  }).
+
+-record(entry, {
+    author :: binary(),
+    enclosure :: #enclosure{},
+    id :: binary(),
+    image :: binary(),
+    link :: binary(),
+    subtitle :: binary(),
+    summary :: binary(),
+    title :: binary(),
+    updated :: integer()
   }).

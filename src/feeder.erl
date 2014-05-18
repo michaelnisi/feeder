@@ -4,11 +4,11 @@
 -module(feeder).
 -export([file/2, stream/2]).
 
+-include("../include/feeder.hrl").
+
 -ifdef(TEST).
 -compile(export_all).
 -endif.
-
--include("../include/feeder.hrl").
 
 -type user_state() :: term().
 -type user_fun() :: term().
@@ -25,6 +25,13 @@ trim(S) ->
   RE = "^[ \t\n\r]+|[ \t\n\r]+$",
   re:replace(Bin, RE, "", [global, {return, binary}]).
 
+epoch(Date) ->
+  calendar:datetime_to_gregorian_seconds(Date) - 62167219200.
+
+unix_time(L) ->
+  Date = datetime:datetime_decode(L),
+  epoch(Date).
+
 -define(updateFeed(Atom),
   if
     F#feed.Atom =:= undefined, L =/= [] ->
@@ -39,7 +46,7 @@ feed(F, link, L) -> ?updateFeed(link);
 feed(F, summary, L) -> ?updateFeed(summary);
 feed(F, name, L) -> ?updateFeed(author); % TODO: Huh?
 feed(F, author, L) -> ?updateFeed(author);
-feed(F, updated, L) -> ?updateFeed(updated);
+feed(F, updated, L) -> F#feed{updated=unix_time(L)};
 feed(F, image, L) -> ?updateFeed(image);
 feed(F, id, L) -> ?updateFeed(id).
 
@@ -57,9 +64,16 @@ entry(E, link, L) -> ?updateEntry(link);
 entry(E, subtitle, L) -> ?updateEntry(subtitle);
 entry(E, summary, L) -> ?updateEntry(summary);
 entry(E, title, L) -> ?updateEntry(title);
-entry(E, updated, L) -> ?updateEntry(updated);
+entry(E, updated, L) -> E#entry{updated=unix_time(L)};
 entry(E, image, L) -> ?updateEntry(image);
 entry(E, enclosure, _L) -> E.
+
+-define(isFeed,
+  State#state.feed =/= undefined,
+  State#state.entry =:= undefined).
+
+-define(isEntry,
+  State#state.entry =/= undefined).
 
 enc(E, [H|T]) ->
   {_, _, K, V} = H,
@@ -88,13 +102,6 @@ attribute(entry, E, image, [{_, _, "href", L}]) ->
   entry(E, image, L);
 attribute(entry, E, _, _) ->
   E.
-
--define(isFeed,
-  State#state.feed =/= undefined,
-  State#state.entry =:= undefined).
-
--define(isEntry,
-  State#state.entry =/= undefined).
 
 end_element(undefined, S) ->
   S;

@@ -3,7 +3,7 @@
 
     <title>Example Feed</title>
     <link href="http://example.org/"/>
-    <updated>2003-12-13T18:30:02Z</updated>
+    <updated>Sun, 18 May 2014 16:13:31 GMT</updated>
     <author>
         <name>John Doe</name>
     </author>
@@ -13,7 +13,7 @@
         <title>Atom-Powered Robots Run Amok</title>
         <link href="http://example.org/2003/12/13/atom03"/>
         <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
-        <updated>2003-12-13T18:30:02Z</updated>
+        <updated>Sun, 18 May 2014 16:13:31 GMT</updated>
         <summary>Some text.</summary>
     </entry>
 
