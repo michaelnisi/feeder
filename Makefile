@@ -1,11 +1,14 @@
 REBAR?=rebar
 
-all: build
+all: deps build
 
 clean:
 	$(REBAR) clean
 	rm -rf logs
 	rm -f *.beam **/*.beam
+
+deps: 
+	$(REBAR) get-deps
 
 build: 
 	$(REBAR) compile
@@ -13,4 +16,4 @@ build:
 test:
 	$(REBAR) eunit
 
-.PHONY: all clean build test
+.PHONY: all clean deps build test

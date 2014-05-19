@@ -3,6 +3,10 @@
 
 -include("../include/feeder.hrl").
 
+epoch_test_() -> [
+  ?_assertEqual(0, feeder:epoch({{1970,1,1},{0,0,0}}))
+].
+
 date_test_() -> [
   ?_assertError({badmatch, ["WTF"]}, feeder:unix_time("WTF")),
   ?_assertEqual(0,
