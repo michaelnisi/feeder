@@ -6,6 +6,35 @@ The Feeder [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted
 
 ## types
 
+### feed()
+
+  - `author = binary()`
+  - `id = binary()`
+  - `image = binary()`
+  - `link = binary()`
+  - `subtitle = binary()`
+  - `summary = binary()`
+  - `title = binary()`
+  - `updated = integer()`
+
+### enclosure()
+
+  - `url = binary()`
+  - `length = binary()`
+  - `type = binary()`
+
+### entry()
+
+  - `author = binary()`
+  - `enclosure = enclosure()`
+  - `id = binary()`
+  - `image = binary()`
+  - `link = binary()`
+  - `subtitle = binary()`
+  - `summary = binary()`
+  - `title = binary()`
+  - `updated = integer()`
+
 ### option()
 
 Options used to customize the behaviour of the parser. Possible options are:
