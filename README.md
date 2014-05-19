@@ -24,12 +24,12 @@ State that is accessible in the event call back function.
 
 ## exports
 
-### `file(Filename, Opts) -> Result`
+#### `file(Filename, Opts) -> Result`
 
 - `Filename = string()`
 - `Opts = [option()]`
 
-### `stream(Xml, Opts) -> Result`
+#### `stream(Xml, Opts) -> Result`
 
 - `Xml = unicode_binary() | latin1_binary() | [unicode_char()]`
 - `Opts = [option()]`
