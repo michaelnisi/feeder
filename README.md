@@ -4,6 +4,29 @@
 
 The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
 
+## Usage
+
+Here is, for example, how you might parse a file and accumulate parser events:
+
+```erlang
+-module(acc).
+-export([file/1]).
+
+event({entry, Entry}, {Feed, Entries}) ->
+  {Feed, [Entry|Entries]};
+event({feed, Feed}, {[], Entries}) ->
+  {Feed, Entries};
+event(endFeed, S) ->
+  S.
+
+opts() ->
+  [{event_state, {[],[]}}, {event_fun, fun event/2}].
+
+file(Filename) ->
+  {ok, EventState, _Rest} = feeder:file(Filename, opts()),
+  EventState.
+```
+
 ## types
 
 ### feed()
@@ -57,13 +80,13 @@ The events that are sent to the user via the callback.
 
 `{feed, Feed}`
 
-- `Feed` = feed()
+- `Feed = feed()`
 
-Receive notification when the meta information of the feed or channel is parsed.
+Receive notification when the meta information of the feed or channel has been parsed.
 
 `{entry, Entry}`
 
-- `Entry` = entry()
+- `Entry = entry()`
 
 Receive notification for each entry or article in the feed.
 
