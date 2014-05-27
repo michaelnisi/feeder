@@ -14,6 +14,6 @@ build:
 	$(REBAR) compile
 
 test:
-	$(REBAR) eunit
+	$(REBAR) eunit skip_deps=true
 
 .PHONY: all clean deps build test

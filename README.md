@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
 
-The Feeder [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
+The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
 
 ## types
 
@@ -37,7 +37,7 @@ The Feeder [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted
 
 ### option()
 
-Options used to customize the behaviour of the parser. Possible options are:
+Options to setup the parser.
 
 `{continuation_fun, ContinuationFun}`
 [`ContinuationFun`](http://www.erlang.org/doc/man/xmerl_sax_parser.html#ContinuationFun-1) is a call back function to decide what to do if the parser runs into EOF before the document is complete.
@@ -50,6 +50,26 @@ State that is accessible in the continuation call back function.
 
 `{event_state, term()}`
 State that is accessible in the event call back function.
+
+### event()
+
+The events that are sent to the user via the callback.
+
+`{feed, Feed}`
+
+- `Feed` = feed()
+
+Receive notification when the meta information of the feed or channel is parsed.
+
+`{entry, Entry}`
+
+- `Entry` = entry()
+
+Receive notification for each entry or article in the feed.
+
+`endFeed`
+
+Receive notification of the end of a document. **Feeder** will send this event only once, and it will be the last event during the parse.
 
 ## exports
 
