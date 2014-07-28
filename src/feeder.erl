@@ -184,8 +184,12 @@ opts(stream, Opts) ->
   CF = proplists:get_value(continuation_fun, Opts),
   [{continuation_state, CS}, {continuation_fun, CF}] ++ opts(file, Opts).
 
+-spec file(Filename :: term(), Opts :: term()) -> term().
+
 file(Filename, Opts) ->
   xmerl_sax_parser:file(Filename, opts(file, Opts)).
+
+-spec stream(Xml :: term(), Opts :: term()) -> term().
 
 stream(Xml, Opts) ->
   xmerl_sax_parser:stream(Xml, opts(stream, Opts)).

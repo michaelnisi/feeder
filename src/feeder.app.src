@@ -1,5 +1,11 @@
-{application, feeder, [
-  {description, "Event based RSS and Atom parser."},
+{application, feeder,
+ [
+  {description, "FDR feed parser"},
   {vsn, "0.0.1"},
-  {modules, [feeder]}
-]}.
+  {modules, [feeder]},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.
