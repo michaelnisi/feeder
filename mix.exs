@@ -1,22 +1,42 @@
 defmodule Feeder.Mixfile do
   use Mix.Project
 
-  defp erlc_opts(:test), do: [
-    {:d, :TEST}
-  ]
-  defp erlc_opts(_), do: []
+  defp erlc_options(:test), do: [{:d, :TEST}]
+  defp erlc_options(_), do: []
 
-  defp deps do
-    [{ :datetime, "~> 1.0.0", git: "https://github.com/lkiesow/erlang-datetime.git"}]
+  defp deps do [
+    { :datetime,
+      "~> 1.0.0",
+      git: "https://github.com/lkiesow/erlang-datetime.git"
+    }
+  ]
+  end
+
+  defp description do
+    """
+    This module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
+    """
+  end
+
+  defp package do [
+    files: ["src", "include", "test", "mix.exs", "README*", "LICENSE*"],
+    contributors: ["Michael Nisi"],
+    licenses: ["MIT"],
+    links: %{
+      "GitHub" => "https://github.com/michaelnisi/feeder",
+    }
+  ]
   end
 
   def project do [
     app: :feeder,
     deps: deps,
+    description: description,
     elixir: "~> 1.0.0",
-    erlc_options: erlc_opts(Mix.env),
+    erlc_options: erlc_options(Mix.env),
     language: :erlang,
-    version: "1.1.0"
+    package: package,
+    version: "1.1.1"
   ]
   end
 
