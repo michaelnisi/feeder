@@ -6,7 +6,7 @@ The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom forma
 
 ## Usage
 
-Here is, for example, how you might parse a file and accumulate parser events:
+Parse a file and accumulate parser events:
 
 ```erlang
 -module(acc).
