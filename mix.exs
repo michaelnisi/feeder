@@ -14,7 +14,7 @@ defmodule Feeder.Mixfile do
 
   defp description do
     """
-    This module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
+    Stream parse RSS and Atom formatted XML feeds
     """
   end
 
@@ -36,7 +36,7 @@ defmodule Feeder.Mixfile do
     erlc_options: erlc_options(Mix.env),
     language: :erlang,
     package: package,
-    version: "1.1.1"
+    version: "1.1.2"
   ]
   end
 
