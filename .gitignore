@@ -1,7 +1,9 @@
 *.app
 *.beam
 *.dump
+*.lock
 *.o
 *.so
 .eunit
+_build
 deps
