@@ -6,14 +6,14 @@ defmodule FeederTest do
   end
 
   test "date" do
-    catch_error :feeder.unix_time "WTF"
-    assert 0 = :feeder.unix_time "WTF, 1 Jan 1970 00:00:00 GMT"
-    assert 1055217600 = :feeder.unix_time "Tue, 10 Jun 2003 04:00:00 GMT"
+    catch_error :feeder.unix_time 'WTF'
+    assert 0 = :feeder.unix_time 'WTF, 1 Jan 1970 00:00:00 GMT'
+    assert 1055217600 = :feeder.unix_time 'Tue, 10 Jun 2003 04:00:00 GMT'
   end
 
   test "trim" do
-    assert <<"">> = :feeder.trim ""
-    assert <<"hello">> = :feeder.trim " hello "
+    assert "" = :feeder.trim ''
+    assert "hello" = :feeder.trim ' hello '
   end
 
   def qname([h|t]) do

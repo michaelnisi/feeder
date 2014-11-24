@@ -4,14 +4,41 @@
 -module(feeder).
 -export([file/2, stream/2]).
 
--include("../include/feeder.hrl").
-
 -ifdef(TEST).
 -compile(export_all).
 -endif.
 
 -type user_state() :: term().
 -type user_fun() :: term().
+
+-record(feed, {
+    author :: undefined | binary(),
+    id :: undefined | binary(),
+    image :: undefined | binary(),
+    link :: undefined | binary(),
+    subtitle :: undefined | binary(),
+    summary :: undefined | binary(),
+    title :: undefined | binary(),
+    updated :: undefined | integer()
+  }).
+
+-record(enclosure, {
+    url :: undefined | binary(),
+    length :: undefined | binary(),
+    type :: undefined | binary()
+  }).
+
+-record(entry, {
+    author :: undefined | binary(),
+    enclosure :: undefined | #enclosure{},
+    id :: undefined | binary(),
+    image :: undefined | binary(),
+    link :: undefined | binary(),
+    subtitle :: undefined | binary(),
+    summary :: undefined | binary(),
+    title :: undefined | binary(),
+    updated :: undefined | integer()
+  }).
 
 -record(state, {
     chars :: undefined | [binary()],
@@ -103,6 +130,42 @@ attribute(entry, E, image, [{_, _, "href", L}]) ->
 attribute(entry, E, _, _) ->
   E.
 
+%% Elixir prefers nil over undefined.
+nil(undefined) ->
+  nil;
+nil(Any) ->
+  Any.
+
+feed_out(F) -> #{
+  author => nil(F#feed.author),
+  id => nil(F#feed.id),
+  image => nil(F#feed.image),
+  link => nil(F#feed.link),
+  subtitle => nil(F#feed.subtitle),
+  summary => nil(F#feed.summary),
+  title => nil(F#feed.title),
+  updated => nil(F#feed.updated)
+}.
+
+enclosure_out(undefined) ->
+  nil;
+enclosure_out(E) -> #{
+  url => nil(E#enclosure.url),
+  length => nil(E#enclosure.length),
+  type => nil(E#enclosure.type)
+}.
+
+entry_out(E) -> #{
+  author => nil(E#entry.author),
+  enclosure => enclosure_out(E#entry.enclosure),
+  id => nil(E#entry.id),
+  image => nil(E#entry.image),
+  link => nil(E#entry.link),
+  subtitle => nil(E#entry.subtitle),
+  summary => nil(E#entry.summary),
+  title => nil(E#entry.title)
+}.
+
 end_element(undefined, S) ->
   S;
 end_element(document, S) ->
@@ -111,11 +174,11 @@ end_element(document, S) ->
   UserState;
 end_element(feed, State) ->
   {UserState, UserFun} = State#state.user,
-  NewUserState = UserFun({feed, State#state.feed}, UserState),
+  NewUserState = UserFun({feed, feed_out(State#state.feed)}, UserState),
   State#state{feed=undefined, user={NewUserState, UserFun}};
 end_element(entry, State) ->
   {UserState, UserFun} = State#state.user,
-  NewUserState = UserFun({entry, State#state.entry}, UserState),
+  NewUserState = UserFun({entry, entry_out(State#state.entry)}, UserState),
   State#state{entry=undefined, user={NewUserState, UserFun}};
 end_element(E, State) when ?isFeed ->
   Feed = feed(State#state.feed, E, State#state.chars),

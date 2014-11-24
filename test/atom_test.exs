@@ -11,34 +11,28 @@ defmodule AtomTest do
 
   test "feed", context do
     found = context[:feed]
-    wanted = {
-      :feed,
-      "John Doe",
-      "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6",
-      :undefined,
-      "http://example.org/",
-      :undefined,
-      :undefined,
-      "Example Feed",
-      1400429611
+    wanted = %{
+      author: "John Doe",
+      id: "urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6",
+      image: nil,
+      link: "http://example.org/",
+      subtitle: nil,
+      summary: nil,
+      title: "Example Feed",
+      updated: 1400429611
     }
     assert found == wanted
   end
 
   test "entries", context do
     found = context[:entries]
-    wanted = [{
-      :entry,
-      :undefined,
-      :undefined,
-      "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a",
-      :undefined,
-      "http://example.org/2003/12/13/atom03",
-      :undefined,
-      "Some text.",
-      "Atom-Powered Robots Run Amok",
-      1400429611
-    }]
+    wanted = [
+      %{author: nil, enclosure: nil,
+        id: "urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a",
+        image: nil, link: "http://example.org/2003/12/13/atom03",
+        subtitle: nil, summary: "Some text.",
+        title: "Atom-Powered Robots Run Amok"}
+    ]
     assert found == wanted
   end
 end

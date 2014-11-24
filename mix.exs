@@ -19,7 +19,7 @@ defmodule Feeder.Mixfile do
   end
 
   defp package do [
-    files: ["src", "include", "test", "mix.exs", "README*", "LICENSE*"],
+    files: ["src", "test", "mix.exs", "README*", "LICENSE*"],
     contributors: ["Michael Nisi"],
     licenses: ["MIT"],
     links: %{
@@ -36,7 +36,7 @@ defmodule Feeder.Mixfile do
     erlc_options: erlc_options(Mix.env),
     language: :erlang,
     package: package,
-    version: "1.1.2"
+    version: "1.2.0"
   ]
   end
 

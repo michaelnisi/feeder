@@ -8,8 +8,6 @@
 -module(feeder_httpc).
 -export([request/2]).
 
--include("../include/feeder.hrl").
-
 -record(state, {
     from,
     reqId,

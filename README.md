@@ -31,32 +31,44 @@ file(Filename) ->
 
 ### feed()
 
-  - `author = binary()`
-  - `id = binary()`
-  - `image = binary()`
-  - `link = binary()`
-  - `subtitle = binary()`
-  - `summary = binary()`
-  - `title = binary()`
-  - `updated = integer()`
+Feed is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and value types:
+
+```erlang
+author :: nil | binary()
+id :: nil | binary()
+image :: nil | binary()
+link :: nil | binary()
+subtitle :: nil | binary()
+summary :: nil | binary()
+title :: nil | binary()
+updated :: nil | integer()
+```
 
 ### enclosure()
 
-  - `url = binary()`
-  - `length = binary()`
-  - `type = binary()`
+Enclosure is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and value types:
+
+```erlang
+url :: nil | binary()
+length :: nil | binary()
+type :: nil | binary()
+```
 
 ### entry()
 
-  - `author = binary()`
-  - `enclosure = enclosure()`
-  - `id = binary()`
-  - `image = binary()`
-  - `link = binary()`
-  - `subtitle = binary()`
-  - `summary = binary()`
-  - `title = binary()`
-  - `updated = integer()`
+Entry is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and value types:
+
+```erlang
+author :: nil | binary()
+enclosure :: nil | enclosure
+id :: nil | binary()
+image :: nil | binary()
+link :: nil | binary()
+subtitle :: nil | binary()
+summary :: nil | binary()
+title :: nil | binary()
+updated :: nil | integer()
+```
 
 ### option()
 

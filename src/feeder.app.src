@@ -1,7 +1,7 @@
 {application, feeder,
  [
   {description, "FDR feed parser"},
-  {vsn, "1.1.2"},
+  {vsn, "1.2.0"},
   {modules, [feeder]},
   {applications, [
                   kernel,
