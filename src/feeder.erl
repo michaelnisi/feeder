@@ -52,13 +52,6 @@ trim(S) ->
   RE = "^[ \t\n\r]+|[ \t\n\r]+$",
   re:replace(Bin, RE, "", [global, {return, binary}]).
 
-epoch(Date) ->
-  calendar:datetime_to_gregorian_seconds(Date) - 62167219200.
-
-unix_time(L) ->
-  Date = datetime:datetime_decode(L),
-  epoch(Date).
-
 -define(updateFeed(Atom),
   if
     F#feed.Atom =:= undefined, L =/= [] ->
@@ -73,7 +66,7 @@ feed(F, link, L) -> ?updateFeed(link);
 feed(F, summary, L) -> ?updateFeed(summary);
 feed(F, name, L) -> ?updateFeed(author); % TODO: Huh?
 feed(F, author, L) -> ?updateFeed(author);
-feed(F, updated, L) -> F#feed{updated=unix_time(L)};
+feed(F, updated, L) -> ?updateFeed(updated);
 feed(F, image, L) -> ?updateFeed(image);
 feed(F, id, L) -> ?updateFeed(id).
 
@@ -91,7 +84,7 @@ entry(E, link, L) -> ?updateEntry(link);
 entry(E, subtitle, L) -> ?updateEntry(subtitle);
 entry(E, summary, L) -> ?updateEntry(summary);
 entry(E, title, L) -> ?updateEntry(title);
-entry(E, updated, L) -> E#entry{updated=unix_time(L)};
+entry(E, updated, L) -> ?updateEntry(updated);
 entry(E, image, L) -> ?updateEntry(image);
 entry(E, enclosure, _L) -> E.
 
@@ -247,12 +240,10 @@ opts(stream, Opts) ->
   CF = proplists:get_value(continuation_fun, Opts),
   [{continuation_state, CS}, {continuation_fun, CF}] ++ opts(file, Opts).
 
--spec file(Filename :: term(), Opts :: term()) -> term().
-
+-spec file(binary() | maybe_improper_list(), [any()]) -> any().
 file(Filename, Opts) ->
   xmerl_sax_parser:file(Filename, opts(file, Opts)).
 
--spec stream(Xml :: term(), Opts :: term()) -> term().
-
+-spec stream(binary() | maybe_improper_list(), [any()]) -> any().
 stream(Xml, Opts) ->
   xmerl_sax_parser:stream(Xml, opts(stream, Opts)).

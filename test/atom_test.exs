@@ -19,7 +19,7 @@ defmodule AtomTest do
       subtitle: nil,
       summary: nil,
       title: "Example Feed",
-      updated: 1400429611
+      updated: "Sun, 18 May 2014 16:13:31 GMT"
     }
     assert found == wanted
   end

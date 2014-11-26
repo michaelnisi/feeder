@@ -19,7 +19,7 @@ defmodule RSSTest do
       subtitle: nil,
       summary: "Liftoff to Space Exploration.",
       title: "Liftoff News",
-      updated: 1055217600
+      updated: "Tue, 10 Jun 2003 04:00:00 GMT"
     }
     assert found == wanted
   end

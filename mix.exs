@@ -4,12 +4,7 @@ defmodule Feeder.Mixfile do
   defp erlc_options(:test), do: [{:d, :TEST}]
   defp erlc_options(_), do: []
 
-  defp deps do [
-    { :datetime,
-      "~> 1.0.0",
-      git: "https://github.com/lkiesow/erlang-datetime.git"
-    }
-  ]
+  defp deps do []
   end
 
   defp description do
@@ -36,7 +31,7 @@ defmodule Feeder.Mixfile do
     erlc_options: erlc_options(Mix.env),
     language: :erlang,
     package: package,
-    version: "1.2.0"
+    version: "1.2.1"
   ]
   end
 

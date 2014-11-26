@@ -1,16 +1,6 @@
 defmodule FeederTest do
   use ExUnit.Case
 
-  test "epoch" do
-    assert 0 = :feeder.epoch {{1970,1,1},{0,0,0}}
-  end
-
-  test "date" do
-    catch_error :feeder.unix_time 'WTF'
-    assert 0 = :feeder.unix_time 'WTF, 1 Jan 1970 00:00:00 GMT'
-    assert 1055217600 = :feeder.unix_time 'Tue, 10 Jun 2003 04:00:00 GMT'
-  end
-
   test "trim" do
     assert "" = :feeder.trim ''
     assert "hello" = :feeder.trim ' hello '
