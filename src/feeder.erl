@@ -2,7 +2,9 @@
 %% feeder - parse RSS and Atom formatted XML documents
 
 -module(feeder).
--export([file/2, stream/2]).
+
+-export([file/2]).
+-export([stream/2]).
 
 -ifdef(TEST).
 -compile(export_all).
@@ -16,6 +18,7 @@
     id :: undefined | binary(),
     image :: undefined | binary(),
     link :: undefined | binary(),
+    language :: undefined | binary(),
     subtitle :: undefined | binary(),
     summary :: undefined | binary(),
     title :: undefined | binary(),
@@ -34,6 +37,7 @@
     id :: undefined | binary(),
     image :: undefined | binary(),
     link :: undefined | binary(),
+    duration :: undefined | binary(),
     subtitle :: undefined | binary(),
     summary :: undefined | binary(),
     title :: undefined | binary(),
@@ -62,9 +66,9 @@ trim(S) ->
 
 feed(F, title, L) -> ?updateFeed(title);
 feed(F, subtitle, L) -> ?updateFeed(subtitle);
+feed(F, language, L) -> ?updateFeed(language);
 feed(F, link, L) -> ?updateFeed(link);
 feed(F, summary, L) -> ?updateFeed(summary);
-feed(F, name, L) -> ?updateFeed(author); % TODO: Huh?
 feed(F, author, L) -> ?updateFeed(author);
 feed(F, updated, L) -> ?updateFeed(updated);
 feed(F, image, L) -> ?updateFeed(image);
@@ -85,6 +89,7 @@ entry(E, subtitle, L) -> ?updateEntry(subtitle);
 entry(E, summary, L) -> ?updateEntry(summary);
 entry(E, title, L) -> ?updateEntry(title);
 entry(E, updated, L) -> ?updateEntry(updated);
+entry(E, duration, L) -> ?updateEntry(duration);
 entry(E, image, L) -> ?updateEntry(image);
 entry(E, enclosure, _L) -> E.
 
@@ -133,6 +138,7 @@ feed_out(F) -> #{
   author => nil(F#feed.author),
   id => nil(F#feed.id),
   image => nil(F#feed.image),
+  language => nil(F#feed.language),
   link => nil(F#feed.link),
   subtitle => nil(F#feed.subtitle),
   summary => nil(F#feed.summary),
@@ -154,6 +160,7 @@ entry_out(E) -> #{
   id => nil(E#entry.id),
   image => nil(E#entry.image),
   link => nil(E#entry.link),
+  duration => nil(E#entry.duration),
   subtitle => nil(E#entry.subtitle),
   summary => nil(E#entry.summary),
   title => nil(E#entry.title)
@@ -198,23 +205,24 @@ start_element(_, _, S) ->
   S.
 
 %% Normalize qualified names
+qname({_, "author"}) -> author;
 qname({_, "channel"}) -> feed;
-qname({_, "feed"}) -> feed;
-qname({_, "item"}) -> entry;
-qname({_, "entry"}) -> entry;
-qname({_, "title"}) -> title;
-qname({_, "subtitle"}) -> subtitle;
 qname({_, "description"}) -> summary;
-qname({_, "summary"}) -> summary;
-qname({_, "link"}) -> link;
-qname({_, "pubDate"}) -> updated;
-qname({_, "updated"}) -> updated;
+qname({_, "enclosure"}) -> enclosure;
+qname({_, "entry"}) -> entry;
+qname({_, "feed"}) -> feed;
 qname({_, "guid"}) -> id;
 qname({_, "id"}) -> id;
-qname({_, "name"}) -> name;
-qname({_, "author"}) -> author;
-qname({_, "enclosure"}) -> enclosure;
 qname({_, "image"}) -> image;
+qname({_, "item"}) -> entry;
+qname({_, "language"}) -> language;
+qname({_, "duration"}) -> duration;
+qname({_, "link"}) -> link;
+qname({_, "pubDate"}) -> updated;
+qname({_, "subtitle"}) -> subtitle;
+qname({_, "summary"}) -> summary;
+qname({_, "title"}) -> title;
+qname({_, "updated"}) -> updated;
 qname({_, _}) -> undefined.
 
 event(startDocument, _, S) ->

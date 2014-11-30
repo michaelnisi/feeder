@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
 
-The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
+The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface. The parser implements an opinionated (incomplete) data transformation, but should be easy to extend (PRs welcome).
 
 ## Usage
 
@@ -27,6 +27,21 @@ file(Filename) ->
   EventState.
 ```
 
+## Example
+
+To run a simple example application do:
+
+```
+cd example
+make
+erl -pa ebin deps/*/ebin
+```
+
+```erlang
+example:start().
+example:print_titles("http://5by5.tv/rss").
+```
+
 ## types
 
 ### feed()
@@ -37,11 +52,12 @@ Feed is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and
 author :: nil | binary()
 id :: nil | binary()
 image :: nil | binary()
+language :: nil | binary()
 link :: nil | binary()
 subtitle :: nil | binary()
 summary :: nil | binary()
 title :: nil | binary()
-updated :: nil | integer()
+updated :: nil | binary()
 ```
 
 ### enclosure()
@@ -60,6 +76,7 @@ Entry is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys an
 
 ```erlang
 author :: nil | binary()
+duration :: nil | binary()
 enclosure :: nil | enclosure
 id :: nil | binary()
 image :: nil | binary()
@@ -67,7 +84,7 @@ link :: nil | binary()
 subtitle :: nil | binary()
 summary :: nil | binary()
 title :: nil | binary()
-updated :: nil | integer()
+updated :: nil | binary()
 ```
 
 ### option()

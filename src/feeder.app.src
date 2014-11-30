@@ -1,0 +1,11 @@
+{application, feeder, [
+	{description, ""},
+	{vsn, "1.3.0"},
+	{id, "git"},
+	{modules, [feeder]},
+	{registered, []},
+	{applications, [
+		kernel,
+		stdlib
+	]}
+]}.

@@ -3,7 +3,8 @@
 *.dump
 *.lock
 *.o
+*.plt
 *.so
 .eunit
-_build
 deps
+logs
