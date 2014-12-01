@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
 
-The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface. The parser normalizes the data to [maps](http://www.erlang.org/doc/man/maps.html). Its main purpose is to fathom XML stream parsing in Erlang.
+The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface. Parsed data is normalized to [maps](http://www.erlang.org/doc/man/maps.html).
 
 ## Usage
 
@@ -29,7 +29,7 @@ file(Filename) ->
 
 ## Example
 
-To run a simple example application do:
+To try HTTP streaming do:
 
 ```
 cd example
