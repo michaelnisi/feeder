@@ -63,8 +63,8 @@ event({entry, Entry}, {Feed, Entries}) ->
   {Feed, [Entry|Entries]};
 event({feed, Feed}, {[], Entries}) ->
   {Feed, Entries};
-event(endFeed, S) ->
-  S.
+event(endFeed, {Feed, Entries}) ->
+  {Feed, lists:reverse(Entries)}.
 
 opts() ->
   [{event_state, {[],[]}}, {event_fun, fun event/2}].

@@ -13,18 +13,18 @@ wanted() -> {#{
   title => <<"All About Everything">>,
   updated => nil}, [
 #{
-  author => <<"Various">>,
+  author => <<"John Doe">>,
   enclosure => #{
-    length => <<"4989537">>,
-    type => <<"audio/mpeg">>,
-    url => <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode1.mp3">>},
-  id => <<"http://example.com/podcasts/archive/aae20050601.mp3">>,
-  image => <<"http://example.com/podcasts/everything/AllAboutEverything/Episode3.jpg">>,
+    length => <<"8727310">>,
+    type => <<"audio/x-m4a">>,
+    url => <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a">>},
+  id => <<"http://example.com/podcasts/archive/aae20050615.m4a">>,
+  image => <<"http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg">>,
   link => nil,
-  duration => <<"3:59">>,
-  subtitle => <<"Red + Blue != Purple">>,
-  summary => <<"This week we talk about surviving in a Red state if you are a Blue person. Or vice versa.">>,
-  title => <<"Red, Whine, & Blue">>},
+  duration => <<"7:04">>,
+  subtitle => <<"Rückblicke, Einblicke und Ausblicke auf das netzpolitische Geschehen als wöchentlicher Podcast"/utf8>>,
+  summary => <<"This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!">>,
+  title => <<"Shake Shake Shake Your Spices">>},
 #{
   author => <<"Jane Doe">>,
   enclosure => #{
@@ -39,16 +39,16 @@ wanted() -> {#{
   summary => <<"This week we talk about metric vs. old english socket wrenches. Which one is better? Do you really need both? Get all of your answers here.">>,
   title => <<"Socket Wrench Shootout">>},
 #{
-  author => <<"John Doe">>,
+  author => <<"Various">>,
   enclosure => #{
-    length => <<"8727310">>,
-    type => <<"audio/x-m4a">>,
-    url => <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a">>},
-  id => <<"http://example.com/podcasts/archive/aae20050615.m4a">>,
-  image => <<"http://example.com/podcasts/everything/AllAboutEverything/Episode1.jpg">>,
+    length => <<"4989537">>,
+    type => <<"audio/mpeg">>,
+    url => <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode1.mp3">>},
+  id => <<"http://example.com/podcasts/archive/aae20050601.mp3">>,
+  image => <<"http://example.com/podcasts/everything/AllAboutEverything/Episode3.jpg">>,
   link => nil,
-  duration => <<"7:04">>,
-  subtitle => <<"Rückblicke, Einblicke und Ausblicke auf das netzpolitische Geschehen als wöchentlicher Podcast"/utf8>>,
-  summary => <<"This week we talk about salt and pepper shakers, comparing and contrasting pour rates, construction materials, and overall aesthetics. Come and join the party!">>,
-  title => <<"Shake Shake Shake Your Spices">>}
+  duration => <<"3:59">>,
+  subtitle => <<"Red + Blue != Purple">>,
+  summary => <<"This week we talk about surviving in a Red state if you are a Blue person. Or vice versa.">>,
+  title => <<"Red, Whine, & Blue">>}
 ]}.

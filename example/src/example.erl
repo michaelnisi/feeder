@@ -10,7 +10,7 @@
 -export([titles/1]).
 
 start() ->
-  application:ensure_started(inets),
+  ok = application:ensure_started(inets),
   application:start(?MODULE).
 
 stop() ->

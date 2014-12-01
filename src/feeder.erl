@@ -166,12 +166,11 @@ entry_out(E) -> #{
   title => nil(E#entry.title)
 }.
 
-end_element(undefined, S) ->
-  S;
-end_element(document, S) ->
-  {UserState, UserFun} = S#state.user,
-  UserFun(endFeed, UserState),
-  UserState;
+end_element(undefined, State) ->
+  State;
+end_element(document, State) ->
+  {UserState, UserFun} = State#state.user,
+  UserFun(endFeed, UserState);
 end_element(feed, State) ->
   {UserState, UserFun} = State#state.user,
   NewUserState = UserFun({feed, feed_out(State#state.feed)}, UserState),
@@ -185,12 +184,10 @@ end_element(E, State) when ?isFeed ->
   State#state{feed=Feed};
 end_element(E, State) when ?isEntry ->
   Entry = entry(State#state.entry, E, State#state.chars),
-  State#state{entry=Entry};
-end_element(_, S) ->
-  S.
+  State#state{entry=Entry}.
 
-start_element(undefined, _, S) ->
-  S;
+start_element(undefined, _, State) ->
+  State;
 start_element(feed, _Attrs, State) ->
   State#state{feed=#feed{}};
 start_element(entry, _Attrs, State) ->
@@ -200,9 +197,7 @@ start_element(E, Attrs, State) when ?isFeed ->
   State#state{chars=[], feed=Feed};
 start_element(E, Attrs, State) when ?isEntry ->
   Entry = attribute(entry, State#state.entry, E, Attrs),
-  State#state{chars=[], entry=Entry};
-start_element(_, _, S) ->
-  S.
+  State#state{chars=[], entry=Entry}.
 
 %% Normalize qualified names
 qname({_, "author"}) -> author;
