@@ -14,83 +14,72 @@
 -type user_fun() :: term().
 
 -record(feed, {
-    author :: undefined | binary(),
-    id :: undefined | binary(),
-    image :: undefined | binary(),
-    link :: undefined | binary(),
-    language :: undefined | binary(),
-    subtitle :: undefined | binary(),
-    summary :: undefined | binary(),
-    title :: undefined | binary(),
-    updated :: undefined | integer()
-  }).
+  author :: undefined | binary(),
+  id :: undefined | binary(),
+  image :: undefined | binary(),
+  link :: undefined | binary(),
+  language :: undefined | binary(),
+  subtitle :: undefined | binary(),
+  summary :: undefined | binary(),
+  title :: undefined | binary(),
+  updated :: undefined | integer()
+}).
 
 -record(enclosure, {
-    url :: undefined | binary(),
-    length :: undefined | binary(),
-    type :: undefined | binary()
-  }).
+  url :: undefined | binary(),
+  length :: undefined | binary(),
+  type :: undefined | binary()
+}).
 
 -record(entry, {
-    author :: undefined | binary(),
-    enclosure :: undefined | #enclosure{},
-    id :: undefined | binary(),
-    image :: undefined | binary(),
-    link :: undefined | binary(),
-    duration :: undefined | binary(),
-    subtitle :: undefined | binary(),
-    summary :: undefined | binary(),
-    title :: undefined | binary(),
-    updated :: undefined | integer()
-  }).
+  author :: undefined | binary(),
+  enclosure :: undefined | #enclosure{},
+  id :: undefined | binary(),
+  image :: undefined | binary(),
+  link :: undefined | binary(),
+  duration :: undefined | binary(),
+  subtitle :: undefined | binary(),
+  summary :: undefined | binary(),
+  title :: undefined | binary(),
+  updated :: undefined | integer()
+}).
 
 -record(state, {
-    chars :: undefined | [binary()],
-    feed :: #feed{},
-    entry :: #entry{},
-    user :: {user_state(), user_fun()}
-  }).
+  chars :: undefined | [binary()],
+  feed :: #feed{},
+  entry :: #entry{},
+  user :: {user_state(), user_fun()}
+}).
 
 trim(S) ->
   Bin = unicode:characters_to_binary(S, utf8),
   RE = "^[ \t\n\r]+|[ \t\n\r]+$",
   re:replace(Bin, RE, "", [global, {return, binary}]).
 
--define(updateFeed(Atom),
-  if
-    F#feed.Atom =:= undefined, L =/= [] ->
-      F#feed{Atom=trim(L)};
-    true ->
-      F
-  end).
+update(T, F, L) when L =/= [] ->
+  setelement(F, T, trim(L));
+update(T, _, _) ->
+  T.
 
-feed(F, title, L) -> ?updateFeed(title);
-feed(F, subtitle, L) -> ?updateFeed(subtitle);
-feed(F, language, L) -> ?updateFeed(language);
-feed(F, link, L) -> ?updateFeed(link);
-feed(F, summary, L) -> ?updateFeed(summary);
-feed(F, author, L) -> ?updateFeed(author);
-feed(F, updated, L) -> ?updateFeed(updated);
-feed(F, image, L) -> ?updateFeed(image);
-feed(F, id, L) -> ?updateFeed(id).
+feed(F, title, L) -> update(F, #feed.title, L);
+feed(F, subtitle, L) -> update(F, #feed.subtitle, L);
+feed(F, language, L) -> update(F, #feed.language, L);
+feed(F, link, L) -> update(F, #feed.link, L);
+feed(F, summary, L) -> update(F, #feed.summary, L);
+feed(F, author, L) -> update(F, #feed.author, L);
+feed(F, updated, L) -> update(F, #feed.updated, L);
+feed(F, image, L) -> update(F, #feed.image, L);
+feed(F, id, L) -> update(F, #feed.id, L).
 
--define(updateEntry(Atom),
-  if
-    E#entry.Atom =:= undefined, L =/= [] ->
-      E#entry{Atom=trim(L)};
-    true ->
-      E
-  end).
-
-entry(E, author, L) -> ?updateEntry(author);
-entry(E, id, L) -> ?updateEntry(id);
-entry(E, link, L) -> ?updateEntry(link);
-entry(E, subtitle, L) -> ?updateEntry(subtitle);
-entry(E, summary, L) -> ?updateEntry(summary);
-entry(E, title, L) -> ?updateEntry(title);
-entry(E, updated, L) -> ?updateEntry(updated);
-entry(E, duration, L) -> ?updateEntry(duration);
-entry(E, image, L) -> ?updateEntry(image);
+entry(E, author, L) -> update(E, #feed.author, L);
+entry(E, id, L) -> update(E, #entry.id, L);
+entry(E, link, L) -> update(E, #entry.link, L);
+entry(E, subtitle, L) -> update(E, #entry.subtitle, L);
+entry(E, summary, L) -> update(E, #entry.summary, L);
+entry(E, title, L) -> update(E, #entry.title, L);
+entry(E, updated, L) -> update(E, #entry.updated, L);
+entry(E, duration, L) -> update(E, #entry.duration, L);
+entry(E, image, L) -> update(E, #entry.image, L);
 entry(E, enclosure, _L) -> E.
 
 -define(isFeed,
