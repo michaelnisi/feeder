@@ -1,5 +1,5 @@
 {application, feeder, [
-	{description, ""},
+	{description, "Stream parse RSS and Atom formatted XML feeds."},
 	{vsn, "1.4.0"},
 	{id, "git"},
 	{modules, [feeder]},

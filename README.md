@@ -112,19 +112,25 @@ State that is accessible in the event call back function.
 
 The events that are sent to the user via the callback.
 
-`{feed, Feed}`
+```erlang
+{feed, Feed}
+```
 
 - `Feed = feed()`
 
 Receive notification when the meta information of the feed or channel has been parsed.
 
-`{entry, Entry}`
+```erlang
+{entry, Entry}`
+```
 
 - `Entry = entry()`
 
 Receive notification for each entry or article in the feed.
 
-`endFeed`
+```erlang
+endFeed
+```
 
 Receive notification of the end of a document. **Feeder** will send this event only once, and it will be the last event during the parse.
 
