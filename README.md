@@ -121,7 +121,7 @@ The events that are sent to the user via the callback.
 Receive notification when the meta information of the feed or channel has been parsed.
 
 ```erlang
-{entry, Entry}`
+{entry, Entry}
 ```
 
 - `Entry = entry()`
