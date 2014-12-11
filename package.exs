@@ -1,9 +1,9 @@
-defmodule Feeer.Mixfile do
+defmodule Feeder.Mixfile do
   use Mix.Project
 
   def project do
     [app: :feeder,
-      version: "1.4.1",
+      version: "1.4.2",
       description: description,
       package: package,
       deps: deps]

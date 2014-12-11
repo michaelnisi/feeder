@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
 
-The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface. Parsed data is normalized to [maps](http://www.erlang.org/doc/man/maps.html).
+The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
 
 ## Usage
 
@@ -49,7 +49,7 @@ example:print_titles("http://5by5.tv/rss").
 The `channel` or `feed` element of the feed.
 
 ```erlang
-{feed, {Author, Id, Image, Language, Link, Subtitle, Summary, Title, Updated}
+{feed, Author, Id, Image, Language, Link, Subtitle, Summary, Title, Updated}
 ```
 - `Author = undefined | binary()`
 - `Id = undefined | binary()`
@@ -121,7 +121,7 @@ The events that are sent to the user via the callback.
 Receive notification when the meta information of the feed or channel has been parsed.
 
 ```erlang
-{entry, Entry}`
+{entry, Entry}
 ```
 
 - `Entry = entry()`

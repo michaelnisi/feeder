@@ -1,3 +1,3 @@
 PROJECT = feeder
-VERSION = 1.0.3
+VERSION = 1.4.2
 include erlang.mk

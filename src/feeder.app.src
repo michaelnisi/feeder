@@ -1,11 +1,11 @@
 {application, feeder, [
-	{description, "Stream parse RSS and Atom formatted XML feeds."},
-	{vsn, "1.4.0"},
-	{id, "git"},
-	{modules, [feeder]},
-	{registered, []},
-	{applications, [
-		kernel,
-		stdlib
-	]}
+  {description, "Stream parse RSS and Atom formatted XML feeds."},
+  {vsn, "1.4.2"},
+  {id, "git"},
+  {modules, [feeder]},
+  {registered, []},
+  {applications, [
+    kernel,
+    stdlib
+  ]}
 ]}.
