@@ -1,6 +1,6 @@
 {application, feeder, [
 	{description, ""},
-	{vsn, "1.3.3"},
+	{vsn, "1.4.0"},
 	{id, "git"},
 	{modules, [feeder]},
 	{registered, []},

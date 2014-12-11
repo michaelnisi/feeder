@@ -46,46 +46,51 @@ example:print_titles("http://5by5.tv/rss").
 
 ### feed()
 
-Feed is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and value types:
+The `channel` or `feed` element of the feed.
 
 ```erlang
-author :: nil | binary()
-id :: nil | binary()
-image :: nil | binary()
-language :: nil | binary()
-link :: nil | binary()
-subtitle :: nil | binary()
-summary :: nil | binary()
-title :: nil | binary()
-updated :: nil | binary()
+{feed, {Author, Id, Image, Language, Link, Subtitle, Summary, Title, Updated}
 ```
+- `Author = undefined | binary()`
+- `Id = undefined | binary()`
+- `Image = undefined | binary()`
+- `Link = undefined | binary()`
+- `Language = undefined | binary()`
+- `Subtitle = undefined | binary()`
+- `Summary = undefined | binary()`
+- `Title = undefined | binary()`
+- `Updated = undefined | binary()`
 
 ### enclosure()
 
-Enclosure is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and value types:
+The `enclosure` element of an `item` or `entry` of the feed.
 
 ```erlang
-url :: nil | binary()
-length :: nil | binary()
-type :: nil | binary()
+{enclosure, Url, Length, Type}
 ```
+
+- `Url = undefined | binary()`
+- `Length = undefined | binary()`
+- `Type = undefined | binary()`
 
 ### entry()
 
-Entry is a [Map](http://www.erlang.org/doc/man/maps.html) with following keys and value types:
+An `item` or `entry` element of the feed.
 
 ```erlang
-author :: nil | binary()
-duration :: nil | binary()
-enclosure :: nil | enclosure
-id :: nil | binary()
-image :: nil | binary()
-link :: nil | binary()
-subtitle :: nil | binary()
-summary :: nil | binary()
-title :: nil | binary()
-updated :: nil | binary()
+{entry, Author, Duration, Enclosure, Id, Image, Link, Subtitle, Summary, Title, Updated}
 ```
+
+- `Author = undefined | binary()`
+- `Duration = undefined | binary()`
+- `Enclosure = undefined | enclosure()`
+- `Id = undefined | binary()`
+- `Image = undefined | binary()`
+- `Link = undefined | binary()`
+- `Subtitle = undefined | binary()`
+- `Summary = undefined | binary()`
+- `Title = undefined | binary()`
+- `Updated = undefined | binary()`
 
 ### option()
 

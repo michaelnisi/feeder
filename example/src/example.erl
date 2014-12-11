@@ -30,7 +30,7 @@ entries(Url) ->
 
 titles(Url) ->
   Entries = entries(Url),
-  TitleFrom = fun (Entry) -> maps:get(title, Entry) end,
+  TitleFrom = fun (Entry) -> element(10, Entry) end,
   [TitleFrom(Entry) || Entry <- Entries].
 
 print_titles(Url) ->

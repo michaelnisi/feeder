@@ -17,12 +17,12 @@
   author :: undefined | binary(),
   id :: undefined | binary(),
   image :: undefined | binary(),
-  link :: undefined | binary(),
   language :: undefined | binary(),
+  link :: undefined | binary(),
   subtitle :: undefined | binary(),
   summary :: undefined | binary(),
   title :: undefined | binary(),
-  updated :: undefined | integer()
+  updated :: undefined | binary()
 }).
 
 -record(enclosure, {
@@ -33,15 +33,15 @@
 
 -record(entry, {
   author :: undefined | binary(),
+  duration :: undefined | binary(),
   enclosure :: undefined | #enclosure{},
   id :: undefined | binary(),
   image :: undefined | binary(),
   link :: undefined | binary(),
-  duration :: undefined | binary(),
   subtitle :: undefined | binary(),
   summary :: undefined | binary(),
   title :: undefined | binary(),
-  updated :: undefined | integer()
+  updated :: undefined | binary()
 }).
 
 -record(state, {
@@ -117,44 +117,6 @@ attribute(entry, E, image, [{_, _, "href", L}]) ->
 attribute(entry, E, _, _) ->
   E.
 
-%% Elixir prefers nil over undefined.
-nil(undefined) ->
-  nil;
-nil(Any) ->
-  Any.
-
-feed_out(F) -> #{
-  author => nil(F#feed.author),
-  id => nil(F#feed.id),
-  image => nil(F#feed.image),
-  language => nil(F#feed.language),
-  link => nil(F#feed.link),
-  subtitle => nil(F#feed.subtitle),
-  summary => nil(F#feed.summary),
-  title => nil(F#feed.title),
-  updated => nil(F#feed.updated)
-}.
-
-enclosure_out(undefined) ->
-  nil;
-enclosure_out(E) -> #{
-  url => nil(E#enclosure.url),
-  length => nil(E#enclosure.length),
-  type => nil(E#enclosure.type)
-}.
-
-entry_out(E) -> #{
-  author => nil(E#entry.author),
-  enclosure => enclosure_out(E#entry.enclosure),
-  id => nil(E#entry.id),
-  image => nil(E#entry.image),
-  link => nil(E#entry.link),
-  duration => nil(E#entry.duration),
-  subtitle => nil(E#entry.subtitle),
-  summary => nil(E#entry.summary),
-  title => nil(E#entry.title)
-}.
-
 end_element(undefined, State) ->
   State;
 end_element(document, State) ->
@@ -162,11 +124,11 @@ end_element(document, State) ->
   UserFun(endFeed, UserState);
 end_element(feed, State) ->
   {UserState, UserFun} = State#state.user,
-  NewUserState = UserFun({feed, feed_out(State#state.feed)}, UserState),
+  NewUserState = UserFun({feed, State#state.feed}, UserState),
   State#state{feed=undefined, user={NewUserState, UserFun}};
 end_element(entry, State) ->
   {UserState, UserFun} = State#state.user,
-  NewUserState = UserFun({entry, entry_out(State#state.entry)}, UserState),
+  NewUserState = UserFun({entry, State#state.entry}, UserState),
   State#state{entry=undefined, user={NewUserState, UserFun}};
 end_element(E, State) when ?isFeed ->
   Feed = feed(State#state.feed, E, State#state.chars),
