@@ -17,4 +17,4 @@ child_spec() -> {
 }.
 
 init([]) ->
-  {ok, {{simple_one_for_one, 10, 1}, [child_spec()]}}.
+  {ok, {{simple_one_for_one, 1, 1}, [child_spec()]}}.

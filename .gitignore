@@ -5,6 +5,8 @@
 *.o
 *.plt
 *.so
+.erlang.mk*
 .eunit
 deps
+ebin
 logs
