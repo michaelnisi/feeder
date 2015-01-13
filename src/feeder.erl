@@ -11,7 +11,19 @@
 -endif.
 
 -type user_state() :: term().
--type user_fun() :: term().
+-export_type([user_state/0]).
+
+-type user_fun() :: function().
+-export_type([user_fun/0]).
+
+-type feed() :: tuple().
+-export_type([feed/0]).
+
+-type enclosure() :: tuple().
+-export_type([enclosure/0]).
+
+-type entry() :: tuple().
+-export_type([entry/0]).
 
 -record(feed, {
   author :: undefined | binary(),

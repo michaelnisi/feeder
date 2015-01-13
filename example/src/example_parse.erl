@@ -60,13 +60,13 @@ request(State=#state{url=Url}) ->
 
 result({ok, State, _Rest}) ->
   Entries = lists:reverse(State#state.entries),
-  {ok, State#state.feed, Entries};
+  {stop, normal, {ok, State#state.feed, Entries}, State};
 result(Result) ->
   Result.
 
 ready(executing, _, State) ->
   R = request(State),
-  {stop, normal, result(R), State}.
+  result(R).
 
 terminate(_Reason, _StateName, _StateData) ->
   ok.
