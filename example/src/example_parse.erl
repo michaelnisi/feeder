@@ -61,15 +61,18 @@ request(State=#state{url=Url}) ->
 result({ok, State, _Rest}) ->
   Entries = lists:reverse(State#state.entries),
   {stop, normal, {ok, State#state.feed, Entries}, State};
-result(Result) ->
-  Result.
+result({error, Reason}) ->
+  {stop, error, Reason};
+result({fatal_error, _, Reason,_ ,_State}) ->
+  {stop, error, Reason}.
 
 ready(executing, _, State) ->
   R = request(State),
   result(R).
 
-terminate(_Reason, _StateName, State) ->
-  httpc:cancel_request(State#state.reqId),
+terminate(_Reason, _StateName, #state{reqId=ReqId}) ->
+  httpc:cancel_request(ReqId);
+terminate(_Reason, _StateName, _StateData) ->
   ok.
 
 event_fun({entry, Entry}, State) ->

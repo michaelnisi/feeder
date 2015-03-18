@@ -14,16 +14,21 @@
 -export([atom/1]).
 -export([itunes/1]).
 -export([rss/1]).
+-export([author/1]).
 
-all() ->
-	[{group, internal}, {group, parse}].
+all() -> [
+  {group, internal},
+  {group, parse},
+  {group, parse_details}
+].
 
 suite() ->
-	[{timetrap, {seconds, 60}}].
+  [{timetrap, {seconds, 60}}].
 
 groups() -> [
   {internal, [parallel], [trim, qname]},
-  {parse, [parallel], [atom, rss, itunes]}
+  {parse, [parallel], [atom, rss, itunes]},
+  {parse_details, [parallel], [author]}
 ].
 
 init_per_group(_, Config) ->
@@ -46,12 +51,15 @@ q([]) ->
 
 qname(_) -> q([
   {author, ["author"]},
+  {duration, ["duration"]},
   {enclosure, ["enclosure"]},
   {entry, ["entry", "item"]},
   {feed, ["feed", "channel"]},
   {id, ["id", "guid"]},
   {image, ["image"]},
+  {language, ["language"]},
   {link, ["link"]},
+  {name, ["name"]},
   {subtitle, ["subtitle"]},
   {summary, ["summary", "description"]},
   {title, ["title"]},
@@ -83,3 +91,5 @@ test(Conf, Name, Wanted) ->
 atom(Conf) -> test(Conf, "atom", atom:wanted()).
 rss(Conf) -> test(Conf, "rss", rss:wanted()).
 itunes(Conf) -> test(Conf, "itunes", itunes:wanted()).
+
+author(Conf) -> test(Conf, "author", author:wanted()).

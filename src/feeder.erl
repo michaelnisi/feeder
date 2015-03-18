@@ -10,20 +10,14 @@
 -compile(export_all).
 -endif.
 
--type user_state() :: term().
--export_type([user_state/0]).
-
 -type user_fun() :: function().
--export_type([user_fun/0]).
-
--type feed() :: tuple().
--export_type([feed/0]).
+-type user_state() :: term().
+-export_type([user_fun/0, user_state/0]).
 
 -type enclosure() :: tuple().
--export_type([enclosure/0]).
-
 -type entry() :: tuple().
--export_type([entry/0]).
+-type feed() :: tuple().
+-export_type([enclosure/0, entry/0, feed/0]).
 
 -record(feed, {
   author :: undefined | binary(),
@@ -57,42 +51,82 @@
 }).
 
 -record(state, {
+  author :: boolean(),
   chars :: undefined | [binary()],
-  feed :: #feed{},
   entry :: #entry{},
+  feed :: #feed{},
+  image :: boolean(),
   user :: {user_state(), user_fun()}
 }).
+
+%% Third pass
 
 trim(S) ->
   Bin = unicode:characters_to_binary(S, utf8),
   RE = "^[ \t\n\r]+|[ \t\n\r]+$",
   re:replace(Bin, RE, "", [global, {return, binary}]).
 
+%% Once we deliberately set something, we do not override it.
 update(T, F, L) when L =/= [] ->
-  setelement(F, T, trim(L));
+  case element(F, T) of
+    undefined -> setelement(F, T, trim(L));
+    _ -> T
+  end;
 update(T, _, _) ->
   T.
 
-feed(F, title, L) -> update(F, #feed.title, L);
-feed(F, subtitle, L) -> update(F, #feed.subtitle, L);
-feed(F, language, L) -> update(F, #feed.language, L);
-feed(F, link, L) -> update(F, #feed.link, L);
-feed(F, summary, L) -> update(F, #feed.summary, L);
-feed(F, author, L) -> update(F, #feed.author, L);
-feed(F, updated, L) -> update(F, #feed.updated, L);
-feed(F, image, L) -> update(F, #feed.image, L);
-feed(F, id, L) -> update(F, #feed.id, L).
+-spec feed(#feed{}, atom(), #state{}) -> #feed{}.
+feed(F, author, State) ->
+  update(F, #feed.author, State#state.chars);
+feed(F, name, State) when State#state.author =:= true ->
+  update(F, #feed.author, State#state.chars);
+feed(F, id, State) ->
+  update(F, #feed.id, State#state.chars);
+feed(F, image, State) ->
+  update(F, #feed.image, State#state.chars);
+feed(F, url, State) when State#state.image =:= true ->
+  update(F, #feed.image, State#state.chars);
+feed(F, language, State) ->
+  update(F, #feed.language, State#state.chars);
+feed(F, link, State) ->
+  update(F, #feed.link, State#state.chars);
+feed(F, subtitle, State) ->
+  update(F, #feed.subtitle, State#state.chars);
+feed(F, summary, State) ->
+  update(F, #feed.summary, State#state.chars);
+feed(F, title, State) ->
+  update(F, #feed.title, State#state.chars);
+feed(F, updated, State) ->
+  update(F, #feed.updated, State#state.chars);
+feed(F, _, _) ->
+  F.
 
-entry(E, author, L) -> update(E, #feed.author, L);
-entry(E, id, L) -> update(E, #entry.id, L);
-entry(E, link, L) -> update(E, #entry.link, L);
-entry(E, subtitle, L) -> update(E, #entry.subtitle, L);
-entry(E, summary, L) -> update(E, #entry.summary, L);
-entry(E, title, L) -> update(E, #entry.title, L);
-entry(E, updated, L) -> update(E, #entry.updated, L);
-entry(E, duration, L) -> update(E, #entry.duration, L);
-entry(E, image, L) -> update(E, #entry.image, L);
-entry(E, enclosure, _L) -> E.
+-spec entry(#entry{}, atom(), #state{}) -> #entry{}.
+entry(E, author, State) ->
+  update(E, #entry.author, State#state.chars);
+entry(E, name, State) when State#state.author =:= true ->
+  update(E, #entry.author, State#state.chars);
+entry(E, duration, State) ->
+  update(E, #entry.duration, State#state.chars);
+entry(E, enclosure, _State) -> E;
+entry(E, id, State) ->
+  update(E, #entry.id, State#state.chars);
+entry(E, image, State) ->
+  update(E, #entry.image, State#state.chars);
+entry(E, link, State) ->
+  update(E, #entry.link, State#state.chars);
+entry(E, subtitle, State) ->
+  update(E, #entry.subtitle, State#state.chars);
+entry(E, summary, State) ->
+  update(E, #entry.summary, State#state.chars);
+entry(E, title, State) ->
+  update(E, #entry.title, State#state.chars);
+entry(E, updated, State) ->
+  update(E, #entry.updated, State#state.chars);
+entry(E, _, _) ->
+  E.
+
+%% Second pass
 
 -define(isFeed,
   State#state.feed =/= undefined,
@@ -114,21 +148,41 @@ enc(E, type, V) -> E#enclosure{type=V}.
 enclosure(Attrs) ->
   enc(#enclosure{}, Attrs).
 
-attribute(feed, F, link, [{_, _, "href", L}]) ->
-  feed(F, link, L);
-attribute(feed, F, image, [{_, _, "href", L}]) ->
-  feed(F, image, L);
-attribute(feed, F, _, _) ->
-  F;
-attribute(entry, E, link, [{_, _, "href", L}]) ->
-  entry(E, link, L);
-attribute(entry, Entry, enclosure, Attrs) ->
-  Entry#entry{enclosure=enclosure(Attrs)};
-attribute(entry, E, image, [{_, _, "href", L}]) ->
-  entry(E, image, L);
-attribute(entry, E, _, _) ->
-  E.
+href(Attrs) ->
+  case lists:keyfind("href", 3, Attrs) of
+    {_, _, "href", L} ->
+      case lists:keyfind("rel", 3, Attrs) of
+        {_, _, "rel", "shorturl"} -> [];
+        _ -> L
+      end;
+    false -> []
+  end.
 
+-spec attribute(atom(), #state{}, atom(), list()) -> #feed{} | #entry{}.
+attribute(feed, State, link, Attrs) ->
+  feed(State#state.feed, link, State#state{chars=href(Attrs)});
+attribute(feed, State, image, Attrs) ->
+  feed(State#state.feed, image, State#state{chars=href(Attrs)});
+attribute(feed, State, _, _) ->
+  State#state.feed;
+attribute(entry, State, link, Attrs) ->
+  entry(State#state.entry, link, State#state{chars=href(Attrs)});
+attribute(entry, State, image, Attrs) ->
+  entry(State#state.entry, image, State#state{chars=href(Attrs)});
+attribute(entry, State, enclosure, Attrs) ->
+  Entry = State#state.entry,
+  Entry#entry{enclosure=enclosure(Attrs)};
+attribute(entry, State, _, _) ->
+  State#state.entry.
+
+flag(author, State, Flag) ->
+  State#state{author=Flag};
+flag(image, State, Flag) ->
+  State#state{image=Flag};
+flag(_, State, _) ->
+  State.
+
+-spec end_element(atom(), #state{}) -> #state{}.
 end_element(undefined, State) ->
   State;
 end_element(document, State) ->
@@ -143,29 +197,37 @@ end_element(entry, State) ->
   NewUserState = UserFun({entry, State#state.entry}, UserState),
   State#state{entry=undefined, user={NewUserState, UserFun}};
 end_element(E, State) when ?isFeed ->
-  Feed = feed(State#state.feed, E, State#state.chars),
-  State#state{feed=Feed};
+  NewState = flag(E, State, false),
+  Feed = feed(NewState#state.feed, E, State),
+  NewState#state{feed=Feed};
 end_element(E, State) when ?isEntry ->
-  Entry = entry(State#state.entry, E, State#state.chars),
-  State#state{entry=Entry}.
+  NewState = flag(E, State, false),
+  Entry = entry(NewState#state.entry, E, State),
+  NewState#state{entry=Entry}.
 
+-spec start_element(atom(), list(), #state{}) -> #state{}.
 start_element(undefined, _, State) ->
-  State;
-start_element(feed, _Attrs, State) ->
+  State#state{chars=[]};
+start_element(feed, _, State) ->
   State#state{feed=#feed{}};
-start_element(entry, _Attrs, State) ->
+start_element(entry, _, State) ->
   State#state{entry=#entry{}};
 start_element(E, Attrs, State) when ?isFeed ->
-  Feed = attribute(feed, State#state.feed, E, Attrs),
-  State#state{chars=[], feed=Feed};
+  NewState = flag(E, State, true),
+  Feed = attribute(feed, NewState, E, Attrs),
+  NewState#state{chars=[], feed=Feed};
 start_element(E, Attrs, State) when ?isEntry ->
-  Entry = attribute(entry, State#state.entry, E, Attrs),
-  State#state{chars=[], entry=Entry}.
+  NewState = flag(E, State, true),
+  Entry = attribute(entry, NewState, E, Attrs),
+  NewState#state{chars=[], entry=Entry}.
 
-%% Normalize qualified names
+%% First pass
+
 qname({_, "author"}) -> author;
+qname({_, "contributor"}) -> author;
 qname({_, "channel"}) -> feed;
 qname({_, "description"}) -> summary;
+qname({_, "duration"}) -> duration;
 qname({_, "enclosure"}) -> enclosure;
 qname({_, "entry"}) -> entry;
 qname({_, "feed"}) -> feed;
@@ -174,13 +236,14 @@ qname({_, "id"}) -> id;
 qname({_, "image"}) -> image;
 qname({_, "item"}) -> entry;
 qname({_, "language"}) -> language;
-qname({_, "duration"}) -> duration;
 qname({_, "link"}) -> link;
+qname({_, "name"}) -> name;
 qname({_, "pubDate"}) -> updated;
 qname({_, "subtitle"}) -> subtitle;
 qname({_, "summary"}) -> summary;
 qname({_, "title"}) -> title;
 qname({_, "updated"}) -> updated;
+qname({_, "url"}) -> url;
 qname({_, _}) -> undefined.
 
 event(startDocument, _, S) ->
@@ -196,10 +259,25 @@ event(endDocument, _, S) ->
 event(_, _, S) ->
   S.
 
+%% API
+
+event({entry, Entry}, {Feed, Entries}) ->
+  {Feed, [Entry|Entries]};
+event({feed, Feed}, {[], Entries}) ->
+  {Feed, Entries};
+event(endFeed, {Feed, Entries}) ->
+  {Feed, lists:reverse(Entries)}.
+
+user_state(undefined) -> {[], []};
+user_state(S) -> S.
+
+user_fun(undefined) -> fun event/2;
+user_fun(F) -> F.
+
 opts(file, Opts) ->
-  UserState = proplists:get_value(event_state, Opts),
-  UserFun = proplists:get_value(event_fun, Opts),
-  User = {UserState, UserFun},
+  US = user_state(proplists:get_value(event_state, Opts)),
+  UF = user_fun(proplists:get_value(event_fun, Opts)),
+  User = {US, UF},
   [{event_state, #state{user=User}}, {event_fun, fun event/3}];
 opts(stream, Opts) ->
   CS = proplists:get_value(continuation_state, Opts),

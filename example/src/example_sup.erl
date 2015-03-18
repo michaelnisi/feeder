@@ -10,7 +10,7 @@ start_link() ->
 child_spec() -> {
   example_worker,
   {example_parse, start_link, []},
-  transient,
+  temporary,
   3000,
   worker,
   [example_parse]
