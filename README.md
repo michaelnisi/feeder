@@ -54,8 +54,8 @@ The `channel` or `feed` element of the feed.
 - `Author = undefined | binary()`
 - `Id = undefined | binary()`
 - `Image = undefined | binary()`
-- `Link = undefined | binary()`
 - `Language = undefined | binary()`
+- `Link = undefined | binary()`
 - `Subtitle = undefined | binary()`
 - `Summary = undefined | binary()`
 - `Title = undefined | binary()`

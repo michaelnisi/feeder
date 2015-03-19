@@ -4,6 +4,8 @@
 -export([all/1]).
 -export([entries/1]).
 -export([feed/1]).
+-export([links/1]).
+-export([print_links/1]).
 -export([print_titles/1]).
 -export([start/0]).
 -export([stop/0]).
@@ -29,13 +31,19 @@ entries(Url) ->
   Entries.
 
 titles(Url) ->
-  Entries = entries(Url),
-  TitleFrom = fun (Entry) -> element(10, Entry) end,
-  [TitleFrom(Entry) || Entry <- Entries].
+  [element(10, Entry) || Entry <-  entries(Url)].
 
-print_titles(Url) ->
-  Titles = titles(Url),
+links(Url) ->
+  [element(7, Entry) || Entry <-  entries(Url)].
+
+print(L) ->
   lists:foreach(fun (Title) ->
     io:format("~ts~n", [Title])
-    end, Titles),
+    end, L),
   ok.
+
+print_titles(Url) ->
+  print(titles(Url)).
+
+print_links(Url) ->
+  print(links(Url)).

@@ -224,8 +224,9 @@ start_element(E, Attrs, State) when ?isEntry ->
 %% First pass
 
 qname({_, "author"}) -> author;
-qname({_, "contributor"}) -> author;
 qname({_, "channel"}) -> feed;
+qname({_, "contributor"}) -> author;
+qname({_, "creator"}) -> author;
 qname({_, "description"}) -> summary;
 qname({_, "duration"}) -> duration;
 qname({_, "enclosure"}) -> enclosure;
