@@ -10,15 +10,6 @@
 -compile(export_all).
 -endif.
 
--type user_fun() :: function().
--type user_state() :: term().
--export_type([user_fun/0, user_state/0]).
-
--type enclosure() :: tuple().
--type entry() :: tuple().
--type feed() :: tuple().
--export_type([enclosure/0, entry/0, feed/0]).
-
 -record(feed, {
   author :: undefined | binary(),
   id :: undefined | binary(),
@@ -40,7 +31,7 @@
 -record(entry, {
   author :: undefined | binary(),
   duration :: undefined | binary(),
-  enclosure :: undefined | #enclosure{},
+  enclosure :: undefined | enclosure(),
   id :: undefined | binary(),
   image :: undefined | binary(),
   link :: undefined | binary(),
@@ -53,11 +44,21 @@
 -record(state, {
   author :: boolean(),
   chars :: undefined | [binary()],
-  entry :: #entry{},
-  feed :: #feed{},
+  entry :: entry(),
+  feed :: feed(),
   image :: boolean(),
   user :: {user_state(), user_fun()}
 }).
+
+-type state() :: #state{}.
+-type user_fun() :: function().
+-type user_state() :: term().
+-export_type([user_fun/0, user_state/0]).
+
+-type enclosure() :: #enclosure{}.
+-type entry() :: #entry{}.
+-type feed() :: #feed{}.
+-export_type([enclosure/0, entry/0, feed/0]).
 
 %% Third pass
 
@@ -75,7 +76,7 @@ update(T, F, L) when L =/= [] ->
 update(T, _, _) ->
   T.
 
--spec feed(#feed{}, atom(), #state{}) -> #feed{}.
+-spec feed(feed(), atom(), state()) -> feed().
 feed(F, author, State) ->
   update(F, #feed.author, State#state.chars);
 feed(F, name, State) when State#state.author =:= true ->
@@ -101,7 +102,7 @@ feed(F, updated, State) ->
 feed(F, _, _) ->
   F.
 
--spec entry(#entry{}, atom(), #state{}) -> #entry{}.
+-spec entry(entry(), atom(), state()) -> entry().
 entry(E, author, State) ->
   update(E, #entry.author, State#state.chars);
 entry(E, name, State) when State#state.author =:= true ->
@@ -128,11 +129,11 @@ entry(E, _, _) ->
 
 %% Second pass
 
--define(isFeed,
+-define(IS_FEED,
   State#state.feed =/= undefined,
   State#state.entry =:= undefined).
 
--define(isEntry,
+-define(IS_ENTRY,
   State#state.entry =/= undefined).
 
 enc(E, [H|T]) ->
@@ -158,7 +159,7 @@ href(Attrs) ->
     false -> []
   end.
 
--spec attribute(atom(), #state{}, atom(), list()) -> #feed{} | #entry{}.
+-spec attribute(atom(), state(), atom(), list()) -> feed() | entry().
 attribute(feed, State, link, Attrs) ->
   feed(State#state.feed, link, State#state{chars=href(Attrs)});
 attribute(feed, State, image, Attrs) ->
@@ -182,7 +183,7 @@ flag(image, State, Flag) ->
 flag(_, State, _) ->
   State.
 
--spec end_element(atom(), #state{}) -> #state{}.
+-spec end_element(atom(), state()) -> state().
 end_element(undefined, State) ->
   State;
 end_element(document, State) ->
@@ -196,27 +197,27 @@ end_element(entry, State) ->
   {UserState, UserFun} = State#state.user,
   NewUserState = UserFun({entry, State#state.entry}, UserState),
   State#state{entry=undefined, user={NewUserState, UserFun}};
-end_element(E, State) when ?isFeed ->
+end_element(E, State) when ?IS_FEED ->
   NewState = flag(E, State, false),
   Feed = feed(NewState#state.feed, E, State),
   NewState#state{feed=Feed};
-end_element(E, State) when ?isEntry ->
+end_element(E, State) when ?IS_ENTRY ->
   NewState = flag(E, State, false),
   Entry = entry(NewState#state.entry, E, State),
   NewState#state{entry=Entry}.
 
--spec start_element(atom(), list(), #state{}) -> #state{}.
+-spec start_element(atom(), list(), state()) -> state().
 start_element(undefined, _, State) ->
   State#state{chars=[]};
 start_element(feed, _, State) ->
   State#state{feed=#feed{}};
 start_element(entry, _, State) ->
   State#state{entry=#entry{}};
-start_element(E, Attrs, State) when ?isFeed ->
+start_element(E, Attrs, State) when ?IS_FEED ->
   NewState = flag(E, State, true),
   Feed = attribute(feed, NewState, E, Attrs),
   NewState#state{chars=[], feed=Feed};
-start_element(E, Attrs, State) when ?isEntry ->
+start_element(E, Attrs, State) when ?IS_ENTRY ->
   NewState = flag(E, State, true),
   Entry = attribute(entry, NewState, E, Attrs),
   NewState#state{chars=[], entry=Entry}.

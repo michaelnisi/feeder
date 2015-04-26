@@ -9,4 +9,6 @@
 .eunit
 deps
 ebin
+elvis
+elvis.config
 logs
