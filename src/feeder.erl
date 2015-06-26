@@ -1,4 +1,3 @@
-
 %% feeder - parse RSS and Atom formatted XML documents
 
 -module(feeder).
@@ -7,7 +6,8 @@
 -export([stream/2]).
 
 -ifdef(TEST).
--compile(export_all).
+-export([trim_test/0]).
+-export([qname_test/0]).
 -endif.
 
 -record(feed, {
@@ -293,3 +293,34 @@ file(Filename, Opts) ->
 -spec stream(binary() | maybe_improper_list(), [any()]) -> any().
 stream(Xml, Opts) ->
   xmerl_sax_parser:stream(Xml, opts(stream, Opts)).
+
+-ifdef(TEST).
+trim_test() ->
+  <<"">> = trim(""),
+  <<"hello">> = trim(" hello "),
+  ok.
+
+q([{Wanted, Names}|T]) ->
+  F = fun (Name) -> Wanted = qname({"", Name}) end,
+  lists:map(F, Names),
+  q(T);
+q([]) ->
+  ok.
+qname_test() -> q([
+  {author, ["author"]},
+  {duration, ["duration"]},
+  {enclosure, ["enclosure"]},
+  {entry, ["entry", "item"]},
+  {feed, ["feed", "channel"]},
+  {id, ["id", "guid"]},
+  {image, ["image"]},
+  {language, ["language"]},
+  {link, ["link"]},
+  {name, ["name"]},
+  {subtitle, ["subtitle"]},
+  {summary, ["summary", "description"]},
+  {title, ["title"]},
+  {undefined, ["wtf", "", "!"]},
+  {updated, ["updated", "pubDate"]}
+]).
+-endif.

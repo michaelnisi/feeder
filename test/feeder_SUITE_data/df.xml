@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Daring Fireball (Articles)</title>
+<subtitle>Mac and web curmudgeonry/nerdery. By John Gruber.</subtitle>
+<link rel="alternate" type="text/html" href="http://daringfireball.net/" />
+<link rel="self" type="application/atom+xml" href="http://daringfireball.net/feeds/articles" />
+<id>http://daringfireball.net/feeds/articles</id>
+
+<updated>2015-03-09T21:58:07-04:00</updated><rights>Copyright © 2015, John Gruber</rights><entry>
+
+<link rel="alternate" type="text/html" href="https://www.tuftandneedle.com/mattress?utm_source=daringfireball&amp;utm_medium=sponsorship&amp;utm_campaign=brand.20150323" />
+<link rel="shorturl" href="http://df4.us/npq" />
+<id>tag:daringfireball.net,2015:/feeds/sponsors//11.30734</id>
+<author>
+	<name>Daring Fireball Department of Commerce</name>
+</author>
+   
+<published>2015-03-09T21:58:05-04:00</published>
+<updated>2015-03-09T21:58:07-04:00</updated>
+   
+<content type="html" xml:base="http://daringfireball.net/feeds/sponsors/" xml:lang="en"><![CDATA[
+<p><em>One mattress, made perfect.</em></p>
+
+<p>Tuft &amp; Needle provides a new way to shop for a mattress that is honest and hassle-free. The Tuft &amp; Needle Mattress is #1 rated on Amazon with over 600 reviews. By cutting out the middlemen, gimmicks and sales tactics, Tuft &amp; Needle offers an American-made mattress at a revolutionary price point. Starting at $350 with a 10-year warranty and ships free directly to your door.</p>
+
+<p>Get your risk-free 30 night trial today at <a href="https://www.tuftandneedle.com/mattress?utm_source=daringfireball&amp;utm_medium=sponsorship&amp;utm_campaign=brand.20150323">tuftandneedle.com</a>.</p>
+
+]]></content>
+<title>[Sponsor] Tuft &amp; Needle</title></entry><entry>
+    <title>Apple Watch Prelude</title>
+    <link rel="alternate" type="text/html" href="http://daringfireball.net/2015/03/apple_watch_prelude" />
+	<link rel="shorturl" href="http://df4.us/npk" />
+	<id>tag:daringfireball.net,2015://1.30728</id>
+	<published>2015-03-08T03:30:00Z</published>
+	<updated>2015-03-09T02:09:41Z</updated>
+	<author>
+		<name>John Gruber</name>
+		<uri>http://daringfireball.net/</uri>
+	</author>
+<summary type="html"><![CDATA[<p>The many unknowns surrounding the watch are what makes it so fun to ponder prior to next week&#8217;s event. So let&#8217;s have some fun.</p>
+]]></summary>
+	<content type="html" xml:base="http://daringfireball.net/" xml:lang="en"><![CDATA[
+<p>I realize there&#8217;s little purpose to further Apple Watch speculation at this point &#8212; in two days, we&#8217;ll know most of the answers. But there is one good reason for last-minute speculation: <em>this is fun</em>. Apple tends to be such a predictable company that we often know the basic gist of what to expect before one of their media events. Not this time. The many unknowns surrounding the watch are what makes it so fun to ponder prior to next week&#8217;s event. So let&#8217;s have some fun.</p>
+
+<p>First, <a href="http://forums.macrumors.com/showpost.php?p=20734401&amp;postcount=104">there&#8217;s this</a>. The same day I published my piece on Apple Watch pricing, MacRumors forum member &#8220;pgiguere1&#8221; created a graphic with possible prices, posting it with the comment:</p>
+
+<blockquote>
+  <p>I made this speculative price list based in large part on Gruber&#8217;s
+speculation:</p>
+</blockquote>
+
+<p>The graphic is a pastiche of genuine Apple marketing material. A trained eye can easily tell it&#8217;s not from Apple &#8212; the typefaces are ones Apple uses (San Francisco and Helvetica Neue) but the <em>way</em> they&#8217;re used is wrong. But it&#8217;s close enough to fool many, and the image has now circled the social media globe several times. I&#8217;ve received at least 50 emails and tweets from DF readers asking if I&#8217;ve seen this &#8220;leaked price list&#8221;.</p>
+
+<p>So let&#8217;s put it to rest. This graphic is not a leaked price list. It&#8217;s speculation from a MacRumors forum member who read my piece on Apple Watch pricing. And, I think, it&#8217;s off in numerous ways.</p>
+
+<p>But there is one thing about pgiguere1&#8217;s speculation that I hadn&#8217;t really considered: that the 42mm models might cost more than the 38mm ones, across the board. On pgiguere1&#8217;s list, the 42mm Sport models are $30 more expensive than the corresponding 38mm ones: $349/379. I&#8217;m torn on whether this will be the case. Apple isn&#8217;t referring to the two sizes as women&#8217;s and men&#8217;s &#8212; some women will wear the 42 and some men (and, I suspect, many boys) will wear the 38 &#8212; but in broad strokes the 38 is the women&#8217;s version and the 42 is the men&#8217;s. You can see that in the high-end leather straps. The feminine &#8220;Modern Buckle&#8221; is only available for the 38mm size, and the &#8220;Leather Loop&#8221; is only available for 42mm.</p>
+
+<p>&#8220;Bigger costs more&#8221; makes sense &#8212; and it&#8217;s true for most Apple products, from iPhones to iPads to MacBooks. But with those products, your choice of device size is a matter of taste and personal preference. With Apple Watch, your choice of size is in large part determined by your anatomy.</p>
+
+<p>If I had to wager today, I&#8217;d bet that 42mm models <em>will</em> cost more across all three collections. A nominal difference for Apple Sport &#8212; $349/379 looks right to my eyes. The difference for Edition models could be $1000 or more because they&#8217;re made from solid 18K gold. I&#8217;m not sure what to expect for the steel ones, though. $100 difference?</p>
+
+<h2>Bands as Stratifying Differentiators</h2>
+
+<p>I think Apple&#8217;s messaging back in September was misleading, and I don&#8217;t think it was purposeful. I think it was a mistake that they will correct on Monday.</p>
+
+<p>In September, the basic message was something like this: <em>Watches are personal, and different people have different tastes, so we created a wide variety of bands to choose from so you can pick one that reflects your taste, and we made them easy to swap so you can change them depending on your mood or the occasion.</em></p>
+
+<p>Most people took that to mean that your choice of band will largely be a matter of taste &#8212; that the various bands will be close to each other in terms of price. I know for a fact &#8212; from my email and tweets &#8212; that many Daring Fireball readers are hoping to buy an entry-level Apple Watch Sport and an optional Link Bracelet or Milanese Loop for maybe $150 or $200. And I also think most people expect the steel Apple Watches that come with the Link Bracelet or Milanese Loop to cost only, say, $150-200 more than the entry level models with the rubber &#8212; er, <em>fluoroelastomer</em> &#8212; bands.</p>
+
+<p>I don&#8217;t think this is the case, at all.</p>
+
+<p><a href="http://daringfireball.net/2015/02/apple_watch_pricing">I wrote about this two weeks ago</a>, and upon further consideration, I am now thinking that the various Apple Watch bands will be priced in significantly stratified tiers.</p>
+
+<p>Consider <a href="https://www.apple.com/watch/apple-watch/">Apple&#8217;s description</a> of what I am convinced is the highest-end strap, the Link Bracelet:</p>
+
+<blockquote>
+  <p>Crafted from the same 316L stainless steel alloy as the case, the
+Link Bracelet has more than 100 components. The machining process
+is so precise, it takes nearly nine hours to cut the links for a
+single band. In part that’s because they aren’t simply a uniform
+size, but subtly increase in width as they approach the case. Once
+assembled, the links are brushed by hand to ensure that the
+texture follows the contours of the design. The custom butterfly
+closure folds neatly within the bracelet. And several links
+feature a simple release button, so you can add and remove links
+without any special tools. Available in stainless steel and space
+black stainless steel.</p>
+</blockquote>
+
+<p>Now, if you start with the assumptions that (a) the various watch bands are largely a matter of personal choice, (b) Apple will encourage Apple Watch buyers to mix and match bands, and (c) even the most expensive of them will only cost $200 or so, the above description reads as marketing braggadocio.</p>
+
+<p>But if you start with the premise that the top-of-the-line steel Apple Watch will cost $1499 or maybe even $1999, the above description makes more sense. It&#8217;s an explanation for why the bracelet is so expensive. If it truly takes nine hours to cut the links for each band, and each one is polished by hand, and they&#8217;re mechanically complex (and they definitely are), this is not a $200 bracelet. I&#8217;m thinking it&#8217;s about $1000, judging by the description, and based on the prices for replacement stainless steel link bracelets from Rolex, Tudor, and Omega.</p>
+
+<p>The three collections of Apple Watch &#8212; Sport, steel, and Edition &#8212; will not, I think, be represented by three basic prices. Instead, the three collections will comprise a continuum of price points, ranging from $349 to $10,000 (or $20,000, if my hunch is correct that there are gold Link Bracelets waiting to be revealed).</p>
+
+<p>Here are my final guesses (38mm/42mm):</p>
+
+<ul>
+<li>Apple Watch Sport (all colors, with Sport Band): $349/399</li>
+<li>Apple Watch, steel, Sport Band: $749/799</li>
+<li>Apple Watch, steel, Classic Buckle: $849/899</li>
+<li>Apple Watch, steel, Milanese Loop: $949/999</li>
+<li>Apple Watch, steel, Modern Buckle (38mm only): $1199</li>
+<li>Apple Watch, steel, Leather Loop (42mm only): $1299</li>
+<li>Apple Watch, steel, Link Bracelet: $1499/1599</li>
+<li>Apple Watch, space black steel, Link Bracelet: $1899/1999</li>
+<li>Apple Watch Edition, Sport Band: $7499/7999</li>
+<li>Apple Watch Edition, Modern Buckle (38mm only): $9999</li>
+<li>Apple Watch Edition, Classic Buckle (42mm only): $10,999</li>
+</ul>
+
+<p>And purely based on my own speculation &#8212; the following configurations have not been announced, have not even been rumored, and have not been suggested to me by any sort of sources:</p>
+
+<ul>
+<li>Apple Watch Edition, Gold Milanese Loop: $14,999/$16,999</li>
+<li>Apple Watch Edition, Gold Link Bracelet: $17,999/$19,999</li>
+</ul>
+
+<p>In my first draft of this piece, I had the regular steel Link Bracelet models at $1899/1999, and the space black ones at $2299/2499, and there&#8217;s a notion in my gut that I should have stuck with them. I&#8217;m out on a limb here, and it&#8217;s quite possible I&#8217;ll be serving up some home-cooked claim chowder Monday. Every single number above other than $349 is truly just a guess on my part. My predictions are way higher than almost everyone else&#8217;s:</p>
+
+<ul>
+<li><a href="http://www.marco.org/2015/03/04/boring-apple-watch-edition-pricing">Marco Arment</a> ($5000 starting price for Edition).<sup id="fnr1-2015-03-07"><a href="#fn1-2015-03-07">1</a></sup></li>
+<li><a href="http://www.mcelhearn.com/apple-watch-pricing-my-predictions/">Kirk McElhearn</a> (steel starting at $500, Edition at $2000).</li>
+<li><a href="http://www.streetinsider.com/Analyst+Comments/Apple+%28AAPL%29+Watch+Average+Price+Seen+at+%24550%2B%3B+Top+Model+Could+Sell+for+%247%2C500%2B%2C+Analyst+Says/10334865.html">Gene Munster</a> (steel starting at $500, Edition starting at $5000 with an average sale price of $7500).</li>
+<li><a href="http://daringfireball.net/linked/2015/02/27/brace-yourselves">Citi Group analyst Jim Suva</a> (steel starting at $550, Edition at the cuckoo price of $950).</li>
+</ul>
+
+<p><a href="http://daringfireball.net/2014/09/apple_watch">Back in September, I wrote</a>:</p>
+
+<blockquote>
+  <p>When the prices of the steel and (especially) gold Apple Watches
+are announced, I expect the tech press to have the biggest
+collective shit-fit in the history of
+Apple-versus-the-standard-tech-industry shit-fits. The utilitarian
+mindset that asks “Why would anyone waste money on a gold watch?”
+isn’t going to be able to come to grips with what Apple is doing
+here. They’re going to say that Jony Ive and Tim Cook have lost
+their minds. They’re going to wear out their keyboards typing
+“This never would have happened if Steve Jobs were alive.” They’re
+going to <a href="http://communities-dominate.blogs.com/brands/2014/09/enter-the-iflop-what-will-be-seen-as-first-apple-failure-after-steve-jobs-but-the-first-edition-appl.html">predict utter and humiliating failure</a>. In short,
+they’re going to mistake Apple for Vertu.</p>
+</blockquote>
+
+<p>The only thing I would change about this is that I now think it&#8217;s the steel Apple Watch pricing that is going to cause the massive collective shit-fit. Most people have wrapped their heads around the fact that the gold Edition models are going to cost <em>at least</em> $5000, and so have already written off Apple Watch Edition as something for the wealthy luxury market.</p>
+
+<p>But the steel Apple Watch, that&#8217;s something that most people still look at as for <em>them</em>. And so they expect the starting price to be around $500, and the various leather and metal band options to cost $100-300 more.</p>
+
+<p>But if the starting price for the steel Apple Watch is $500, I don&#8217;t see why Apple Watch Sport exists at $350. $150 difference does not justify the difference. If they were that close in price, there&#8217;d only be one of them. Sport and steel only make sense as separate collections if the steel collection is significantly higher in price, even at the entry level with the rubber Sport band. People are looking at this as a $100-200 upsell, like going from 16 to 64 to 128 GB iPhones and iPads. Technically that&#8217;s possible, but it doesn&#8217;t make any sense to me strategically or in terms of operational efficiency. With storage tiers in iOS devices, the <em>only</em> difference is the capacity of the flash memory chip. That&#8217;s it. All the other components, and the machining and tooling required to produce them, are the same. With Sport and steel Apple Watches, everything you can see or touch is different. Different metal (aluminum vs. steel), different finishes (matte vs. highly-polished), different displays (glass vs. sapphire), different case backs (plastic vs. ceramic and sapphire). If the marketing argument doesn&#8217;t persuade you, the operations angle should. I just don&#8217;t see why Apple would bother with all this if the starting price for steel Apple Watch wasn&#8217;t at least around double that of Sport.</p>
+
+<p>That&#8217;s why I think the pricing for the steel Apple Watch collection is what&#8217;s going to raise a ruckus, because there are a lot of people who want one and expect that they&#8217;ll only have to pay $500 or $600, regardless of their strap preference.</p>
+
+<p>At the introduction event in September, Tim Cook explicitly billed Apple Watch as the next flagship product line in the company&#8217;s history: Apple II, Macintosh, iPod, iPhone, iPad, and now the watch. There will be no brushing it off as a mere &#8220;hobby&#8221; if it isn&#8217;t successful.</p>
+
+<p>The thing is, for all the griping about the prices that I expect come Monday, at $349, Apple Watch has the lowest entry-level price for any first-generation flagship product from Apple. The first iPod cost $399. The iPhone was $599 (before <a href="http://www.nytimes.com/2007/09/07/technology/07apple.html?_r=0">the infamous $200 price cut</a> a few months later, which still left the entry model at $399). iPad was $499.</p>
+
+<p>The fact that so many people want the steel Apple Watch and non-Sport bands shows why they will cost more: desire. Apple sets prices not based on what people <em>want</em> to pay, but what people are <em>willing</em> to pay.</p>
+
+<p>This is without question new territory for Apple. They&#8217;ve never sold products with the same computing internals at different pricing tiers based solely on the luxuriousness of the materials.</p>
+
+<h2>Third-Party Bands</h2>
+
+<p>No matter what the pricing is, third-party Apple Watch bands seem like an inevitable thing. But will Apple stock them in its stores? Will there be a Made for Apple Watch program to certify them? I don&#8217;t think so.</p>
+
+<p>If Apple&#8217;s prices are as high as I&#8217;m predicting, demand for third-party link bracelets and leather straps will be high. It&#8217;ll be interesting to see how it plays out. I never would have predicted the size and scope of today&#8217;s iPhone case market back in 2007.</p>
+
+<h2>The Messaging</h2>
+
+<p>If I&#8217;m even close to correct regarding steel Apple Watch pricing, and if I&#8217;m also correct that there&#8217;s going to be a vociferous backlash, Apple has only itself to blame. The September event and Apple&#8217;s marketing to date have created the impression that the differences between collections are largely about style, not price.</p>
+
+<p>Using the name &#8220;Apple Watch&#8221; for the stainless steel collection &#8212; the collection with the widest variety of straps &#8212; clearly establishes it as the &#8220;regular&#8221; collection. In turn, that has left many with the impression that it will be the best-selling, the most common, the one most people walk out of the store with &#8212; and thus priced near the $349 baseline.</p>
+
+<p>&#8220;Apple Watch starts at $349&#8221; as the one and only mention of price left too much room for bad assumptions, I think. </p>
+
+<p>To play devil&#8217;s advocate, perhaps Apple did this deliberately. They showed all these different watch bands knowing that they would spark desire, and that people get their heart set on a certain combination based purely on how it looks &#8212; including combinations which they wouldn&#8217;t have allowed themselves to consider in the first place if they&#8217;d known the eventual price back in September. In other words, someone who&#8217;s had their heart set on a model with the Milanese Loop, under the assumption that it would cost, say, $600, might still go ahead and buy it for $1200 even though they wouldn&#8217;t have considered it in the first place if they&#8217;d known it would cost $1200 back in September.</p>
+
+<p>I think that devil&#8217;s advocate take is over-thinking things. It&#8217;s just the only explanation I can think of other than that Apple kind of botched the pricing expectations for Apple Watch. Actually, there is one other explanation I can think of: Apple didn&#8217;t want its competition to know how much Apple Watch and Apple Watch Edition were going to cost, and they decided the competitive value of keeping prices secret outweighed the value of setting accurate expectations for customers.</p>
+
+<h2>Storage Capacity</h2>
+
+<p>Apple has revealed nothing about internal storage capacity in Apple Watch. I could see this playing out two ways:</p>
+
+<ul>
+<li><p>Apple never talks about storage capacity for Apple Watch. It becomes a &#8220;secret&#8221; tech spec, like the amount of RAM in iOS devices. We&#8217;ll figure it out once we get our hands on them, but it won&#8217;t be something Apple talks about.</p></li>
+<li><p>If they do talk about it, each collection will get its own tier. Say, 8 GB for Sport, 32 GB for steel, 64 GB for Edition.</p></li>
+</ul>
+
+<p>I don&#8217;t think Apple Watch will <em>need</em> much storage, but they&#8217;ve said you can store music and photos directly on the device. So it&#8217;s not like storage doesn&#8217;t matter at all. It&#8217;s just another upsell to push people to higher-priced models.</p>
+
+<h2>The Modular S1 and Upgradeability</h2>
+
+<p>There&#8217;s been a lot of speculation about the modular nature of Apple Watch&#8217;s S1 &#8220;computer on a chip&#8221;. Why brag about that? Why encase the whole thing in resin? Why make <a href="/misc/2015/02/chip_large_2x.jpg">this photograph</a>? My wild guess back in September: perhaps Apple Watch, or at least the Edition models, would be upgradeable in future years. Take it in for service, pay $500, walk out with your &#8220;old&#8221; Apple Watch Edition upgraded with an S2.</p>
+
+<p>I now think this theory is bunk. Not going to happen.</p>
+
+<p>Take a first generation iPhone. Now imagine if you could upgrade it to today&#8217;s A8 SoC. It&#8217;d be better than it was before, that&#8217;s for sure. But it&#8217;d still have a low-resolution non-retina display. It&#8217;d still be stuck with EDGE cellular networking. It&#8217;d still have a crappy camera that couldn&#8217;t even shoot video. Etc. The &#8220;computer&#8221; inside Apple Watch isn&#8217;t centrally important. Everything is important. The health sensors, the display, the battery, the Taptic Engine, the digital crown, the networking capabilities, everything.</p>
+
+<p>A few years from now we might have Apple Watches that support Wi-Fi or even cellular networking. They might go several days on a single charge. None of those improvements would come from an upgrade to an S2 or S3 chip.</p>
+
+<p>I&#8217;d love to be wrong on this one, but I don&#8217;t think it makes any sense. And if I am wrong, the upgrade would have to include the entire innards of the watch &#8212; new display, new electronics, new battery, new sensors. Everything but the case and the bands. That still seems unlikely to me, but it&#8217;s at least plausible. And it could put Apple Watch Edition on par with existing luxury watches in terms of lifespan. But even in that case, the modular nature of the S1 doesn&#8217;t really have much to do with it.</p>
+
+<p>Lastly, many readers have suggested a trade-in program, where you could bring in your old Apple Watch Edition and get a significant trade-in on a new one. No way. First, as stated earlier, the value of the raw gold in a gold watch is just a small fraction of the price. Second, trading in used goods is not part of a luxury shopping experience.</p>
+
+<h2>One More Thing</h2>
+
+<p>Holding the event at Yerba Buena instead of the smaller confines of their campus Town Hall makes me think Apple has a lot to show. There must be more to learn about Apple Watch&#8217;s software and experience &#8212; Tim Cook even said so back in September, explaining that they simply didn&#8217;t have enough time then to show more. I&#8217;ve heard that Apple has been hosting over 100 third-party developers and designers in Cupertino for the last month, to test and refine WatchKit apps on production Apple Watch hardware, so I expect a bunch of third-party Watch app demos too.</p>
+
+<p>The new Mac version of Photos is in public beta, so I expect a full demo of that and the now-complete iCloud Photos cross-device experience. And if they&#8217;re going to talk about Mac software, maybe they&#8217;ll reveal the <a href="http://9to5mac.com/2015/01/06/macbook-air-12-inch-redesign/">rumored 12-inch thinner-than-ever MacBook Air</a>, too. My gut tells me the new MacBook Air could be ready, and it also tells me that the purported bigger iPad is not.</p>
+
+<p><strong>Update:</strong> If Apple is ready to unveil the upcoming redesign of its retail stores, we will see Angela Ahrendts&#8217;s first on-stage appearance since joining Apple last year.</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1-2015-03-07">
+<p>Marco expressed a thought I&#8217;ve considered myself:</p>
+
+<blockquote>
+  <p>Apple’s letting the $10,000–20,000 guesses simmer in the press to
+set price expectations high, just as they stayed quiet when
+everyone thought the first iPad would cost $1000. Maybe it’s for
+the same reason: maybe the Edition won’t be completely
+unreasonably priced for a piece of electronic jewelry that will
+probably be completely obsolete in five years but happens to be
+encased in a thousand bucks worth of solid gold. Letting people
+believe it’ll cost so much will make the real price seem like a
+great deal when it’s announced.</p>
+</blockquote>
+
+<p>That&#8217;s certainly possible. But what makes me think otherwise is that $1000 was the rumored <em>starting</em> price for the iPad. When Steve Jobs unveiled the &#8220;$499&#8221; slide, it was our collective expectation for the iPad&#8217;s entry-level price that was exceeded. (I remember being in the Yerba Buena theater at that moment &#8212; everyone, yours truly included, was genuinely surprised by that. It was palpable.) The &#8220;best&#8221; iPad &#8212; 64 GB with cellular networking &#8212; cost $829, which isn&#8217;t that much less than $1000. With Apple Watch we know the starting price: $349. What we don&#8217;t know is how much the higher-end models will cost.&nbsp;<a href="#fnr1-2015-03-07"  class="footnoteBackLink"  title="Jump back to footnote 1 in the text.">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+    ]]></content>
+  </entry><entry>
+    <title> On the Pricing of Apple Watch</title>
+    <link rel="alternate" type="text/html" href="http://daringfireball.net/2015/02/apple_watch_pricing" />
+	<link rel="shorturl" href="http://df4.us/nn9" />
+	<id>tag:daringfireball.net,2015://1.30645</id>
+	<published>2015-02-20T16:56:05Z</published>
+	<updated>2015-02-23T22:15:37Z</updated>
+	<author>
+		<name>John Gruber</name>
+		<uri>http://daringfireball.net/</uri>
+	</author>
+<summary type="html"><![CDATA[<p>I now think Edition models will start around $10,000 &#8212; and, if my hunch is right about bands and bracelets, the upper range could go to $20,000.</p>
+]]></summary>
+	<content type="html" xml:base="http://daringfireball.net/" xml:lang="en"><![CDATA[
+<p>After the gala announcement event in September at which Apple introduced Apple Watch and whatever last year&#8217;s iPhone was, I ran into SlashGear editor-in-chief <a href="http://www.slashgear.com/author/vincent/">Vincent Nguyen</a> in the private hands-on area Apple had set up for select members of the media. I&#8217;ve known Vincent for years from various Apple events, and I always enjoy his perspective. I was actually looking around for him this time, though, because I really wanted to hear his take on Apple Watch. Vincent is a watch guy &#8212; he knows the watch industry, and his taste is excellent.</p>
+
+<p>We greeted each other, walked in, and started staring, close-up, at the lineup. When we got to the Edition models, Vincent said, with some excitement, &#8220;This is going to cost $20,000.&#8221;</p>
+
+<p>I&#8217;d already started thinking that the Edition models would cost thousands, plural, but $20,000 struck me as a price from Bananas Town. Vincent&#8217;s reply was something to the effect of, &#8220;Try to find a good 18-karat gold watch for less than $20,000. You won&#8217;t.&#8221;</p>
+
+<p><a href="http://daringfireball.net/2014/09/apple_watch">Here&#8217;s what I wrote back in September</a>, in my initial thoughts regarding Apple Watch:</p>
+
+<blockquote>
+  <p>In short: hundreds for Sport, a thousand for stainless steel,
+<em>thousands</em> for gold.</p>
+
+<p>Most people think I’m joking when I say the gold ones are going to
+start at $5,000. I couldn’t be more serious. I made a friendly bet
+last week with a few friends on the starting price for the Edition
+models, and I bet on $9,999.</p>
+</blockquote>
+
+<p>The more I think about it, and the more I learn about the watch industry, the world of luxury goods, and the booming upper class of China, the better I feel about that bet. I don&#8217;t think I was wrong to place a friendly late night bar bet on a $9,999 starting price. I think I was wrong to guess just $4,999 in my ostensibly sober published analysis.</p>
+
+<p>I can see which way the wind is blowing. For months I&#8217;ve been asking friends who might know &#8212; or know someone else who might know, or even know someone who knows someone who might know &#8212; whether my guess of $5,000 is too high for the Edition starting price. The answer has always been &#8220;No&#8221;. But the way I&#8217;ve been told &#8220;No&#8221; has given me the uneasy feeling that I&#8217;ve been asking the wrong question. I should have been asking if $5,000 is too <em>low</em>.</p>
+
+<p>I now think Edition models will start around $10,000 &#8212; and, if my hunch is right about bands and bracelets, the upper range could go to $20,000. I was off by a factor of two, and my friend Vincent, I think, nailed it back on the day Apple Watch was introduced.</p>
+
+<h2>It&#8217;s All About the Bands</h2>
+
+<p>Louie Mantia helped clarify my thinking on this by publishing <a href="http://lmnt.me/watch/">this seemingly sparsely populated table of Apple Watch collection/band combinations</a>. Study that for a few minutes, and you should come to a few surprising &#8212; to me at least &#8212; conclusions.</p>
+
+<p>One of the selling points Apple emphasized in September is that bands are easily interchanged on Apple Watch. You just press a button underneath and it&#8217;s released; slide a new one in and it securely clicks into place. And they showed a wide variety of bands: Sport, Classic Buckle, Leather Loop, Modern Buckle, Milanese Loop, and Link Bracelet. Six different styles, all of them &#8212; other than the Milanese Loop &#8212; in multiple colors.</p>
+
+<p>I walked out of the event under the assumption that all of these bands would be available to purchase as accessories, like iPhone cases. So that one could, say, buy an Apple Watch Sport with a white sport band, and buy a Milanese Loop or one of the leather bands to make it dressier.</p>
+
+<p>I am no longer certain that&#8217;s going to be the case. And if it is the case, the non-Sport bands are going to be expensive &#8212; in most cases, even more expensive than the Apple Watch Sport itself.</p>
+
+<p>What seems clear to me now is that the various bands signify tiers within the three collections &#8212; particularly for the stainless steel Apple Watch models. Take a look at <a href="http://www.apple.com/watch/apple-watch/">Apple&#8217;s page for the steel Watch collection</a>, and scroll down to the bottom, where they present a scrolling carousel of &#8220;all 18 models in the collection&#8221;. From left to right:</p>
+
+<ul>
+<li>38mm with White Sport Band</li>
+<li>42mm with White Sport Band</li>
+<li>38mm with Black Sport Band</li>
+<li>42mm with Black Sport Band</li>
+<li>38mm with Black Classic Buckle</li>
+<li>42mm with Black Classic Buckle</li>
+<li>38mm with Milanese Loop</li>
+<li>42mm with Milanese Loop</li>
+<li>38mm with Soft Pink Modern Buckle</li>
+<li>38mm with Brown Modern Buckle</li>
+<li>38mm with Midnight Blue Modern Buckle</li>
+<li>42mm with Stone Leather Loop</li>
+<li>42mm with Bright Blue Leather Loop</li>
+<li>42mm with Light Brown Leather Loop</li>
+<li>38mm with Link Bracelet</li>
+<li>42mm with Link Bracelet</li>
+<li>38mm Space Black Stainless Steel with Link Bracelet</li>
+<li>42mm Space Black Stainless Steel with Link Bracelet</li>
+</ul>
+
+<p>Things to note:</p>
+
+<p>The &#8220;Modern Buckle&#8221; is only available for 38mm models. The Leather Loop is only available for 42mm models. The Space Black watch is only available with a single band option: the Link Bracelet.</p>
+
+<p>Sport Bands are surely the least expensive. Link Bracelets, I&#8217;m almost as sure, are the most expensive. I think Apple placed these models in order from least to most expensive, going from left to right. (Including the fact that 38mm models will cost slightly less than their 42mm siblings.)</p>
+
+<p>Why are there both Classic Buckles and Modern Buckles? From their descriptions, it sounds like the Modern Buckle uses a better leather, and without question it has a more advanced clasp mechanism. I conclude: Modern is more expensive. They both exist because they&#8217;ll sit at different price points.</p>
+
+<p>Note too, that on the regular Apple Watch collection page, the Classic Buckle description states, regarding color options: &#8220;Available in black.&#8221; This, despite the same band being offered in Midnight Blue for the Edition collection.</p>
+
+<p>So I&#8217;m thinking the regular Apple Watch will come in at least five pricing tiers:</p>
+
+<ol>
+<li>Entry: Sport Band, black or white.</li>
+<li>Regular leather: Classic Buckle, you&#8217;ll get it in black and you&#8217;ll like it.</li>
+<li>Milanese Loop.</li>
+<li>Deluxe leather: Modern Buckle for 38mm models, Leather Loop for 42mm models. Each with a choice of three colors.</li>
+<li>Link Bracelet.</li>
+</ol>
+
+<p>You&#8217;ll pay a premium for color straps and advanced clasp mechanisms, and you&#8217;ll pay even more for the Link Bracelet.</p>
+
+<p>I think the spread between these tiers could be significant, ranging from, say, $700 for the entry model with the Sport Band to well over $1,000 for the Link Bracelet. I still think the average for the steel Apple Watch will be around $1,000, but depending on your strap choice, you&#8217;ll pay several hundred less or more.</p>
+
+<p>But wait. I would not bet against Apple bringing back the black tax. Remember the plastic MacBooks from 2006? <a href="http://www.macworld.com/article/1050928/blackmacbook.html">Apple charged $150 more for the black one</a> than the white one, even though they had nearly identical specs.</p>
+
+<p>Note that the silver Apple Watch Sport only has four band color choices: white, blue, green, and pink. The space gray Sport edition has only one band: black. I think Apple might charge more for both the space gray Sport model and the space black stainless steel model.</p>
+
+<p>Further, I don&#8217;t think any of the stainless steel bands will be available for retail purchase. They&#8217;ll sell sport bands, which you&#8217;ll be able to use on any Apple Watch, but I don&#8217;t think any of the nicer bands will be available for retail purchase. Don&#8217;t hold your breath for a space black Link Bracelet to put on your $349 Sport model. The nicer bands aren&#8217;t accessories that Apple hopes you&#8217;ll tack onto your purchase; they&#8217;re signifiers of how much you paid for your stainless steel or gold Apple Watch.</p>
+
+<h2>Limited Edition</h2>
+
+<p>Which brings me to the Edition collection&#8217;s <a href="http://www.apple.com/watch/apple-watch-edition/">curiously thin lineup of strap choices</a>. There are only three for each watch size, and Apple doesn&#8217;t present them side-by-side in a carousel like they do with the stainless steel models:</p>
+
+<ul>
+<li>38mm Yellow Gold with Bright Red Modern Buckle</li>
+<li>38mm Rose Gold with White Sport Band</li>
+<li>42mm Rose Gold with White Sport Band</li>
+<li>38mm Rose Gold with Rose Gray Modern Buckle</li>
+<li>42mm Yellow Gold with Black Sport Band</li>
+<li>42mm Yellow Gold with Midnight Blue Classic Buckle</li>
+</ul>
+
+<p>That&#8217;s the order in which the six models appear on Apple&#8217;s page. It almost certainly does not correspond to price.</p>
+
+<p>Things to note: None of these leather colors are available in the standard Apple Watch lineup. These are not regular Sport Bands &#8212; they have gold clasps. None of them have metal bands.</p>
+
+<p>These are (I think) $10,000+ watches, but <em>half of them come with rubber sport bands that are nearly indistinguishable from the bands on the $349 Sport collection</em>.</p>
+
+<p>Glaringly omitted is a gold Link Bracelet. I&#8217;d place a side bet Apple withheld it in September, and will unveil it as a surprise option at the event they&#8217;ll hold before releasing the watches. If you&#8217;re going to go gold, go gold. Some people buy a gold watch simply because they like it. Others buy a gold watch because they want everyone to know they wear a gold watch. The latter group will gladly pay $20,000 for a watch with gold band. </p>
+
+<p>Perhaps I&#8217;m biased by my personal taste in watch bands, but at the hands-on event in September, the Link Bracelet was my favorite by far, followed by the Milanese Loop. It seems downright ludicrous to me to charge significantly more for the Edition models and not offer the best of the bands. Note too that among the Edition combinations Apple currently lists, there is but a single 42mm model with something other than a rubber Sport Band &#8212; the Midnight Blue Classic Buckle. Further, as stated above, I think the Classic Buckle is the low-end leather strap. I&#8217;m guessing Apple will offer Edition models with gold Link Bracelets for $20,000, and perhaps Milanese Loops for $15,000 and a Leather Loop for around $12,500.</p>
+
+<h2>Look at the Watch Industry</h2>
+
+<p>Don&#8217;t try to guess the price of the Edition models based on the amount of gold they contain. <a href="http://daringfireball.net/linked/2015/02/18/gold">I did it this week</a>, but it&#8217;s the wrong way to look at this. It doesn&#8217;t matter if the gold in an Apple Watch Edition model is &#8220;only&#8221; worth $1,000 or $1,500 or whatever. The gold in a Rolex is only worth that, too &#8212; and their gold watches sell for $20,000 and more, for the exact same movements in their $6,000 stainless steel models. The value of a gold watch is only tangentially related to the number of ounces of gold it contains. And Edition isn&#8217;t just made of 18-karat gold &#8212; it&#8217;s made of the <em>best</em> 18-karat gold in the world. (I don&#8217;t know that for a fact &#8212; I don&#8217;t know anything about gold &#8212; I&#8217;m just saying what Apple is saying.)</p>
+
+<p>Apple Watch Edition is not a tech product, so don&#8217;t try to price it like one.</p>
+
+<p>Apple Watch Edition is a luxury wrist watch. Apple&#8217;s ambitions in this arena, I am convinced, are almost boundless. They&#8217;re not entering the market against Rolex, Omega, and the rest of the Swiss luxury watch establishment with disruptive prices. They&#8217;re entering the market against those companies going head-to-head on pricing, with disruptive (they think) features. </p>
+
+<p>Again I point you to someone from the watch world, Grail Watch&#8217;s Stephen Foskett, <a href="http://grail-watch.com/2015/02/16/gold-apple-watch-edition-must-cost-10000/">who points out that gold watches typically cost $10-15,000 more than the same watch in stainless steel</a> &#8212; and tens of thousands <em>more</em> if they come with a gold bracelet. Even if I&#8217;m wrong about Apple having gold Link Bracelets lying in wait as an April surprise, I don&#8217;t think a $10,000 starting price for Apple Watch Edition is even a step out of line for the watch industry.<sup id="fnr1-2015-02-20"><a href="#fn1-2015-02-20">1</a></sup></p>
+
+<p>Will it work? Will people actually buy these? I have no idea. But I think Apple thinks it&#8217;s going to work.</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1-2015-02-20">
+<p>At prices like these, an Apple Watch Edition is not an accessory for your iPhone &#8212; your iPhone is an accessory for your Apple Watch Edition.&nbsp;<a href="#fnr1-2015-02-20"  class="footnoteBackLink"  title="Jump back to footnote 1 in the text.">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+    ]]></content>
+  </entry><entry>
+    <title>The Artful Dodge</title>
+    <link rel="alternate" type="text/html" href="http://daringfireball.net/2015/02/the_artful_dodge" />
+	<link rel="shorturl" href="http://df4.us/nmz" />
+	<id>tag:daringfireball.net,2015://1.30635</id>
+	<published>2015-02-19T04:07:29Z</published>
+	<updated>2015-02-22T23:48:08Z</updated>
+	<author>
+		<name>John Gruber</name>
+		<uri>http://daringfireball.net/</uri>
+	</author>
+<summary type="html"><![CDATA[<p>The artful dodge: the rumor was actually right; it&#8217;s the shipping product that contradicts that rumor that is in fact wrong.</p>
+]]></summary>
+	<content type="html" xml:base="http://daringfireball.net/" xml:lang="en"><![CDATA[
+<p>From <a href="http://www.wsj.com/articles/apple-plans-multiple-designs-for-smartwatch-1403245062">a 20 June 2014 story by WSJ reporter Daisuke Wakabayashi</a>:</p>
+
+<blockquote>
+  <p>Apple is planning multiple versions of a smartwatch &#8212; dubbed the
+iWatch in the media &#8212; later this year, according to people
+familiar with the matter.</p>
+</blockquote>
+
+<p>So far so good.</p>
+
+<blockquote>
+  <p>The devices will include more than 10 sensors to track and monitor
+health and fitness data, these people said. Taiwanese manufacturer
+Quanta Computer Inc. is expected to start producing the devices in
+two to three months, they said.</p>
+</blockquote>
+
+<p>Not so good. Production did not start in September, not even close. And <a href="http://www.apple.com/watch/health-and-fitness/">Apple&#8217;s website lists only two sensors</a> for health and fitness tracking: the accelerometer and a heart rate sensor.</p>
+
+<p><a href="http://www.wsj.com/articles/challenge-of-apple-watch-defining-its-purpose-1424133615">Yesterday, Wakabayashi explained the discrepancies</a>:</p>
+
+<blockquote>
+  <p>When Apple Inc. started developing its smartwatch, executives
+envisioned a state-of-the-art health-monitoring device that could
+measure blood pressure, heart activity and stress levels, among
+other things, according to people familiar with the matter.</p>
+
+<p>But none of those technologies made it into the much-anticipated
+Apple Watch, due in April. Some didn’t work reliably. Others
+proved too complex. And still others could have prompted unwanted
+regulatory oversight, these people said.</p>
+
+<p>That left Apple executives struggling to define the purpose of the
+smartwatch and wrestling with why a consumer would need or want
+such a device. Their answer, for now, is a little bit of
+everything: displaying a fashion accessory; glancing at
+information nuggets more easily than reaching for a phone; buying
+with Apple Pay; communicating in new ways through remote taps,
+swapped heartbeats or drawings; and tracking daily activity.</p>
+
+<p>Apple declined to comment.</p>
+</blockquote>
+
+<p>If we&#8217;re to take Wakabayashi&#8217;s reporting, and his sources &#8220;familiar with the matter&#8221;, at face value, here&#8217;s what we&#8217;d need to believe:</p>
+
+<ul>
+<li><p>As of 20 June 2014, Apple planned on shipping Apple Watch by the end of the year &#8212; which means October, in order to hit the holiday season. I.e., that in June, Apple thought they were four months away from shipping.</p></li>
+<li><p>In June, Apple thought the watch would contain &#8220;more than 10 sensors to track and monitor health and fitness data&#8221;, but by September they&#8217;d abandoned most of them and still didn&#8217;t expect to ship until &#8220;early 2015&#8221;. In June they expected to ship a watch with more than 10 sensors by October, but by September they&#8217;d scrapped all those sensors other than the accelerometer and heart rate monitor <em>and</em> moved the shipping deadline back by six months.</p></li>
+<li><p>In September, when Apple thought it was seven months or less away from shipping<sup id="fnr1-2015-02-18"><a href="#fn1-2015-02-18">1</a></sup>, they deemed it strategic to pre-announce the Apple Watch. But in June, when, according to Wakabayashi&#8217;s &#8220;people familiar with the matter&#8221;, they thought they were only four or five months away from shipping, they did not pre-announce the watch at WWDC.</p></li>
+</ul>
+
+<p>Maybe that&#8217;s exactly what happened. I don&#8217;t know. But it doesn&#8217;t sound anything like how product development within Apple works from my knowledge. I do know that up until some point, Apple expected to release the watch in 2014. I find it hard to believe they still believed that in June. I find it even harder to believe that they still planned on things like blood pressure monitoring and stress level detection as late as June while still thinking they could ship in 2014.</p>
+
+<p>To be fair, Wakabayashi&#8217;s June 2014 story doesn&#8217;t say &#8220;blood pressure monitoring&#8221; or &#8220;stress level detector&#8221;, but it does say &#8220;more than 10 sensors to track and monitor health and fitness data&#8221;, and that turned out not to be true.</p>
+
+<p>I also do not doubt for a moment that Apple looked hard at all sorts of sensors like those during the three-year development of Apple Watch. That&#8217;s how they develop products: come up with a slew of ideas, try the ideas that seem best, iterate and refine and change (narrowing focus) until they get to something that feels right. The iPhone, for example, started as a tablet project.</p>
+
+<p>The way it reads to me is that Wakabayashi&#8217;s sources for the June 2014 story were not &#8220;familiar with the matter&#8221;, but rather were familiar with, at best, already-outdated plans to ship a more fitness/health-focused Apple Watch in 2014. And his report this week reads more like an attempt to make it look like it&#8217;s the Apple Watch that is actually coming in April that is wrong, not his reporting from last year.</p>
+
+<p>The artful dodge: the rumor was actually right; it&#8217;s the shipping product that contradicts the rumor that is wrong.</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1-2015-02-18">
+<p>Tim Cook, during January 27&#8217;s quarterly analyst conference call: &#8220;And just to clarify, what we had been saying was early 2015, and we sort of look at the year and think of &#8216;early&#8217; is the first four months, &#8216;mid&#8217; is the next four months, and &#8216;late&#8217; is the final four months. To us, it&#8217;s sort of within the range, so it&#8217;s basically when we thought.&#8221;&nbsp;<a href="#fnr1-2015-02-18"  class="footnoteBackLink"  title="Jump back to footnote 1 in the text.">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+    ]]></content>
+  </entry><entry>
+    <title>Thinking About the Split in Apple Watch Sales by Model</title>
+    <link rel="alternate" type="text/html" href="http://daringfireball.net/2015/02/apple_watch_split" />
+	<link rel="shorturl" href="http://df4.us/nmt" />
+	<id>tag:daringfireball.net,2015://1.30629</id>
+	<published>2015-02-18T02:08:25Z</published>
+	<updated>2015-02-18T23:51:22Z</updated>
+	<author>
+		<name>John Gruber</name>
+		<uri>http://daringfireball.net/</uri>
+	</author>
+<summary type="html"><![CDATA[<p>The Edition models would thus do to the Apple Watch lineup as a whole what the iPhone, iPad, and Macintosh do to the entire phone, tablet, and PC industries, respectively: achieve a decided majority of the profits with a decided minority of the unit sales.</p>
+]]></summary>
+	<content type="html" xml:base="http://daringfireball.net/" xml:lang="en"><![CDATA[
+<p>Lorraine Luk and Daisuke Wakabayashi, reporting today for the WSJ, <a href="http://blogs.wsj.com/digits/2015/02/17/apple-orders-more-than-5-million-watches-for-initial-run/">&#8220;Apple Orders More Than 5 Million Watches for Initial Run&#8221;</a>:</p>
+
+<blockquote>
+  <p>Apple has asked its suppliers in Asia to make a combined five to
+six million units of its three Apple Watch models during the first
+quarter ahead of the product’s release in April, according to
+people familiar with the matter.</p>
+</blockquote>
+
+<p>I would wager &#8212; heavily &#8212; that these numbers come from supply chain sources, not Apple executives. I can&#8217;t see why anyone at Apple would see a strategic advantage to leaking these numbers, especially the split between Sport, regular, and Edition models:</p>
+
+<blockquote>
+  <p>Half of the first-quarter production order is earmarked for the
+entry-level Apple Watch Sport model, while the mid-tier Apple
+Watch is expected to account for one-third of output, one of these
+people said.</p>
+
+<p>Orders for Apple Watch Edition &#8212; the high-end model featuring
+18-karat gold casing &#8212; are relatively small in the first quarter
+but Apple plans to start producing more than one million units per
+month in the second quarter, the person said. Analysts expect
+demand for the high-end watches to be strong in China where
+Apple’s sales are booming.</p>
+</blockquote>
+
+<p>Even in the initial quarter, 17 percent of &#8220;5 to 6 million&#8221; is 850,000 to 1,000,000 units. That&#8217;s a lot for a model that is going to be expensive. More interesting to me is that, according to this WSJ report, Apple is indeed going to assemble the Edition models in China. I have wondered, idly, whether Apple might assemble the Edition models in the U.S., like they do with Mac Pros, to further their prestige. At a million or more units per quarter, I can see why they might <em>have</em> to do it in China just to achieve the scale, but I believe it is unprecedented in the watch industry for a luxury model to be assembled in China.</p>
+
+<blockquote>
+  <p>Apple Watch Sport will start at $349. Apple hasn’t announced
+pricing for the other models, but Apple Watch Edition is expected
+to be among the most expensive products the company has ever sold,
+likely surpassing the $4,000 Mac Pro computer.</p>
+</blockquote>
+
+<p>When I was a freshman at Drexel in 1991, there was a kid in my dorm with <a href="https://en.wikipedia.org/wiki/Macintosh_IIfx">a $12,000 Mac IIfx</a>. (He was an asshole who cheated at <a href="https://en.wikipedia.org/wiki/Spectre_(video_game)">Spectre</a>.) So the record &#8212; particularly inflation-adjusted &#8212; is pretty high.</p>
+
+<p>Ancient Mac history aside, consider the numbers. If Apple actually sells 1 million Edition units per quarter, and they sell for an ASP of $5,000, that&#8217;s $5 billion in revenue per quarter &#8212; <em>just for the gold Edition models</em>. If the ASP is closer to $10,000, which I <a href="http://daringfireball.net/2014/09/apple_watch">still think</a> is possible, double that.</p>
+
+<p>3 million Sport units at $350 comes to &#8220;only&#8221; $1 billion or so. 2 million stainless steel regular units with a $1,000 ASP would be an additional $2 billion.</p>
+
+<p>So as a business &#8212; <em>if</em> the WSJ&#8217;s sources are correct,<sup id="fnr1-2015-02-17"><a href="#fn1-2015-02-17">1</a></sup> and <em>if</em> Apple is correctly predicting demand<sup id="fnr2-2015-02-17">[2]</sup> &#8212; Apple Watch revenue will be dominated by the gold Edition units, accounting for double or more of the revenue from all the other models combined. The Edition models would thus do to the Apple Watch lineup as a whole what the iPhone, iPad, and Macintosh do to the entire phone, tablet, and PC industries, respectively: achieve a decided majority of the profits with a decided minority of the unit sales.</p>
+
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1-2015-02-17">
+<p>That&#8217;s a very big &#8220;if&#8221; for Luk and Wakabayashi, as I&#8217;ll write tomorrow.&nbsp;<a href="#fnr1-2015-02-17"  class="footnoteBackLink"  title="Jump back to footnote 1 in the text.">&#8617;</a></p>
+</li>
+
+<li id="fn2-2015-02-17">
+<p>For some quick perspective on that, Wikipedia pegs Rolex&#8217;s sales at 2,000 watches per day, &nbsp;<a href="#fnr2-2015-02-17"  class="footnoteBackLink"  title="Jump back to footnote 2 in the text.">&#8617;</a></p>
+</li>
+
+
+</ol>
+</div>
+
+
+
+    ]]></content>
+  </entry><entry>
+    <title>60 Frames Per Second and the Web</title>
+    <link rel="alternate" type="text/html" href="http://daringfireball.net/2015/02/60_frames_per_second_and_the_web" />
+	<link rel="shorturl" href="http://df4.us/nmm" />
+	<id>tag:daringfireball.net,2015://1.30622</id>
+	<published>2015-02-16T01:16:48Z</published>
+	<updated>2015-02-16T01:29:55Z</updated>
+	<author>
+		<name>John Gruber</name>
+		<uri>http://daringfireball.net/</uri>
+	</author>
+<summary type="html"><![CDATA[<p>60 frames per second is not &#8220;would be nice&#8221;. It&#8217;s &#8220;must have&#8221;.</p>
+]]></summary>
+	<content type="html" xml:base="http://daringfireball.net/" xml:lang="en"><![CDATA[
+<p>Faruk Ateş, in <a href="http://farukat.es/journal/2015/02/708-how-flipboard-chose-form-over-function-their-web-version">a thoughtful piece regarding the new Flipboard website</a>, which, because it eschews the DOM and builds the entire layout using the HTML5 <code>&lt;canvas&gt;</code> element, is not accessible:</p>
+
+<blockquote>
+  <p>I’m also hopeful that Accessibility is the next big project to
+tackle for the engineering team. A 2.0 release, if you will.</p>
+
+<p>But more than anything, I am dismayed.</p>
+
+<p>I am dismayed that Accessibility was treated not even as a mere
+afterthought, but as something worth sacrificing <em>completely</em> for
+the sake of flashiness.</p>
+
+<p>I am dismayed that Flipboard’s leadership chose fancy but
+ultimately irrelevant animations over function, over purpose.</p>
+
+<p>And I am dismayed that people like John Gruber now think this
+solution by Flipboard is somehow “<a href="http://daringfireball.net/linked/2015/02/10/flipboard-web">a scathing condemnation of the
+DOM/CSS web standards stack</a>.”</p>
+</blockquote>
+
+<p>When you build a website with traditional standard DOM techniques, you get accessibility &#8220;for free&#8221; more or less, and this is without question a good thing. I&#8217;ve been a proponent of accessibility for as long as I can remember. It does not follow, however, that what Flipboard chose to do is wrong.</p>
+
+<p>It is true that Flipboard&#8217;s engineering decisions prioritize animation and scrolling performance above accessibility. That&#8217;s no secret &#8212; the title of their how-we-build-this post was &#8220;<a href="http://engineering.flipboard.com/2015/02/mobile-web/">60 FPS on the Mobile Web</a>&#8221;. It does not mean they don&#8217;t care about accessibility. My understanding is that accessibility is coming &#8212; they&#8217;re working on it, but it isn&#8217;t ready yet.</p>
+
+<p>As I see it, the only things Flipboard could have done differently:</p>
+
+<ol>
+<li><p>Launch now, lack of accessibility be damned.</p></li>
+<li><p>Wait some number of additional months to unveil this web version, so that it could debut with better accessibility.</p></li>
+<li><p>Build the whole thing with standard DOM techniques.</p></li>
+</ol>
+
+<p>Launching today (#1) does not postpone the eventual release of an accessible Flipboard.com (#2). Shipping is a feature.</p>
+
+<p>If they had gone with choice #3, <a href="http://engineering.flipboard.com/2015/02/mobile-web/">by their own admission</a>, Flipboard never would have achieved 60 FPS animation and scrolling across all the devices they were targeting. You may disagree with their technical argument. Go ahead and build a Flipboard-esque website using the DOM to prove them wrong.</p>
+
+<p>You may disagree that 60 FPS animation and scrolling is important. That&#8217;s a perfectly valid opinion &#8212; but it&#8217;s an opinion that is falling into antiquity. iOS raised the bar. We expect not just smooth scrolling and animation, but <em>perfect</em> animation and scrolling. A janky platform is now perceived by many as a junky platform. And complex animations and scrolling via the DOM are <a href="http://jankfree.org/">janky</a>.</p>
+
+<p>I stand by my remark that Flipboard being unable to use the DOM to achieve this design is &#8220;a scathing condemnation of the DOM/CSS web standards stack&#8221;. The standard DOM/CSS stack is great for many things. Going forward, though, it needs to be great for building designs with iOS-caliber animation, scrolling, and touch responsiveness. Not only is the DOM/HTML/CSS stack not great at that, it&#8217;s incapable of it.</p>
+
+<p>Blinded by ideology, oblivious to the practical concerns of <em>60-FPS-or-bust</em>-minded developers and designers, the W3C has allowed standard DOM development to fall into seemingly permanent second-class status. I almost tacked &#8220;on mobile&#8221; to the end of the previous sentence, but that shouldn&#8217;t be necessary. Mobile is all that matters going forward. The DOM has always been slow and cumbersome. CSS has always been an over-engineered, over-complicated academic exercise that largely ignores the practical needs and processes of working designers.</p>
+
+<p>60 frames per second is not &#8220;would be nice&#8221;. It&#8217;s &#8220;must have&#8221;. And the DOM doesn&#8217;t have it. It&#8217;s not surprising that Flipboard&#8217;s workaround &#8212; the <code>&lt;canvas&gt;</code> element &#8212; <a href="https://en.wikipedia.org/wiki/Canvas_element">was invented by Apple</a>, as the basis for Dashboard widgets and potentially as the backdrop for the iPhone. But it&#8217;s damning that something Apple decided was too slow to serve as the basis for native iPhone apps is the best-performing backdrop for the mobile web.</p>
+
+
+
+    ]]></content>
+  </entry><entry>
+    <title>Dazzling Results</title>
+    <link rel="alternate" type="text/html" href="http://daringfireball.net/2015/02/dazzling_results" />
+	<link rel="shorturl" href="http://df4.us/nkr" />
+	<id>tag:daringfireball.net,2015://1.30555</id>
+	<published>2015-02-05T01:41:29Z</published>
+	<updated>2015-02-05T04:09:05Z</updated>
+	<author>
+		<name>John Gruber</name>
+		<uri>http://daringfireball.net/</uri>
+	</author>
+<summary type="html"><![CDATA[<p>Apple is disrupting the conventional tenets of business even more than they are any particular product category in consumer electronics.</p>
+]]></summary>
+	<content type="html" xml:base="http://daringfireball.net/" xml:lang="en"><![CDATA[
+<p>Juan Pablo Vazquez Sampere, writing for Harvard Business Review, &#8220;<a href="https://hbr.org/2015/02/we-shouldnt-be-dazzled-by-apples-earnings-report">We Shouldn’t Be Dazzled by Apple’s Earnings Report</a>&#8221;:</p>
+
+<blockquote>
+  <p>But one thing <em>has</em> changed. Apple used to revolutionize
+industries, announcing record sales numbers because it had
+introduced a new technology, feature, or product that we had never
+imagined but that, when we saw it, we all instantly wanted. <em>That</em>
+Apple seems no longer present. In this instance, all Apple has
+done is copy a feature for its own best customers. While that’s
+very effective for today, it does not solve the problem of
+tomorrow for a company that competes on serial innovation.</p>
+</blockquote>
+
+<p>That one feature he&#8217;s talking about is the larger display sizes for the iPhone 6. I&#8217;ll reiterate that Apple has never been a company that serially produced revolutionary product after revolutionary product. Their revolutions have been very few and far between: Apple II, Macintosh, iPod, iPhone/iPad. Everything else is <a href="http://www.macworld.com/article/1151235/apple_rolls.html">constant iteration and refinement</a>.</p>
+
+<p>So I&#8217;d argue Sampere is provably<sup id="fnr1-2015-02-04"><a href="#fn1-2015-02-04">1</a></sup> wrong on Apple&#8217;s history. And it seems doubly weird to publish this two months before Apple Watch is set to hit. Potentially, Apple Watch is clearly another &#8220;<em>we had never imagined but that, when we saw it, we all instantly wanted</em>&#8221; product.</p>
+
+<p>I would also argue that Apple&#8217;s record-shattering results last quarter <em>are</em> remarkable. Not because the iPhone 6 and 6 Plus are revolutionary, because they&#8217;re not. But because it shows that design can matter in the mass market. For decades the industry&#8217;s conventional wisdom held that design wasn&#8217;t important. The industry&#8217;s leaders created shitty software and shitty hardware. Apple&#8217;s success has upended the industry&#8217;s value system. Almost all of Apple&#8217;s competitors value design more today than they did a decade ago: Microsoft, Google, Samsung, HP &#8212; all of them.</p>
+
+<p>There&#8217;s no reason to buy an iPhone 6 or 6 Plus other than because you&#8217;re willing to pay a premium for superior hardware and software quality. And last quarter 74 million people around the world did just that.</p>
+
+<p>As its products evolve, Apple pours ever more effort into incremental improvements in the details. The bigger displays are the most noticeable differences in the iPhones 6, but everything else was improved too: the camera is better, both in terms of speed and image quality; the CPU is faster; the GPU is faster; battery life is better; the display quality is better; Touch ID is better. And then there&#8217;s Apple Pay.</p>
+
+<p>Again, none of those improvements are revolutionary. But it&#8217;s a solid list of year-over-year improvements, and the results show that consumers agree. The most telling &#8212; dare I say <em>dazzling</em> &#8212; number Apple revealed last week wasn&#8217;t the number of iPhones they sold during the quarter, but the price people paid for them. Average selling price went <em>up</em> year-over-year, in an industry where average selling prices are going down.</p>
+
+<p>The problem isn&#8217;t that Apple has changed. The problem is that Apple has <em>not</em> changed, and their continuing success is proving that conventional disruption theory <a href="http://stratechery.com/2013/clayton-christensen-got-wrong/">does not apply to consumer-driven markets</a> in which outstanding design and integration (as opposed to modularity) can drive demand.</p>
+
+<p>Apple is disrupting the conventional tenets of business even more than they are any particular product category in consumer electronics. There is something fascinating &#8212; in several ways unprecedented &#8212; going on with Apple right now. Rather than study it, understand it, describe it, and teach it, Sampere<sup id="fnr2-2015-02-04"><a href="#fn2-2015-02-04">2</a></sup> has chosen to deny that it&#8217;s happening.<sup id="fnr3-2015-02-04"><a href="#fn3-2015-02-04">3</a></sup></p>
+
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1-2015-02-04">
+<p>A few readers have reported my use of <em>provably</em> here as a typo, thinking I intended to write <em>probably</em>. But I meant <em>provably</em> &#8212; able to be proven. You can look at Apple&#8217;s entire history and show that revolutionary products have been few and far between.&nbsp;<a href="#fnr1-2015-02-04"  class="footnoteBackLink"  title="Jump back to footnote 1 in the text.">&#8617;</a></p>
+</li>
+<li id="fn2-2015-02-04">
+<p>For a taste of what Sampere considers to be actual innovation, see his year-ago HBR piece, &#8220;<a href="https://hbr.org/2014/10/xiaomi-not-apple-is-changing-the-smartphone-industry/">Xiaomi, Not Apple, Is Changing the Smartphone Industry</a>&#8221;. (My retort would be that both companies are changing the phone industry, but in very different ways.)&nbsp;<a href="#fnr2-2015-02-04"  class="footnoteBackLink"  title="Jump back to footnote 2 in the text.">&#8617;</a></p>
+</li>
+<li id="fn3-2015-02-04">
+<p>It’s starting to look like you could say <a href="http://www.businessinsider.com/clay-christensen-defends-disruption-theory-2014-10">the same thing about Clayton Christensen himself</a>. He and his followers (of which Sampere seems to be one) are trying to force the existing theory to fit modern-day Apple, rather than adjust the theory to explain Apple.&nbsp;<a href="#fnr3-2015-02-04"  class="footnoteBackLink"  title="Jump back to footnote 3 in the text.">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+    ]]></content>
+  </entry></feed><!-- THE END -->

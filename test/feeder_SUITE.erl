@@ -1,4 +1,3 @@
-
 -module(feeder_SUITE).
 
 -include_lib("common_test/include/ct.hrl").
@@ -8,27 +7,29 @@
 -export([groups/0]).
 -export([init_per_group/2]).
 -export([end_per_group/2]).
+-export([init_per_testcase/2]).
+-export([end_per_testcase/2]).
 
--export([trim/1]).
--export([qname/1]).
 -export([atom/1]).
 -export([itunes/1]).
 -export([rss/1]).
 -export([author/1]).
+-export([measure_time/1]).
 
 all() -> [
-  {group, internal},
-  {group, parse},
-  {group, parse_details}
+  {group, atom},
+  {group, rss},
+  {group, itunes},
+  measure_time
 ].
 
 suite() ->
   [{timetrap, {seconds, 60}}].
 
 groups() -> [
-  {internal, [parallel], [trim, qname]},
-  {parse, [parallel], [atom, rss, itunes]},
-  {parse_details, [parallel], [author]}
+  {atom, [parallel], [atom, author]},
+  {rss, [parallel], [rss]},
+  {itunes, [parallel], [itunes]}
 ].
 
 init_per_group(_, Config) ->
@@ -37,35 +38,13 @@ init_per_group(_, Config) ->
 end_per_group(_, _) ->
   ok.
 
-trim(_) ->
-  <<"">> = feeder:trim(""),
-  <<"hello">> = feeder:trim(" hello "),
-  ok.
+init_per_testcase(measure_time, _) ->
+  {skip, optional};
+init_per_testcase(_, Config) ->
+  Config.
 
-q([{Wanted, Names}|T]) ->
-  F = fun (Name) -> Wanted = feeder:qname({"", Name}) end,
-  lists:map(F, Names),
-  q(T);
-q([]) ->
+end_per_testcase(_, _) ->
   ok.
-
-qname(_) -> q([
-  {author, ["author"]},
-  {duration, ["duration"]},
-  {enclosure, ["enclosure"]},
-  {entry, ["entry", "item"]},
-  {feed, ["feed", "channel"]},
-  {id, ["id", "guid"]},
-  {image, ["image"]},
-  {language, ["language"]},
-  {link, ["link"]},
-  {name, ["name"]},
-  {subtitle, ["subtitle"]},
-  {summary, ["summary", "description"]},
-  {title, ["title"]},
-  {undefined, ["wtf", "", "!"]},
-  {updated, ["updated", "pubDate"]}
-]).
 
 event({entry, Entry}, {Feed, Entries}) ->
   {Feed, [Entry|Entries]};
@@ -81,15 +60,40 @@ parse(Filename) ->
   {ok, EventState, _Rest} = feeder:file(Filename, opts()),
   EventState.
 
-test(Conf, Name, Wanted) ->
+name(Conf, Name) ->
   Dir = proplists:get_value(data_dir, Conf),
-  Filename= [filename:join([Dir, Name])|".xml"],
+  [filename:join([Dir, Name])|".xml"].
+
+test(Conf, Name, Wanted) ->
+  Filename = name(Conf, Name),
   Found = parse(Filename),
   Wanted = Found,
   ok.
 
 atom(Conf) -> test(Conf, "atom", atom:wanted()).
+author(Conf) -> test(Conf, "author", author:wanted()).
 rss(Conf) -> test(Conf, "rss", rss:wanted()).
 itunes(Conf) -> test(Conf, "itunes", itunes:wanted()).
 
-author(Conf) -> test(Conf, "author", author:wanted()).
+test_loop(_M, _F, _A, 0, List) ->
+  List;
+test_loop(M, F, A, N, List) ->
+  {T, _Result} = timer:tc(M, F, A),
+  test_loop(M, F, A, N - 1, [T|List]).
+
+measure_time(M, F, A, N) when N > 0 ->
+  L = test_loop(M, F, A, N, []),
+  Length = length(L),
+  Min = lists:min(L),
+  Max = lists:max(L),
+  Med = lists:nth(round((Length / 2)), lists:sort(L)),
+  Avg = round(lists:foldl(fun(X, Sum) -> X + Sum end, 0, L) / Length),
+  ct:log(info, ?LOW_IMPORTANCE, "Range: ~.2f - ~.2f ms~n"
+    "Median: ~.2f ms~n"
+    "Average: ~.2f ms~n",
+    [X * 0.001 || X <- [Min, Max, Med, Avg]]),
+  ok.
+
+measure_time(Conf) ->
+  Filename = name(Conf, "df"),
+  measure_time(feeder, file, [Filename, []], 100).

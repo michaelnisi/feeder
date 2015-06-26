@@ -1,8 +1,8 @@
 # feeder - parse RSS and Atom
 
-[![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
+The **feeder** [Erlang](http://www.erlang.org/) library parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
 
-The **feeder** [Erlang](http://www.erlang.org/) module parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
+[![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
 
 ## Usage
 
@@ -42,7 +42,7 @@ example:start().
 example:print_titles("http://5by5.tv/rss").
 ```
 
-## types
+## Types
 
 ### feed()
 
@@ -132,9 +132,9 @@ Receive notification for each entry or article in the feed.
 endFeed
 ```
 
-Receive notification of the end of a document. **Feeder** will send this event only once, and it will be the last event during the parse.
+Receive notification of the end of a document. **feeder** will send this event only once, and it will be the last event during the parse.
 
-## exports
+## Exports
 
 ### file(Filename, Opts) -> Result
 

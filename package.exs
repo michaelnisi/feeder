@@ -3,7 +3,7 @@ defmodule Feeder.Mixfile do
 
   def project do
     [app: :feeder,
-      version: "1.4.6",
+      version: "1.4.7",
       description: description,
       package: package,
       deps: deps]
