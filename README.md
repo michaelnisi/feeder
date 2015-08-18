@@ -46,51 +46,15 @@ example:print_titles("http://5by5.tv/rss").
 
 ### feed()
 
-The `channel` or `feed` element of the feed.
-
-```erlang
-{feed, Author, Id, Image, Language, Link, Subtitle, Summary, Title, Updated}
-```
-- `Author = undefined | binary()`
-- `Id = undefined | binary()`
-- `Image = undefined | binary()`
-- `Language = undefined | binary()`
-- `Link = undefined | binary()`
-- `Subtitle = undefined | binary()`
-- `Summary = undefined | binary()`
-- `Title = undefined | binary()`
-- `Updated = undefined | binary()`
+The `channel` or `feed` tuple.
 
 ### enclosure()
 
-The `enclosure` element of an `item` or `entry` of the feed.
-
-```erlang
-{enclosure, Url, Length, Type}
-```
-
-- `Url = undefined | binary()`
-- `Length = undefined | binary()`
-- `Type = undefined | binary()`
+The `enclosure` tuple for an `item` or `entry`.
 
 ### entry()
 
-An `item` or `entry` element of the feed.
-
-```erlang
-{entry, Author, Duration, Enclosure, Id, Image, Link, Subtitle, Summary, Title, Updated}
-```
-
-- `Author = undefined | binary()`
-- `Duration = undefined | binary()`
-- `Enclosure = undefined | enclosure()`
-- `Id = undefined | binary()`
-- `Image = undefined | binary()`
-- `Link = undefined | binary()`
-- `Subtitle = undefined | binary()`
-- `Summary = undefined | binary()`
-- `Title = undefined | binary()`
-- `Updated = undefined | binary()`
+An `item` or `entry` tuple.
 
 ### option()
 
@@ -136,15 +100,48 @@ Receive notification of the end of a document. **feeder** will send this event o
 
 ## Exports
 
-### file(Filename, Opts) -> Result
+### Parsing feeds
 
+```erlang
+feeder:file(Filename, Opts) -> Result
+```
 - `Filename = string()`
 - `Opts = [option()]`
+- `Result = {ok, EventState, Rest}`
+- `Rest = unicode_binary() | latin1_binary()`
+- `EventState = term()`
 
-### stream(Xml, Opts) -> Result
-
+```erlang
+feeder:stream(Xml, Opts) -> Result
+```
 - `Xml = unicode_binary() | latin1_binary() | [unicode_char()]`
 - `Opts = [option()]`
+- `Result = {ok, EventState, Rest}`
+- `Rest = unicode_binary() | latin1_binary()`
+- `EventState = term()`
+
+### Accessing values
+
+```erlang
+feeder_feeds:get(Key, Feed) -> Value
+```
+- `Key = author | id | image | language | link | subtitle | summary | title | updated`
+- `Feed = feed()`
+- `Value = binary() | undefined`
+
+```erlang
+feeder_enclosures:get(Key, Enclosure) -> Value
+```
+- `Key = url | length | type`
+- `Enclosure = enclosure()`
+- `Value = binary() | undefined`
+
+```erlang
+feeder_entries:get(Key, Entry) -> Value
+```
+- `Key = author | duration | enclosure | id | image | link | subtitle | summary | title | updated`
+- `Entry = entry()`
+- `Value = binary() | enclosure() | undefined`
 
 ## License
 

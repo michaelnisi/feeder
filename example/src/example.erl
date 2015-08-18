@@ -1,4 +1,3 @@
-
 -module(example).
 
 -export([all/1]).
@@ -31,10 +30,10 @@ entries(Url) ->
   Entries.
 
 titles(Url) ->
-  [element(10, Entry) || Entry <-  entries(Url)].
+  [feeder_entries:get(title, Entry) || Entry <-  entries(Url)].
 
 links(Url) ->
-  [element(7, Entry) || Entry <-  entries(Url)].
+  [feeder_feeds:get(link, Entry) || Entry <-  entries(Url)].
 
 print(L) ->
   lists:foreach(fun (Title) ->

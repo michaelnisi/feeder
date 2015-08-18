@@ -1,8 +1,13 @@
 {application, feeder, [
   {description, "Stream parse RSS and Atom formatted XML feeds."},
-  {vsn, "1.4.7"},
+  {vsn, "2.0.0"},
   {id, "git"},
-  {modules, [feeder]},
+  {modules, [
+    feeder,
+    feeder_entries,
+    feeder_enclosures,
+    feeder_feeds
+  ]},
   {registered, []},
   {applications, [
     kernel,

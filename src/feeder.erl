@@ -6,40 +6,10 @@
 -export([stream/2]).
 
 -ifdef(TEST).
--export([trim_test/0]).
--export([qname_test/0]).
+-include_lib("eunit/include/eunit.hrl").
 -endif.
 
--record(feed, {
-  author :: undefined | binary(),
-  id :: undefined | binary(),
-  image :: undefined | binary(),
-  language :: undefined | binary(),
-  link :: undefined | binary(),
-  subtitle :: undefined | binary(),
-  summary :: undefined | binary(),
-  title :: undefined | binary(),
-  updated :: undefined | binary()
-}).
-
--record(enclosure, {
-  url :: undefined | binary(),
-  length :: undefined | binary(),
-  type :: undefined | binary()
-}).
-
--record(entry, {
-  author :: undefined | binary(),
-  duration :: undefined | binary(),
-  enclosure :: undefined | enclosure(),
-  id :: undefined | binary(),
-  image :: undefined | binary(),
-  link :: undefined | binary(),
-  subtitle :: undefined | binary(),
-  summary :: undefined | binary(),
-  title :: undefined | binary(),
-  updated :: undefined | binary()
-}).
+-include("feeder_records.hrl").
 
 -record(state, {
   author :: boolean(),
@@ -54,11 +24,6 @@
 -type user_fun() :: function().
 -type user_state() :: term().
 -export_type([user_fun/0, user_state/0]).
-
--type enclosure() :: #enclosure{}.
--type entry() :: #entry{}.
--type feed() :: #feed{}.
--export_type([enclosure/0, entry/0, feed/0]).
 
 %% Third pass
 
@@ -296,12 +261,12 @@ stream(Xml, Opts) ->
 
 -ifdef(TEST).
 trim_test() ->
-  <<"">> = trim(""),
-  <<"hello">> = trim(" hello "),
+  ?assertMatch(<<"">>, trim("")),
+  ?assertMatch(<<"hello">>, trim(" hello ")),
   ok.
 
 q([{Wanted, Names}|T]) ->
-  F = fun (Name) -> Wanted = qname({"", Name}) end,
+  F = fun (Name) -> ?assertMatch(Wanted, qname({"", Name})) end,
   lists:map(F, Names),
   q(T);
 q([]) ->
