@@ -9,6 +9,10 @@ defmodule Feeder.Mixfile do
       deps: deps]
   end
 
+  def application do
+    [applications: [:xmerl]]
+  end
+
   defp deps do
     []
   end
