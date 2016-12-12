@@ -1,7 +1,10 @@
 language: erlang
 otp_release:
+  - 19.1
+  - 19.0
+  - 18.3
   - 18.0
-  - 17.4
+  - 17.5
   - 17.0
 script: "make tests"
 branches:
