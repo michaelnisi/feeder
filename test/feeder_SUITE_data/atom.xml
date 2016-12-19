@@ -2,6 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
     <title>Example Feed</title>
+    <atom:link href="http://example.org/feed/" rel="self" type="application/rss+xml" />
     <link href="http://example.org/"/>
     <updated>Sun, 18 May 2014 16:13:31 GMT</updated>
     <author>
