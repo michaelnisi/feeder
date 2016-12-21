@@ -52,6 +52,8 @@ feed(F, image, State) ->
   update(F, #feed.image, State#state.chars);
 feed(F, url, State) when State#state.image =:= true ->
   update(F, #feed.image, State#state.chars);
+feed(F, url, State) ->
+  update(F, #feed.url, State#state.chars);
 feed(F, language, State) ->
   update(F, #feed.language, State#state.chars);
 feed(F, link, State) ->
@@ -129,6 +131,8 @@ attribute(feed, State, link, Attrs) ->
   feed(State#state.feed, link, State#state{chars=href(Attrs)});
 attribute(feed, State, image, Attrs) ->
   feed(State#state.feed, image, State#state{chars=href(Attrs)});
+attribute(feed, State, url, Attrs) ->
+  feed(State#state.feed, url, State#state{chars=href(Attrs)});
 attribute(feed, State, _, _) ->
   State#state.feed;
 attribute(entry, State, link, Attrs) ->
@@ -189,6 +193,7 @@ start_element(E, Attrs, State) when ?IS_ENTRY ->
 
 %% First pass
 
+qname({"atom", "link"}) -> url;
 qname({_, "author"}) -> author;
 qname({_, "channel"}) -> feed;
 qname({_, "contributor"}) -> author;
@@ -265,27 +270,28 @@ trim_test() ->
   ?assertMatch(<<"hello">>, trim(" hello ")),
   ok.
 
-q([{Wanted, Names}|T]) ->
-  F = fun (Name) -> ?assertMatch(Wanted, qname({"", Name})) end,
-  lists:map(F, Names),
+q([{Wanted, QualifiedNames}|T]) ->
+  F = fun (QualifiedName) -> ?assertMatch(Wanted, qname(QualifiedName)) end,
+  lists:map(F, QualifiedNames),
   q(T);
 q([]) ->
   ok.
 qname_test() -> q([
-  {author, ["author"]},
-  {duration, ["duration"]},
-  {enclosure, ["enclosure"]},
-  {entry, ["entry", "item"]},
-  {feed, ["feed", "channel"]},
-  {id, ["id", "guid"]},
-  {image, ["image"]},
-  {language, ["language"]},
-  {link, ["link"]},
-  {name, ["name"]},
-  {subtitle, ["subtitle"]},
-  {summary, ["summary", "description"]},
-  {title, ["title"]},
-  {undefined, ["wtf", "", "!"]},
-  {updated, ["updated", "pubDate"]}
+  {author, [{"", "author"}]},
+  {duration, [{"", "duration"}]},
+  {enclosure, [{"", "enclosure"}]},
+  {entry, [{"", "entry"}, {"", "item"}]},
+  {feed, [{"", "feed"}, {"", "channel"}]},
+  {id, [{"", "id"}, {"", "guid"}]},
+  {image, [{"", "image"}]},
+  {language, [{"", "language"}]},
+  {link, [{"", "link"}]},
+  {name, [{"", "name"}]},
+  {subtitle, [{"", "subtitle"}]},
+  {summary, [{"", "summary"}, {"", "description"}]},
+  {title, [{"", "title"}]},
+  {undefined, [{"", "wtf"}, {"", ""}, {"", "!"}]},
+  {updated, [{"", "updated"}, {"", "pubDate"}]},
+  {url, [{"atom", "link"}]}
 ]).
 -endif.

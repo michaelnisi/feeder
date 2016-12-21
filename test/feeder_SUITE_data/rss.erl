@@ -12,7 +12,8 @@ wanted() -> {{
   undefined,
   <<"Liftoff to Space Exploration.">>,
   <<"Liftoff News">>,
-  <<"Tue, 10 Jun 2003 04:00:00 GMT">>}, [
+  <<"Tue, 10 Jun 2003 04:00:00 GMT">>,
+  <<"http://liftoff.msfc.nasa.gov/">>}, [
 {
   entry,
   undefined,

@@ -12,6 +12,7 @@ wanted() -> {{
   <<"A show about everything">>,
   <<"All About Everything is a show about everything. Each week we dive into any subject known to man and talk about it as much as we can. Look for our Podcast in the iTunes Store">>,
   <<"All About Everything">>,
+  undefined,
   undefined}, [
 {
   entry,

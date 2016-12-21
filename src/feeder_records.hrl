@@ -13,7 +13,8 @@
   subtitle :: undefined | binary(),
   summary :: undefined | binary(),
   title :: undefined | binary(),
-  updated :: undefined | binary()
+  updated :: undefined | binary(),
+  url :: undefined | binary()
 }).
 
 -record(entry, {

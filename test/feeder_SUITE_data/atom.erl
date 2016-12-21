@@ -12,7 +12,8 @@ wanted() -> {{
   undefined,
   undefined,
   <<"Example Feed">>,
-  <<"Sun, 18 May 2014 16:13:31 GMT">>}, [
+  <<"Sun, 18 May 2014 16:13:31 GMT">>,
+  <<"http://example.org/feed/">>}, [
 {
   entry,
   undefined,
