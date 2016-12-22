@@ -125,7 +125,7 @@ feeder:stream(Xml, Opts) -> Result
 ```erlang
 feeder_feeds:get(Key, Feed) -> Value
 ```
-- `Key = author | id | image | language | link | subtitle | summary | title | updated`
+- `Key = author | id | image | language | link | subtitle | summary | title | updated | url`
 - `Feed = feed()`
 - `Value = binary() | undefined`
 
