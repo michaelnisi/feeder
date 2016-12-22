@@ -21,4 +21,6 @@ get(summary, F) ->
 get(title, F) ->
   F#feed.title;
 get(updated, F) ->
-  F#feed.updated.
+  F#feed.updated;
+get(url, F) ->
+  F#feed.url.
