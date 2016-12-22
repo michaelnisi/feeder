@@ -265,18 +265,17 @@ stream(Xml, Opts) ->
   xmerl_sax_parser:stream(Xml, opts(stream, Opts)).
 
 -ifdef(TEST).
-trim_test() ->
-  ?assertMatch(<<"">>, trim("")),
-  ?assertMatch(<<"hello">>, trim(" hello ")),
-  ok.
+trim_test_() -> [
+  ?_assertMatch(<<"">>, trim("")),
+  ?_assertMatch(<<"hello">>, trim(" hello "))
+].
 
-q([{Wanted, QualifiedNames}|T]) ->
-  F = fun (QualifiedName) -> ?assertMatch(Wanted, qname(QualifiedName)) end,
-  lists:map(F, QualifiedNames),
-  q(T);
-q([]) ->
-  ok.
-qname_test() -> q([
+q([{Wanted, QualifiedNames}|T], Tests) ->
+  F = fun (QualifiedName) -> ?_assertMatch(Wanted, qname(QualifiedName)) end,
+  q(T, [Tests|lists:map(F, QualifiedNames)]);
+q([], Tests) ->
+  Tests.
+qname_test_() -> q([
   {author, [{"", "author"}]},
   {duration, [{"", "duration"}]},
   {enclosure, [{"", "enclosure"}]},
@@ -293,5 +292,5 @@ qname_test() -> q([
   {undefined, [{"", "wtf"}, {"", ""}, {"", "!"}]},
   {updated, [{"", "updated"}, {"", "pubDate"}]},
   {url, [{"atom", "link"}]}
-]).
+], []).
 -endif.
