@@ -1,8 +1,8 @@
+[![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
+
 # feeder - parse RSS and Atom
 
 The **feeder** [Erlang](http://www.erlang.org/) library parses RSS and Atom formatted XML feeds. It is a stream based parser that sends its events through a callback interface.
-
-[![Build Status](https://secure.travis-ci.org/michaelnisi/feeder.svg)](http://travis-ci.org/michaelnisi/feeder)
 
 ## Usage
 
