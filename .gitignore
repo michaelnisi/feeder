@@ -5,6 +5,7 @@
 *.o
 *.plt
 *.so
+*cover*
 .erlang.mk*
 .eunit
 deps

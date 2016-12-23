@@ -67,7 +67,10 @@ name(Conf, Name) ->
 test(Conf, Name, Wanted) ->
   Filename = name(Conf, Name),
   Found = parse(Filename),
-  Wanted = Found,
+  {WantedFeed, WantedEntries} = Wanted,
+  {FoundFeed, FoundEntries} = Found,
+  WantedFeed = FoundFeed,
+  [A = B || {A, B} <- lists:zip(WantedEntries, FoundEntries)],
   ok.
 
 atom(Conf) -> test(Conf, "atom", atom:wanted()).
