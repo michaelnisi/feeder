@@ -67,7 +67,7 @@ name(Conf, Name) ->
 -include("../src/feeder_records.hrl").
 
 checkRecords(A, B, Fields, F) ->
-  R = [{F(Field, A), F(Field, B)} || Field <- Fields],
+  R = [{{Field, F(Field, A)}, {Field, F(Field, B)}} || Field <- Fields],
   [X = Y || {X, Y} <- R].
 
 feeds(A, B) ->
