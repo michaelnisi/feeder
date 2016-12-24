@@ -68,7 +68,8 @@ name(Conf, Name) ->
 
 checkRecords(A, B, Fields, F) ->
   R = [{{Field, F(Field, A)}, {Field, F(Field, B)}} || Field <- Fields],
-  [X = Y || {X, Y} <- R].
+  [X = Y || {X, Y} <- R],
+  ok.
 
 feeds(A, B) ->
   Fields = record_info(fields, feed),
