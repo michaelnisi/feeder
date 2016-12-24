@@ -64,13 +64,40 @@ name(Conf, Name) ->
   Dir = proplists:get_value(data_dir, Conf),
   [filename:join([Dir, Name])|".xml"].
 
-test(Conf, Name, Wanted) ->
+-include("../src/feeder_records.hrl").
+
+checkRecords(A, B, Fields, F) ->
+  R = [{F(Field, A), F(Field, B)} || Field <- Fields],
+  [X = Y || {X, Y} <- R].
+
+feeds(A, B) ->
+  Fields = record_info(fields, feed),
+  F = fun(Field, Feed) -> feeder_feeds:get(Field, Feed) end,
+  checkRecords(A, B, Fields, F).
+
+enclosures(undefined, undefined) ->
+  ok;
+enclosures(A, B) ->
+  Fields = record_info(fields, enclosure),
+  F = fun(Field, Enclosure) -> feeder_enclosures:get(Field, Enclosure) end,
+  checkRecords(A, B, Fields, F).
+
+entries(A, B) ->
+  enclosures(feeder_entries:get(enclosure, A), feeder_entries:get(enclosure, B)),
+
+  Fields = record_info(fields, entry),
+  F = fun(Field, Entry) -> feeder_entries:get(Field, Entry) end,
+  checkRecords(A, B, Fields, F).
+
+test(Conf, Name, {WantedFeed, WantedEntries}) ->
   Filename = name(Conf, Name),
   Found = parse(Filename),
-  {WantedFeed, WantedEntries} = Wanted,
   {FoundFeed, FoundEntries} = Found,
-  WantedFeed = FoundFeed,
-  [A = B || {A, B} <- lists:zip(WantedEntries, FoundEntries)],
+
+  %% Comparing each field individually to expose mismatches.
+  feeds(WantedFeed, FoundFeed),
+  [entries(A,B) || {A, B} <- lists:zip(WantedEntries, FoundEntries)],
+
   ok.
 
 atom(Conf) -> test(Conf, "atom", atom:wanted()).
