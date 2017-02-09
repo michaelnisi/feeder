@@ -143,6 +143,12 @@ feeder_entries:get(Key, Entry) -> Value
 - `Entry = entry()`
 - `Value = binary() | enclosure() | undefined`
 
+## Tests
+
+```bash
+$ make tests
+```
+
 ## License
 
 [MIT License](https://raw.github.com/michaelnisi/feeder/master/LICENSE)
