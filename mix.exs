@@ -4,9 +4,9 @@ defmodule Feeder.Mixfile do
   def project do
     [app: :feeder,
       version: "2.1.0",
-      description: description,
-      package: package,
-      deps: deps]
+      description: description(),
+      package: package(),
+      deps: deps()]
   end
 
   def application do
