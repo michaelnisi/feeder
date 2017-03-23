@@ -17,6 +17,7 @@ wanted() -> {{
 {
   entry,
   undefined,
+  [<<"second category">>,<<"first category">>],
   undefined,
   undefined,
   <<"http://liftoff.msfc.nasa.gov/2003/06/03.html#item573">>,
@@ -29,6 +30,7 @@ wanted() -> {{
 {
   entry,
   undefined,
+  [<<"example category">>],
   undefined,
   undefined,
   <<"http://liftoff.msfc.nasa.gov/2003/05/30.html#item572">>,
@@ -41,6 +43,7 @@ wanted() -> {{
 {
   entry,
   undefined,
+  [<<"example category">>],
   undefined,
   undefined,
   <<"http://liftoff.msfc.nasa.gov/2003/05/27.html#item571">>,
@@ -52,6 +55,7 @@ wanted() -> {{
   <<"Tue, 27 May 2003 08:37:32 GMT">>},
 {
   entry,
+  undefined,
   undefined,
   undefined,
   undefined,

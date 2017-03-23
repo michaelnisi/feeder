@@ -19,6 +19,7 @@
 
 -record(entry, {
   author :: undefined | binary(),
+  categories :: undefined | [binary()],
   duration :: undefined | binary(),
   enclosure :: undefined | enclosure(),
   id :: undefined | binary(),

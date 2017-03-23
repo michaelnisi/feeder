@@ -19,6 +19,7 @@ wanted() -> {{
   undefined,
   undefined,
   undefined,
+  undefined,
   <<"urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a">>,
   undefined,
   <<"http://example.org/2003/12/13/atom03">>,

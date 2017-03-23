@@ -17,6 +17,7 @@ wanted() -> {{
 {
   entry,
   <<"John Doe">>,
+  undefined,
   <<"7:04">>,
   {enclosure,
     <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a">>,
@@ -32,6 +33,7 @@ wanted() -> {{
 {
   entry,
   <<"Jane Doe">>,
+  undefined,
   <<"4:34">>,
   {enclosure,
     <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode2.mp3">>,
@@ -47,6 +49,7 @@ wanted() -> {{
 {
   entry,
   <<"Various">>,
+  undefined,
   <<"3:59">>,
   {enclosure,
     <<"http://example.com/podcasts/everything/AllAboutEverythingEpisode1.mp3">>,

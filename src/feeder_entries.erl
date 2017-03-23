@@ -6,6 +6,8 @@
 
 get(author, E) ->
   E#entry.author;
+get(categories, E) ->
+  E#entry.categories;
 get(duration, E) ->
   E#entry.duration;
 get(enclosure, E) ->

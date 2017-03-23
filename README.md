@@ -139,7 +139,7 @@ feeder_enclosures:get(Key, Enclosure) -> Value
 ```erlang
 feeder_entries:get(Key, Entry) -> Value
 ```
-- `Key = author | duration | enclosure | id | image | link | subtitle | summary | title | updated`
+- `Key = author | categories | duration | enclosure | id | image | link | subtitle | summary | title | updated`
 - `Entry = entry()`
 - `Value = binary() | enclosure() | undefined`
 

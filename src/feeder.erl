@@ -41,6 +41,15 @@ update(T, F, L) when L =/= [] ->
 update(T, _, _) ->
   T.
 
+%% Some fields are lists (e.g. category nodes)
+append(T, F, L) when L =/= [] ->
+  case element(F, T) of
+    undefined -> setelement(F, T, [trim(L)]);
+    E -> setelement(F, T, [trim(L)|E])
+  end;
+append(T, _, _) ->
+  T.
+
 -spec feed(feed(), atom(), state()) -> feed().
 feed(F, author, State) ->
   update(F, #feed.author, State#state.chars);
@@ -74,6 +83,8 @@ entry(E, author, State) ->
   update(E, #entry.author, State#state.chars);
 entry(E, name, State) when State#state.author =:= true ->
   update(E, #entry.author, State#state.chars);
+entry(E, category, State) ->
+  append(E, #entry.categories, State#state.chars);
 entry(E, duration, State) ->
   update(E, #entry.duration, State#state.chars);
 entry(E, enclosure, _State) -> E;
@@ -195,6 +206,7 @@ start_element(E, Attrs, State) when ?IS_ENTRY ->
 
 qname({"atom", "link"}) -> url;
 qname({_, "author"}) -> author;
+qname({_, "category"}) -> category;
 qname({_, "channel"}) -> feed;
 qname({_, "contributor"}) -> author;
 qname({_, "creator"}) -> author;
@@ -277,6 +289,7 @@ q([], Tests) ->
   Tests.
 qname_test_() -> q([
   {author, [{"", "author"}]},
+  {category, [{"", "category"}]},
   {duration, [{"", "duration"}]},
   {enclosure, [{"", "enclosure"}]},
   {entry, [{"", "entry"}, {"", "item"}]},
