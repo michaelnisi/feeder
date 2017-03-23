@@ -3,7 +3,7 @@ defmodule Feeder.Mixfile do
 
   def project do
     [app: :feeder,
-     version: "2.2.0",
+     version: "2.2.1",
      description: description(),
      package: package(),
      deps: deps()]
@@ -14,7 +14,7 @@ defmodule Feeder.Mixfile do
   end
 
   defp deps do
-    []
+    [{:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
   defp description do
@@ -25,7 +25,7 @@ defmodule Feeder.Mixfile do
 
   defp package do
     [files: ~w(src erlang.mk Makefile README.md LICENSE),
-     maintainers: ["Michael Nisi", "Udo Kramer", "Adam Steel", "David Authier", "Craig P Jolicoeur"],
+     maintainers: ["Michael Nisi"],
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/michaelnisi/feeder"}]
   end
