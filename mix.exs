@@ -25,7 +25,7 @@ defmodule Feeder.Mixfile do
 
   defp package do
     [files: ~w(src erlang.mk Makefile README.md LICENSE),
-     contributors: ["Michael Nisi", "Udo Kramer", "Adam Steel", "David Authier", "Craig P Jolicoeur"],
+     maintainers: ["Michael Nisi", "Udo Kramer", "Adam Steel", "David Authier", "Craig P Jolicoeur"],
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/michaelnisi/feeder"}]
   end
