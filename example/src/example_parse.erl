@@ -14,7 +14,6 @@
 -export([callback_mode/0]).
 
 -export([ready/3]).
--export([request/1]).
 
 -record(state, {
   entries=[],
