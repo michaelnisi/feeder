@@ -39,7 +39,7 @@ erl -pa ebin deps/*/ebin
 
 ```erlang
 example:start().
-example:print_titles("http://5by5.tv/rss").
+example:print_titles("https://troubled.pro/rss.xml").
 ```
 
 ## Types

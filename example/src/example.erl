@@ -11,8 +11,7 @@
 -export([titles/1]).
 
 start() ->
-  ok = application:ensure_started(inets),
-  application:start(?MODULE).
+  application:ensure_all_started(?MODULE).
 
 stop() ->
   application:stop(?MODULE).

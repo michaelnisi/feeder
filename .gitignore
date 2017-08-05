@@ -9,6 +9,7 @@
 *cover*
 .erlang.mk*
 .eunit
+_build
 deps
 ebin
 elvis
