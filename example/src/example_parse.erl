@@ -29,7 +29,7 @@
 %% API
 
 resume(FsmRef) ->
-  gen_statem:call(FsmRef, executing, ?TIMEOUT).
+  gen_statem:call(FsmRef, request, ?TIMEOUT).
 
 start_link(Url) ->
   gen_statem:start_link(?MODULE, Url, []).
@@ -51,17 +51,6 @@ callback_mode() -> state_functions.
 
 %% Internals
 
-event_fun({entry, Entry}, State) ->
-  State#state{entries=[Entry|State#state.entries]};
-event_fun({feed, Feed}, State) ->
-  State#state{feed=Feed};
-event_fun(endFeed, State) ->
-  State.
-
-parser_opts(State) ->
-  [{event_state, State}, {event_fun, fun event_fun/2},
-    {continuation_state, State}, {continuation_fun, fun stream/1}].
-
 stream(State=#state{reqId=ReqId, httpcPid=Pid}) ->
   httpc:stream_next(Pid),
   receive
@@ -72,6 +61,17 @@ stream(State=#state{reqId=ReqId, httpcPid=Pid}) ->
     {http, {ReqId, stream_end, _Headers}} ->
       {<<>>, State}
   end.
+
+event_fun({entry, Entry}, State) ->
+  State#state{entries=[Entry|State#state.entries]};
+event_fun({feed, Feed}, State) ->
+  State#state{feed=Feed};
+event_fun(endFeed, State) ->
+  State.
+
+parser_opts(State) ->
+  [{event_state, State}, {event_fun, fun event_fun/2},
+    {continuation_state, State}, {continuation_fun, fun stream/1}].
 
 opts(http) -> [
   {autoredirect, true}];
@@ -102,6 +102,6 @@ result(_From, {fatal_error, _, Reason,_ ,_State}) ->
 
 %% State callbacks
 
-ready({call, From}, executing, State) ->
+ready({call, From}, request, State) ->
   R = request(State),
   result(From, R).
