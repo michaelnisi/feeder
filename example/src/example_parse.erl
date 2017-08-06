@@ -90,5 +90,5 @@ ready(cast, request, Data=#state{url=Url}) ->
 executing(info, {http, {ReqId, stream_start, _Headers, Pid}}, Data) ->
   ReqId = Data#state.reqId,
   NewData = Data#state{httpcPid=Pid},
-  {ok, _, _} = feeder:stream(<<>>, parser_opts(NewData)),
+  {ok, _EventState, _Rest} = feeder:stream(<<>>, parser_opts(NewData)),
   {stop, normal}.
