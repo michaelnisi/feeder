@@ -6,7 +6,7 @@
     example,
     example_sup,
     example_parse,
-    terminal_logger
+    example_logger
   ]},
   {registered, [example_sup, example_event_man]},
   {applications, [

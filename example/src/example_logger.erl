@@ -1,4 +1,4 @@
--module(terminal_logger).
+-module(example_logger).
 -behaviour(gen_event).
 
 -export([init/1, handle_event/2, handle_call/2, terminate/2]).
