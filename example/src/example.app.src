@@ -1,9 +1,14 @@
 {application, example, [
-  {description, "feeder http stream example"},
-  {vsn, "1.0.0"},
+  {description, "feeder http streaming example"},
+  {vsn, "2.0.0"},
   {id, "git"},
-  {modules, []},
-  {registered, [example_sup]},
+  {modules, [
+    example,
+    example_sup,
+    example_parse,
+    terminal_logger
+  ]},
+  {registered, [example_sup, example_event_man]},
   {applications, [
     kernel,
     stdlib,

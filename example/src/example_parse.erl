@@ -14,6 +14,7 @@
 -export([callback_mode/0]).
 
 -export([ready/3]).
+-export([executing/3]).
 
 -record(state, {
   entries=[],
@@ -28,7 +29,7 @@
 %% API
 
 resume(FsmRef) ->
-  gen_statem:call(FsmRef, request, ?TIMEOUT).
+  gen_statem:cast(FsmRef, request).
 
 start_link(Url) ->
   gen_statem:start_link(?MODULE, Url, []).
@@ -62,9 +63,11 @@ stream(State=#state{reqId=ReqId, httpcPid=Pid}) ->
   end.
 
 event_fun({entry, Entry}, State) ->
-  State#state{entries=[Entry|State#state.entries]};
+  gen_event:notify(example_event_man, {entry, Entry}),
+  State;
 event_fun({feed, Feed}, State) ->
-  State#state{feed=Feed};
+  gen_event:notify(example_event_man, {feed, Feed}),
+  State;
 event_fun(endFeed, State) ->
   State.
 
@@ -79,28 +82,15 @@ opts(req) -> [
   {stream, {self, once}},
   {sync, false}].
 
-request(State=#state{url=Url}) ->
-  {ok, ReqId} = httpc:request(get, {Url, []}, opts(http), opts(req)),
-  receive
-    {http, {ReqId, stream_start, _Headers, Pid}} ->
-      feeder:stream(<<>>, parser_opts(State#state{reqId=ReqId, httpcPid=Pid}));
-    {http, {error, Reason}} ->
-      {error, Reason}
-  after
-    ?TIMEOUT ->
-      {error, timeout}
-  end.
-
-result(From, {ok, State, _Rest}) ->
-  Entries = lists:reverse(State#state.entries),
-  {stop_and_reply, normal, [{reply, From, {ok, State#state.feed, Entries}}]};
-result(_From, {error, Reason}) ->
-  {stop, {error, Reason}};
-result(_From, {fatal_error, _, Reason,_ ,_State}) ->
-  {stop, {error, Reason}}.
-
 %% State callbacks
 
-ready({call, From}, request, State) ->
-  R = request(State),
-  result(From, R).
+ready(cast, request, Data=#state{url=Url}) ->
+  {ok, ReqId} = httpc:request(get, {Url, []}, opts(http), opts(req)),
+  NewData = Data#state{reqId=ReqId},
+  {next_state, executing, NewData}.
+
+executing(info, {http, {ReqId, stream_start, _Headers, Pid}}, Data) ->
+  ReqId = Data#state.reqId,
+  NewData = Data#state{httpcPid=Pid},
+  {ok, _, _} = feeder:stream(<<>>, parser_opts(NewData)),
+  {stop, normal}.
