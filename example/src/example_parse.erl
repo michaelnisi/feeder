@@ -17,8 +17,6 @@
 -export([executing/3]).
 
 -record(state, {
-  entries=[],
-  feed,
   httpcPid,
   reqId,
   url
