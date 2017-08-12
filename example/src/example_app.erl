@@ -5,7 +5,7 @@
 -export([stop/1]).
 
 start(_Type, _Args) ->
-	example_sup:start_link().
+	ex_sup:start_link().
 
 stop(_State) ->
 	ok.

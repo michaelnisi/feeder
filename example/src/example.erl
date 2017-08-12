@@ -6,12 +6,11 @@
 
 start() ->
   application:ensure_all_started(?MODULE),
-  gen_event:start({local, example_event_man}),
-  gen_event:add_handler(example_event_man, example_logger, []).
+  gen_event:add_handler(ex_event_man, ex_logger, []).
 
 stop() ->
   application:stop(?MODULE).
 
 fetch(Url) ->
-  {ok, Pid} = supervisor:start_child(example_sup, [Url]),
-  example_parse:resume(Pid).
+  {ok, Pid} = supervisor:start_child(ex_parse_sup, [Url]),
+  ex_parse:resume(Pid).

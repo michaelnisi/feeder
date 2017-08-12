@@ -3,17 +3,25 @@
   {vsn, "2.0.0"},
   {id, "git"},
   {modules, [
+    ex_logger,
+    ex_parse,
+    ex_parse_sup,
+    ex_sup,
     example,
-    example_sup,
-    example_parse,
-    example_logger
+    example_app
   ]},
-  {registered, [example_sup, example_event_man]},
+  {registered, [
+    ex_event_man,
+    ex_parse_sup,
+    ex_sup
+  ]},
   {applications, [
-    kernel,
-    stdlib,
+    feeder,
     inets,
-    ssl
+    kernel,
+    ssl,
+    stdlib,
+    xmerl
   ]},
   {mod, {example_app, []}},
   {env, []}
