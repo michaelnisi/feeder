@@ -3,15 +3,13 @@ defmodule Feeder.Mixfile do
 
   def project do
     [app: :feeder,
-     version: "2.2.3",
+     version: "2.2.4",
      description: description(),
      package: package(),
      deps: deps(),
-
      name: "feeder",
      source_url: "https://github.com/michaelnisi/feeder",
-     docs: [extras: ["README.md"]]
-    ]
+     docs: [main: "readme", extras: ["README.md"]]]
   end
 
   def application do
