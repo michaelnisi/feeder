@@ -1,4 +1,4 @@
--module(ex_logger).
+-module(fedex_logger).
 -behaviour(gen_event).
 
 -export([init/1, handle_event/2, handle_call/2, terminate/2]).

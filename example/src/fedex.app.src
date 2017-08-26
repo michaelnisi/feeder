@@ -1,19 +1,19 @@
-{application, example, [
+{application, fedex, [
   {description, "feeder http streaming example"},
   {vsn, "2.0.0"},
   {id, "git"},
   {modules, [
-    ex_logger,
-    ex_parse,
-    ex_parse_sup,
-    ex_sup,
-    example,
-    example_app
+    fedex_logger,
+    fedex_parse,
+    fedex_parse_sup,
+    fedex_sup,
+    fedex,
+    fedfedex_app
   ]},
   {registered, [
-    ex_event_man,
-    ex_parse_sup,
-    ex_sup
+    fedex_event_man,
+    fedex_parse_sup,
+    fedex_sup
   ]},
   {applications, [
     feeder,
@@ -23,6 +23,6 @@
     stdlib,
     xmerl
   ]},
-  {mod, {example_app, []}},
+  {mod, {fedex_app, []}},
   {env, []}
 ]}.

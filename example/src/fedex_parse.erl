@@ -1,6 +1,6 @@
 %% example_parse - stream parse feed over HTTP
 
--module(ex_parse).
+-module(fedex_parse).
 
 -export([start_link/1]).
 -export([resume/1]).
@@ -60,10 +60,10 @@ stream(State=#state{reqId=ReqId, httpcPid=Pid}) ->
   end.
 
 event_fun({entry, Entry}, State=#state{url=Url}) ->
-  gen_event:notify(ex_event_man, {entry, Entry, Url}),
+  gen_event:notify(fedex_event_man, {entry, Entry, Url}),
   State;
 event_fun({feed, Feed}, State) ->
-  gen_event:notify(ex_event_man, {feed, Feed}),
+  gen_event:notify(fedex_event_man, {feed, Feed}),
   State;
 event_fun(endFeed, State) ->
   State.

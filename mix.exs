@@ -3,7 +3,7 @@ defmodule Feeder.Mixfile do
 
   def project do
     [app: :feeder,
-     version: "2.2.2",
+     version: "2.2.3",
      description: description(),
      package: package(),
      deps: deps()]
@@ -14,7 +14,7 @@ defmodule Feeder.Mixfile do
   end
 
   defp deps do
-    [{:ex_doc, ">= 0.0.0", only: :dev}]
+    []
   end
 
   defp description do

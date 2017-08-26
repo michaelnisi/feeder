@@ -1,4 +1,4 @@
--module(example).
+-module(fedex).
 
 -export([start/0]).
 -export([stop/0]).
@@ -6,11 +6,11 @@
 
 start() ->
   application:ensure_all_started(?MODULE),
-  gen_event:add_handler(ex_event_man, ex_logger, []).
+  gen_event:add_handler(fedex_event_man, fedex_logger, []).
 
 stop() ->
   application:stop(?MODULE).
 
 fetch(Url) ->
-  {ok, Pid} = supervisor:start_child(ex_parse_sup, [Url]),
-  ex_parse:resume(Pid).
+  {ok, Pid} = supervisor:start_child(fedex_parse_sup, [Url]),
+  fedex_parse:resume(Pid).

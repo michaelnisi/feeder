@@ -1,4 +1,4 @@
--module(ex_parse_sup).
+-module(fedex_parse_sup).
 -behaviour(supervisor).
 
 -export([start_link/0]).
@@ -8,12 +8,12 @@ start_link() ->
   supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 parser() -> #{
-  id => ex_parse,
-  start => {ex_parse, start_link, []},
+  id => fedex_parse,
+  start => {fedex_parse, start_link, []},
   restart => temporary,
   shutdown => 3000,
   type => worker,
-  modules => [ex_parse]
+  modules => [fedex_parse]
 }.
 
 init([]) ->

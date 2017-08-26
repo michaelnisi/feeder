@@ -38,8 +38,8 @@ erl -pa ebin deps/*/ebin
 ```
 
 ```erlang
-example:start().
-example:fetch("http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml").
+fedex:start().
+fedex:fetch("http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml").
 ```
 
 ## Types
