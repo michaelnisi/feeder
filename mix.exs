@@ -6,7 +6,12 @@ defmodule Feeder.Mixfile do
      version: "2.2.3",
      description: description(),
      package: package(),
-     deps: deps()]
+     deps: deps(),
+
+     name: "feeder",
+     source_url: "https://github.com/michaelnisi/feeder",
+     docs: [extras: ["README.md"]]
+    ]
   end
 
   def application do
@@ -14,7 +19,7 @@ defmodule Feeder.Mixfile do
   end
 
   defp deps do
-    []
+    [{:ex_doc, "~> 0.16", only: :dev}]
   end
 
   defp description do
