@@ -149,6 +149,10 @@ feeder_entries:get(Key, Entry) -> Value
 $ make tests
 ```
 
+## Install
+
+You can install **feeder** with [Rebar3](https://github.com/erlang/rebar3), of course, and there are [hex](https://hex.pm/packages/feeder) and [erlang.mk](https://github.com/ninenines/erlang.mk/tree/master/index) packages.
+
 ## License
 
 [MIT License](https://raw.github.com/michaelnisi/feeder/master/LICENSE)
