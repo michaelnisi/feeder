@@ -6,7 +6,7 @@
 
 start_link() ->
   StartLinkRet = supervisor:start_link({local, ?MODULE}, ?MODULE, []),
-  gen_event:add_handler(fedex_event_man, fedex_logger, []),
+  ok = gen_event:add_handler(fedex_event_man, fedex_logger, []),
   StartLinkRet.
 
 fedex_parser_sup() -> #{
