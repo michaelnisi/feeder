@@ -16,7 +16,6 @@
     fedex_sup
   ]},
   {applications, [
-    feeder,
     inets,
     kernel,
     ssl,
