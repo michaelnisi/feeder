@@ -5,7 +5,9 @@
 -export([init/1]).
 
 start_link() ->
-  supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+  StartLinkRet = supervisor:start_link({local, ?MODULE}, ?MODULE, []),
+  gen_event:add_handler(fedex_event_man, fedex_logger, []),
+  StartLinkRet.
 
 fedex_parser_sup() -> #{
   id => fedex_parse_sup,

@@ -5,8 +5,9 @@
 -export([fetch/1]).
 
 start() ->
-  application:ensure_all_started(?MODULE),
-  gen_event:add_handler(fedex_event_man, fedex_logger, []).
+  {ok, _} = application:ensure_all_started(ssl),
+  {ok, _} = application:ensure_all_started(inets),
+  application:start(?MODULE).
 
 stop() ->
   application:stop(?MODULE).
