@@ -7,6 +7,8 @@
 start() ->
   {ok, _} = application:ensure_all_started(inets),
   {ok, _} = application:ensure_all_started(ssl),
+  {ok, _} = application:ensure_all_started(xmerl),
+  {ok, _} = application:ensure_all_started(feeder),
   application:start(?MODULE).
 
 stop() ->
