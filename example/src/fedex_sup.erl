@@ -6,6 +6,7 @@
 
 start_link() ->
   StartLinkRet = supervisor:start_link({local, ?MODULE}, ?MODULE, []),
+  % Using gen_event for instant but separated output.
   ok = gen_event:add_handler(fedex_event_man, fedex_logger, []),
   StartLinkRet.
 

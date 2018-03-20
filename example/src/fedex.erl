@@ -5,8 +5,8 @@
 -export([fetch/1]).
 
 start() ->
-  {ok, _} = application:ensure_all_started(ssl),
   {ok, _} = application:ensure_all_started(inets),
+  {ok, _} = application:ensure_all_started(ssl),
   application:start(?MODULE).
 
 stop() ->
