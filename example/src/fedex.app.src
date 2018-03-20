@@ -17,10 +17,7 @@
   ]},
   {applications, [
     inets,
-    kernel,
-    ssl,
-    stdlib,
-    xmerl
+    ssl
   ]},
   {mod, {fedex_app, []}},
   {env, []}
