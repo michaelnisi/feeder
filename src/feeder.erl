@@ -13,6 +13,7 @@
 
 -record(state, {
   author :: boolean(),
+  category :: boolean(),
   chars :: undefined | [binary()],
   entry :: entry(),
   feed :: feed(),
@@ -137,6 +138,12 @@ href(Attrs) ->
     false -> []
   end.
 
+category(Attrs) ->
+  case lists:keyfind("term", 3, Attrs) of
+    {_, _, "term", L} -> L;
+    false -> []
+  end.
+
 -spec attribute(atom(), state(), atom(), list()) -> feed() | entry().
 attribute(feed, State, link, Attrs) ->
   feed(State#state.feed, link, State#state{chars=href(Attrs)});
@@ -150,6 +157,8 @@ attribute(entry, State, link, Attrs) ->
   entry(State#state.entry, link, State#state{chars=href(Attrs)});
 attribute(entry, State, image, Attrs) ->
   entry(State#state.entry, image, State#state{chars=href(Attrs)});
+attribute(entry, State, category, Attrs) ->
+  entry(State#state.entry, category, State#state{chars=category(Attrs)});
 attribute(entry, State, enclosure, Attrs) ->
   Entry = State#state.entry,
   Entry#entry{enclosure=enclosure(Attrs)};
@@ -160,6 +169,8 @@ flag(author, State, Flag) ->
   State#state{author=Flag};
 flag(image, State, Flag) ->
   State#state{image=Flag};
+flag(category, State, Flag) ->
+  State#state{category=Flag};
 flag(_, State, _) ->
   State.
 

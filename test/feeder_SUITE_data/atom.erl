@@ -17,7 +17,7 @@ wanted() -> {{
 {
   entry,
   undefined,
-  undefined,
+  [<<"robot">>,<<"nuclear">>],
   undefined,
   undefined,
   <<"urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a">>,
