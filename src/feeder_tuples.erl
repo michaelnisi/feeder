@@ -1,12 +1,16 @@
--module(feeder_tuples).
+%%
+%% feeder_tuples - modify tuples
+%%
 
--export([trim/1]).
--export([update/3]).
--export([append/3]).
+-module(feeder_tuples).
 
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
 -endif.
+
+-export([trim/1]).
+-export([update/3]).
+-export([append/3]).
 
 trim(S) ->
   Bin = unicode:characters_to_binary(S, utf8),

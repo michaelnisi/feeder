@@ -4,11 +4,11 @@
 
 -module(feeder_elements).
 
--export([qname/1]).
-
 -ifdef(TEST).
 -include_lib("eunit/include/eunit.hrl").
 -endif.
+
+-export([qname/1]).
 
 qname({"atom", "link"}) -> url;
 qname({_, "author"}) -> author;
