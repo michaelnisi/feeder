@@ -98,17 +98,17 @@ entry(E, _, _) ->
 
 -spec attribute(atom(), state(), atom(), list()) -> feed() | entry().
 attribute(feed, State, link, Attrs) ->
-  feed(State#state.feed, link, State#state{chars=feeder_attributes:href(Attrs)});
+  feed(State#state.feed, link, State#state{chars=feeder_attributes:anchor(Attrs)});
 attribute(feed, State, image, Attrs) ->
-  feed(State#state.feed, image, State#state{chars=feeder_attributes:href(Attrs)});
+  feed(State#state.feed, image, State#state{chars=feeder_attributes:anchor(Attrs)});
 attribute(feed, State, url, Attrs) ->
-  feed(State#state.feed, url, State#state{chars=feeder_attributes:href(Attrs)});
+  feed(State#state.feed, url, State#state{chars=feeder_attributes:anchor(Attrs)});
 attribute(feed, State, _, _) ->
   State#state.feed;
 attribute(entry, State, link, Attrs) ->
-  entry(State#state.entry, link, State#state{chars=feeder_attributes:href(Attrs)});
+  entry(State#state.entry, link, State#state{chars=feeder_attributes:anchor(Attrs)});
 attribute(entry, State, image, Attrs) ->
-  entry(State#state.entry, image, State#state{chars=feeder_attributes:href(Attrs)});
+  entry(State#state.entry, image, State#state{chars=feeder_attributes:anchor(Attrs)});
 attribute(entry, State, category, Attrs) ->
   entry(State#state.entry, category, State#state{chars=feeder_attributes:category(Attrs)});
 attribute(entry, State, enclosure, Attrs) ->

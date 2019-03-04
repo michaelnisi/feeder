@@ -12,7 +12,7 @@
 
 -export([category/1]).
 -export([enclosure/1]).
--export([href/1]).
+-export([anchor/1]).
 
 enc(E, [H|T]) ->
   {_, _, K, V} = H,
@@ -28,26 +28,25 @@ enc(E, type, V) -> E#enclosure{type=V}.
 enclosure(Attributes) ->
   enc(#enclosure{}, Attributes).
 
+href(_, {_, _, "rel", "shorturl"}) -> [];
+href({_, _, "href", L}, _) -> L;
+href(_, _) -> [].
+
 %% Returns the href URL from Attributes.
-href(Attributes) ->
-  case lists:keyfind("href", 3, Attributes) of
-    {_, _, "href", L} ->
-      case lists:keyfind("rel", 3, Attributes) of
-        {_, _, "rel", "shorturl"} -> [];
-        _ -> L
-      end;
-    false -> []
-  end.
+anchor(Attributes) ->
+  HRef = lists:keyfind("href", 3, Attributes),
+  Rel = lists:keyfind("rel", 3, Attributes),
+  href(HRef, Rel).
+
+term({_, _, "term", L}) -> L;
+term(_) -> [].
 
 %% Returns the first category term found in Attributes.
 %%
 %% Atom describes categories with attibutes.
 %% https://tools.ietf.org/html/rfc4287#section-4.2.2
 category(Attributes) ->
-  case lists:keyfind("term", 3, Attributes) of
-    {_, _, "term", L} -> L;
-    false -> []
-  end.
+  term(lists:keyfind("term", 3, Attributes)).
 
 -ifdef(TEST).
 
@@ -62,12 +61,17 @@ category_test() ->
   C = category([nil, {}, F, nil]),
   C = category([nil, {}, F, {nil, nil, "term", <<"second food">>}]).
 
-href_test() ->
-  [] = href([]),
-  [] = href([{}]),
+anchor_test() ->
+  [] = anchor([]),
+  [] = anchor([{}]),
   URL = binary:list_to_bin("https://troubled.pro"),
-  URL = href([{nil, nil, "href", URL}]),
-  % TODO: Understand shorturl filter. Can’t remember the reasoning behind it.
-  [] = href([{nil, nil, "href", URL}, {nil, nil, "rel", "shorturl"}]).
+  URL = anchor([{nil, nil, "href", URL}]),
+  URL = anchor([{nil, nil, "href", URL}, {nil, nil, "rel", "alternate"}]),
+
+  % Blocking short URLs seems arbitary, why would we do that? Just leaving
+  % that in because there is a test for that, test/feederSUITE_data/author.*.
+  [] = anchor([{nil, nil, "href", URL}, {nil, nil, "rel", "shorturl"}]),
+
+  [] = anchor([{nil, nil, "rel", "shorturl"}, {nil, nil, "href", URL}]).
 
 -endif.
