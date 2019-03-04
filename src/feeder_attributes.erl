@@ -24,27 +24,27 @@ enc(E, url, V) -> E#enclosure{url=V};
 enc(E, length, V) -> E#enclosure{length=V};
 enc(E, type, V) -> E#enclosure{type=V}.
 
-%% Returns an enclosure record from Attrs.
-enclosure(Attrs) ->
-  enc(#enclosure{}, Attrs).
+%% Returns an enclosure record from Attributes.
+enclosure(Attributes) ->
+  enc(#enclosure{}, Attributes).
 
-%% Returns the href URL from Attrs.
-href(Attrs) ->
-  case lists:keyfind("href", 3, Attrs) of
+%% Returns the href URL from Attributes.
+href(Attributes) ->
+  case lists:keyfind("href", 3, Attributes) of
     {_, _, "href", L} ->
-      case lists:keyfind("rel", 3, Attrs) of
+      case lists:keyfind("rel", 3, Attributes) of
         {_, _, "rel", "shorturl"} -> [];
         _ -> L
       end;
     false -> []
   end.
 
-%% Returns the first category term found in Attrs.
+%% Returns the first category term found in Attributes.
 %%
 %% Atom describes categories with attibutes.
 %% https://tools.ietf.org/html/rfc4287#section-4.2.2
-category(Attrs) ->
-  case lists:keyfind("term", 3, Attrs) of
+category(Attributes) ->
+  case lists:keyfind("term", 3, Attributes) of
     {_, _, "term", L} -> L;
     false -> []
   end.
@@ -57,9 +57,10 @@ enclosure_test() ->
 category_test() ->
   [] = category([]),
   [] = category([{}]),
-  Food = {nil, nil, "term", <<"food">>},
-  <<"food">> = category([nil, {}, Food, nil]),
-  <<"food">> = category([nil, {}, Food, {nil, nil, "term", <<"second food">>}]).
+  C = <<"food">>,
+  F = {nil, nil, "term", C},
+  C = category([nil, {}, F, nil]),
+  C = category([nil, {}, F, {nil, nil, "term", <<"second food">>}]).
 
 href_test() ->
   [] = href([]),
