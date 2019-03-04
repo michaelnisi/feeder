@@ -1,8 +1,8 @@
 -module(feeder_enclosures).
 
--export([get/2]).
-
 -include("feeder_records.hrl").
+
+-export([get/2]).
 
 get(url, Enc) ->
   Enc#enclosure.url;

@@ -1,8 +1,8 @@
 -module(feeder_entries).
 
--export([get/2]).
-
 -include("feeder_records.hrl").
+
+-export([get/2]).
 
 get(author, E) ->
   E#entry.author;
