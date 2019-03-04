@@ -4,3 +4,8 @@ otp_release:
   - 20.3
   - 19.3
 script: "make tests"
+branches:
+  only:
+    - master
+  except:
+    - /^v[0-9]/
