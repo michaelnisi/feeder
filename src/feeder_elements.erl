@@ -1,5 +1,5 @@
 %%
-%% feeder_elements - Qualify elements by name
+%% feeder_elements - qualify elements by name
 %%
 
 -module(feeder_elements).
