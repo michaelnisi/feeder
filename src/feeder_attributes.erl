@@ -68,7 +68,7 @@ anchor_test() ->
   URL = anchor([{nil, nil, "href", URL}]),
   URL = anchor([{nil, nil, "href", URL}, {nil, nil, "rel", "alternate"}]),
 
-  % Blocking short URLs seems arbitary, why would we do that? Just leaving
+  % Blocking short URLs seems arbitrary, why would we do that? Just leaving
   % that in because there is a test for that, test/feederSUITE_data/author.*.
   [] = anchor([{nil, nil, "href", URL}, {nil, nil, "rel", "shorturl"}]),
 
