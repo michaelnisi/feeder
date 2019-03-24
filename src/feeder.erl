@@ -14,12 +14,12 @@
 -export([stream/2]).
 
 -record(state, {
-  author :: boolean(),
-  category :: boolean(),
+  author=false :: boolean(),
+  category=false :: boolean(),
   chars :: undefined | [binary()],
-  entry :: entry(),
-  feed :: feed(),
-  image :: boolean(),
+  entry :: undefined | entry(),
+  feed :: undefined | feed(),
+  image=false :: boolean(),
   user :: {user_state(), user_fun()}
 }).
 

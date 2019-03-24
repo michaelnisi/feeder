@@ -1,4 +1,6 @@
 PROJECT = feeder
+PLT_APPS = xmerl
+
 include erlang.mk
 
 publish:
